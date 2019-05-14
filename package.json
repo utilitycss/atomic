@@ -1,6 +1,6 @@
 {
   "name": "@utilitycss/atomic",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Andrea Moretti (@axyz) <axyzxp@gmail.com>",
   "description": "Atomic CSS composition for yarn workspaces",
   "repository": "utilitycss/atomic",
@@ -23,6 +23,7 @@
     "chokidar": "^2.0.4",
     "commander": "^2.15.0",
     "cssnano": "^4.1.10",
+    "cssnano-preset-advanced": "^4.0.7",
     "postcss-cssnext": "^3.1.0",
     "postcss-discard-duplicates": "^2.1.0",
     "postcss-discard-empty": "^2.1.0",
@@ -35,10 +36,10 @@
   "devDependencies": {
     "@types/jest": "^22.1.3",
     "@types/node": "^9.4.6",
-    "jest": "^24.0.0",
-    "ts-jest": "^24.0.0",
     "husky": "^2.2.0",
+    "jest": "^24.0.0",
     "lint-staged": "^8.1.6",
+    "ts-jest": "^24.0.0",
     "tslint": "^5.9.1",
     "typescript": "^3.4.5"
   },
