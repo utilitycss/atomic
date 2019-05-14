@@ -10,7 +10,7 @@
     "atomic": "index.js"
   },
   "scripts": {
-    "prepublish": "build-ts",
+    "prepublish": "npm run build-ts",
     "test": "jest --forceExit --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
     "build-ts": "tsc",
