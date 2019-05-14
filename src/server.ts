@@ -1,32 +1,50 @@
-const chokidar = require('chokidar');
-const Atom = require('./atom');
-const generateDependencyGraph = require('./dependency-graph');
-const BuildAtomCssVisitor = require('./visitor/build-atom-css');
-const ConcatenateCSSVisitor = require('./visitor/concatenate-css');
-const indexCssWatchChange = require('./watch/index-css/change');
-const bundleAtomsAction = require('./action/bundle-atoms');
-const path = require('path');
-const util = require('util');
-const fs = require('fs');
+import chokidar from "chokidar";
+import Atom from "./atom";
+import generateDependencyGraph, { AtomGraph } from "./dependency-graph";
+import BuildAtomCssVisitor from "./visitor/build-atom-css";
+import ConcatenateCSSVisitor from "./visitor/concatenate-css";
+import indexCssWatchChange from "./watch/index-css/change";
+import bundleAtomsAction from "./action/bundle-atoms";
+import path from "path";
+import util from "util";
+import fs from "fs";
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
-const DEVELOPMENT = process.env.NODE_ENV === 'development';
+const DEVELOPMENT = process.env.NODE_ENV === "development";
 const CWD = process.cwd();
 
 const PKG_FILE_RE = /^pkg:(.*)/;
 
-class AtomsServer {
+type FileContent = string | { [key: string]: any };
+
+export default class AtomsServer {
+  atomsFolder: string;
+  electronsFolder: string;
+  electronsModuleName: string;
+  utilityConfigPath: string;
+  packageScope: string;
+  bundleCSSPath: string;
+  bundleCSSMinPath: string;
+  cache: Map<string, FileContent>;
+  trackClasses: Map<string, string>;
+  atomsPathRE: RegExp;
+  importedElectronRE: RegExp;
+  importedModuleRE: RegExp;
+  ICSSImportRE: RegExp;
+  graph: AtomGraph;
+  root: Atom;
+  utilityConfig: Object;
+
   constructor({
-    atomsFolder = 'atoms',
-    electronsFolder = 'electrons',
-    electronsModuleName,
-    utilityConfigPath = 'packages/atoms/utility.config.js',
-    packageScope,
-    bundleCSSPath = './',
-    bundleCSSName = 'atoms',
+    atomsFolder = "atoms",
+    electronsFolder = "electrons",
+    electronsModuleName = "@my-org/electrons",
+    utilityConfigPath = "packages/atoms/utility.config.js",
+    packageScope = "@my-org",
+    bundleCSSPath = "./",
+    bundleCSSName = "atoms"
   } = {}) {
-    console.log('ENV >>>>>>', process.env.NODE_PATH)
     this.atomsFolder = atomsFolder;
     this.electronsFolder = electronsFolder;
     this.electronsModuleName = electronsModuleName;
@@ -35,7 +53,7 @@ class AtomsServer {
     this.bundleCSSPath = path.join(bundleCSSPath, `${bundleCSSName}.css`);
     this.bundleCSSMinPath = path.join(
       bundleCSSPath,
-      `${bundleCSSName}.min.css`,
+      `${bundleCSSName}.min.css`
     );
     this.cache = new Map();
     this.trackClasses = new Map();
@@ -43,12 +61,12 @@ class AtomsServer {
     this.atomsPathRE = new RegExp(`packages\\/${atomsFolder}`);
     this.importedElectronRE = new RegExp(`^.*\\/(${packageScope}\\/electrons)`);
     this.importedModuleRE = new RegExp(
-      `^.*\\/(${packageScope}\\/.*)\\/module\\.css`,
+      `^.*\\/(${packageScope}\\/.*)\\/module\\.css`
     );
     this.ICSSImportRE = new RegExp(`:import\\("(.*)\\/module\\.css"\\)`);
   }
 
-  readFileSync(p, { useCache = true } = {}) {
+  readFileSync(p: string, { useCache = true } = {}): FileContent {
     if (useCache && this.cache.has(p)) {
       return this.cache.get(p);
     }
@@ -62,14 +80,14 @@ class AtomsServer {
       return json;
     }
 
-    const content = fs.readFileSync(p, 'utf8');
+    const content = fs.readFileSync(p, "utf8");
     const cachedContent =
-      path.extname(p) === '.json' ? JSON.parse(content) : content;
+      path.extname(p) === ".json" ? JSON.parse(content) : content;
     this.cache.set(p, cachedContent);
     return cachedContent;
   }
 
-  async readFile(p, { useCache = true } = {}) {
+  async readFile(p: string, { useCache = true } = {}): Promise<FileContent> {
     if (useCache && this.cache.has(p)) {
       return this.cache.get(p);
     }
@@ -83,84 +101,83 @@ class AtomsServer {
       return json;
     }
 
-    const content = await readFile(p, 'utf8');
+    const content = await readFile(p, "utf8");
     const cachedContent =
-      path.extname(p) === '.json' ? JSON.parse(content) : content;
+      path.extname(p) === ".json" ? JSON.parse(content) : content;
     this.cache.set(p, cachedContent);
     return cachedContent;
   }
 
-  writeFile(p, content) {
-    return new Promise(async (resolve, reject) => {
-      if (path.extname(p) === '.json') {
+  writeFile(p: string, content: string): Promise<void> {
+    return new Promise(async resolve => {
+      if (path.extname(p) === ".json") {
         this.cache.set(p, JSON.parse(content));
       } else {
         this.cache.set(p, content);
       }
       resolve();
       await writeFile(p, content);
-      console.log('WRITE:', p);
+      console.log("WRITE:", p);
     });
   }
 
-  async initialize() {
-    console.log('START: initializing server');
-    console.time('initialize-server');
+  async initialize(): Promise<this> {
+    console.log("START: initializing server");
+    console.time("initialize-server");
     this.graph = await generateDependencyGraph(this.atomsPathRE);
 
     const roots = Object.keys(this.graph).filter(
-      name => this.graph[name].parents.length === 0,
+      name => this.graph[name].parents.length === 0
     );
 
     this.root = new Atom({
-      name: 'all',
+      name: "all",
       atoms: this.graph,
-      isCss: false,
+      isCss: false
     }).withChildren(roots);
 
     // prepopulate cache
     Object.keys(this.graph).forEach(async name => {
       await this.readFile(
-        path.join(CWD, this.graph[name].path, 'package.json'),
+        path.join(CWD, this.graph[name].path, "package.json")
       );
       if (this.graph[name].isCss) {
-        await this.readFile(path.join(CWD, this.graph[name].path, 'index.css'));
+        await this.readFile(path.join(CWD, this.graph[name].path, "index.css"));
       }
     });
     this.utilityConfig = require(path.join(CWD, this.utilityConfigPath));
-    console.log('DONE: initializing server');
-    console.timeEnd('initialize-server');
+    console.log("DONE: initializing server");
+    console.timeEnd("initialize-server");
     return this;
   }
 
   async run() {
     const indexCssWatcher = chokidar.watch(
-      `packages/${this.atomsFolder}/**/index.css`,
+      `packages/${this.atomsFolder}/**/index.css`
     );
-    indexCssWatcher.on('change', indexCssWatchChange(this));
+    indexCssWatcher.on("change", indexCssWatchChange(this));
   }
 
   async build() {
-    console.log('START: building atoms css');
-    console.time('build-atoms-css');
+    console.log("START: building atoms css");
+    console.time("build-atoms-css");
     await this.root.accept(
       new BuildAtomCssVisitor({
-        utilityConfig: this.utilityConfig,
-        server: this,
-      }),
+        server: this
+      })
     );
-    console.log('DONE: building atoms css');
-    console.timeEnd('build-atoms-css');
+    console.log("DONE: building atoms css");
+    console.timeEnd("build-atoms-css");
 
-    console.log('START: bundling global css');
-    console.time('bundle-global-css');
+    console.log("START: bundling global css");
+    console.time("bundle-global-css");
     const concatenateCSSVisitor = new ConcatenateCSSVisitor({ server: this });
     await this.root.accept(concatenateCSSVisitor);
     const bundleCssPath = path.join(CWD, this.bundleCSSPath);
     const { css } = await bundleAtomsAction({
       source: concatenateCSSVisitor.getCSS(),
       to: bundleCssPath,
-      minify: false,
+      minify: false
     });
     await this.writeFile(bundleCssPath, css);
     if (!DEVELOPMENT) {
@@ -168,13 +185,11 @@ class AtomsServer {
       const { css } = await bundleAtomsAction({
         source: concatenateCSSVisitor.getCSS(),
         to: bundleCssMinPath,
-        minify: true,
+        minify: true
       });
       await this.writeFile(bundleCssMinPath, css);
     }
-    console.log('DONE: bundling global css');
-    console.timeEnd('bundle-global-css');
+    console.log("DONE: bundling global css");
+    console.timeEnd("bundle-global-css");
   }
 }
-
-module.exports = AtomsServer;

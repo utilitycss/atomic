@@ -1,13 +1,14 @@
-const path = require('path');
-const postcss = require('postcss');
-const cssModules = require('postcss-modules');
-const crypto = require("crypto");
-const generateAtomTypings = require('../action/generate-atom-typings');
+import path from "path";
+import crypto from "crypto";
+import postcss, { Rule, Declaration } from "postcss";
+import generateAtomTypings from "../action/generate-atom-typings";
+import AtomsServer from "../server";
+const cssModules = require("postcss-modules");
 
 const HASH_LENGTH = 6;
-const DEVELOPMENT = process.env.NODE_ENV === 'development';
+const DEVELOPMENT = process.env.NODE_ENV === "development";
 
-function hashFunction(string, length) {
+function hashFunction(string: string, length: number): string {
   // get numerical value of murmur hash for the string
   return (
     crypto
@@ -25,13 +26,30 @@ function hashFunction(string, length) {
   );
 }
 
-const generateHashableContent = rule =>
-  rule.nodes.map(node => node.type + node.prop + node.value).join(';');
+const generateHashableContent = (rule: Rule): string =>
+  rule.nodes
+    .map((node: Declaration) => node.type + node.prop + node.value)
+    .join(";");
 
-module.exports = postcss.plugin(
-  'atomic-css-modules',
+interface AtomicCssModulesOptions {
+  trackClasses: Map<string, string>;
+  importedElectronRE: RegExp;
+  importedModuleRE: RegExp;
+  ICSSImportRE: RegExp;
+  server: AtomsServer;
+}
+
+type GenerateScopedName = (
+  name: string,
+  filename: string,
+  content: string
+) => string;
+type GetJSON = (cssFileName: string, json: string) => void;
+
+const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
+  "atomic-css-modules",
   opts => (css, results) => {
-    const { opts: { to } = {} } = results;
+    const { opts: { to } = { to: "" } } = results;
     // only apply the plugin when a target is specified (avoid infinite loop)
     if (!to) return;
     // we need to clone the root in order to use it to get the original non hashed
@@ -45,13 +63,17 @@ module.exports = postcss.plugin(
       importedElectronRE,
       importedModuleRE,
       ICSSImportRE,
-      server,
+      server
     } = opts;
 
-    const generateScopedName = function(name, filename, content) {
+    const generateScopedName: GenerateScopedName = function(
+      name,
+      filename,
+      content
+    ) {
       let definition = content;
       let hash;
-      let pkgName = '';
+      let pkgName = "";
       let isProxySource = false;
       const definitionsMap = new Map();
       root.walkRules(new RegExp(`(\.${name}|:import)`), rule => {
@@ -67,7 +89,9 @@ module.exports = postcss.plugin(
         } else if (importedModuleRE.test(filename)) {
           // check for @scope/xxx pattern in the filename
           const importedPackage = filename.match(importedModuleRE)[1];
-          const pkg = server.readFileSync(`pkg:${importedPackage}`);
+          const pkg = <{ [key: string]: any }>(
+            server.readFileSync(`pkg:${importedPackage}`)
+          );
           if (pkg.proxy) {
             pkgName = pkg.proxy;
           } else {
@@ -76,7 +100,9 @@ module.exports = postcss.plugin(
         } else if (/:import/.test(rule.selector)) {
           // check for @scope/xxx pattern in the ICSS selector
           const importedPackage = rule.selector.match(ICSSImportRE)[1];
-          const pkg = server.readFileSync(`pkg:${importedPackage}`);
+          const pkg = <{ [key: string]: any }>(
+            server.readFileSync(`pkg:${importedPackage}`)
+          );
           if (pkg.proxy) {
             // check if it is a proxy atom (passthrough for utility electrons)
             // in that case we can use the same hash of the respective electron
@@ -87,11 +113,15 @@ module.exports = postcss.plugin(
           }
         } else {
           // base case: use the package name from package.json
-          const pkg = server.readFileSync(
-            path.join(path.dirname(filename), 'package.json'),
+          const pkg = <{ [key: string]: any }>(
+            server.readFileSync(
+              path.join(path.dirname(filename), "package.json")
+            )
           );
           if (pkg.proxy) {
-            definition = server.readFileSync(require.resolve(pkg.proxy));
+            definition = <string>(
+              server.readFileSync(require.resolve(pkg.proxy))
+            );
             isProxySource = true;
             pkgName = pkg.proxy;
           } else {
@@ -117,7 +147,7 @@ module.exports = postcss.plugin(
               definition,
               count: definitionsMap.get(name).count + 1,
               key,
-              pkgName,
+              pkgName
             });
           } else {
             definitionsMap.set(name, { definition, count: 1, key, pkgName });
@@ -138,7 +168,7 @@ module.exports = postcss.plugin(
           // use electron hashes for proxied atoms
           const pkg = filename.match(importedElectronRE)[1];
           if (isProxySource) {
-            definition = server.readFileSync(require.resolve(pkg));
+            definition = <string>server.readFileSync(require.resolve(pkg));
           }
           hash = hashFunction(`${pkg}_${name}_${definition}`, HASH_LENGTH);
           const key = `${pkg};${name}`;
@@ -151,16 +181,18 @@ module.exports = postcss.plugin(
       return DEVELOPMENT ? `${name.toUpperCase()}_${hash}` : hash;
     };
 
-    const getJSON = async (cssFileName, json) => {
-      const jsonFilePath = cssFileName + '.json';
+    const getJSON: GetJSON = async (cssFileName, json) => {
+      const jsonFilePath = cssFileName + ".json";
       await server.writeFile(jsonFilePath, JSON.stringify(json));
       const typingsFilePath = path.join(
         path.dirname(cssFileName),
-        'index.d.ts',
+        "index.d.ts"
       );
       await generateAtomTypings(typingsFilePath, json, { server });
     };
 
     return cssModules({ generateScopedName, getJSON })(css, results);
-  },
+  }
 );
+
+export default atomicCssModules;

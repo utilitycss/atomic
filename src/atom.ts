@@ -1,10 +1,13 @@
-const topologicalOrder = (graph, root) => {
+import { AtomGraph } from "./dependency-graph";
+import { Visitor } from "./visitor/visitor";
+
+const topologicalOrder = (graph: AtomGraph, root: string[]) => {
   const visited = new Set();
   const dirty = new Set();
-  let order = [];
-  let queue = [...root];
+  const order = [];
+  const queue = [...root];
 
-  let dirtyCheck = [...queue];
+  const dirtyCheck = [...queue];
   while (dirtyCheck.length) {
     const atom = dirtyCheck.pop();
     dirty.add(atom);
@@ -20,7 +23,7 @@ const topologicalOrder = (graph, root) => {
 
     graph[current].children.forEach(child => {
       const allParentsAreVisited = graph[child].parents.every(
-        p => visited.has(p) || !dirty.has(p),
+        p => visited.has(p) || !dirty.has(p)
       );
       if (allParentsAreVisited) {
         queue.push(child);
@@ -31,8 +34,27 @@ const topologicalOrder = (graph, root) => {
   return order;
 };
 
-class Atom {
-  constructor({ name, path, atoms, isCss = true }) {
+export default class Atom {
+  name: string;
+  path: string;
+  atoms: AtomGraph;
+  parents: string[];
+  children: string[];
+  isCss: boolean;
+  package: {};
+  source: string;
+
+  constructor({
+    name,
+    path,
+    atoms,
+    isCss = true
+  }: {
+    name: string;
+    path?: string;
+    atoms?: AtomGraph;
+    isCss: boolean;
+  }) {
     this.name = name;
     this.path = path;
     this.atoms = atoms;
@@ -41,30 +63,30 @@ class Atom {
     this.isCss = isCss;
   }
 
-  withParents(parents) {
+  withParents(parents: string[]): this {
     this.parents = parents;
     return this;
   }
 
-  withChildren(children) {
+  withChildren(children: string[]): this {
     this.children = children;
     return this;
   }
 
-  withPackage(pkg) {
+  withPackage(pkg: {}): this {
     this.package = pkg;
     return this;
   }
 
-  withSource(src) {
+  withSource(src: string): this {
     this.source = src;
     return this;
   }
 
   // async topologically sorted visit
   // promises are resolved concurrently for each tree level
-  async accept(visitor) {
-    const root = this.name === 'all' ? this.children : [this.name];
+  async accept(visitor: Visitor) {
+    const root = this.name === "all" ? this.children : [this.name];
     const order = topologicalOrder(this.atoms, root);
     if (order.length === 0) return;
 
@@ -79,7 +101,7 @@ class Atom {
         prev[prev.length - 1] = [...currentBatch, next];
         return prev;
       },
-      [[order[0]]],
+      [[order[0]]]
     );
 
     for (const batch of batches) {
@@ -87,5 +109,3 @@ class Atom {
     }
   }
 }
-
-module.exports = Atom;

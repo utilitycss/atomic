@@ -1,7 +1,7 @@
-const exec = require('child_process').exec;
-const chalk = require('chalk');
+import { exec } from "child_process";
+import chalk from "chalk";
 
-function run(cmd) {
+export default function run(cmd: string): Promise<string> {
   return new Promise((resolve, reject) => {
     exec(cmd, (err, stdout) => {
       if (err) {
@@ -13,5 +13,3 @@ function run(cmd) {
     });
   });
 }
-
-module.exports = run;
