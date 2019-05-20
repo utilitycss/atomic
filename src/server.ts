@@ -5,9 +5,11 @@ import BuildAtomCssVisitor from "./visitor/build-atom-css";
 import ConcatenateCSSVisitor from "./visitor/concatenate-css";
 import indexCssWatchChange from "./watch/index-css/change";
 import bundleAtomsAction from "./action/bundle-atoms";
+import electronsCssAction from "./action/electrons-css";
 import path from "path";
 import util from "util";
 import fs from "fs";
+import mkdirp from "mkdirp-promise";
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
@@ -116,6 +118,8 @@ export default class AtomsServer {
         this.cache.set(p, content);
       }
       resolve();
+      const dirName = path.dirname(p);
+      await mkdirp(dirName);
       await writeFile(p, content);
       console.log("WRITE:", p);
     });
@@ -159,6 +163,9 @@ export default class AtomsServer {
   }
 
   async build() {
+    console.log("START: building electrons css");
+    await electronsCssAction({ electronsFolder: this.electronsFolder });
+    console.log("DONE: building electrons css");
     console.log("START: building atoms css");
     console.time("build-atoms-css");
     await this.root.accept(

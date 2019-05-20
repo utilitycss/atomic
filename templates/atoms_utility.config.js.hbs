@@ -1,0 +1,10 @@
+const {
+  base,
+  breakpoints: breakPointsValues
+} = require("{{ electronsModuleName }}/config");
+
+module.exports = {
+  config: Object.assign({}, base, {
+    breakPoints: breakPointsValues
+  })
+};
