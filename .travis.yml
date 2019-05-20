@@ -1,0 +1,11 @@
+language: node_js
+cache:
+  yarn: true
+deploy:
+  provider: npm
+  email: axyzxp@gmail.com
+  api_key:
+    secure: ZvalXT5uvLe2w9R9K2XzRtrUgaaLvmNgc8tFy473L1cAuKjdgsfdlw8fj798D5mqVgoBPq225/IGFihRUd0jo+YlPDG8SvLGrDOjqCSwBiHeH0BEAq3Xur4FqE/YhAwwTEF0kflCUPLbWrqK97PaM7l5TCzR1h8yeQXudmxgjlpHd4Hha70pmYQS/eXdFTsBGm0LRfD7W1IWxdH8lF/ePzl/2amgcW+r1unuafdgypuNklUgZzTRvNn3KctR+DpeSBKo/nEhCfbTLrNNxhWr4yRzfOOYDjWFW/AfX1HTfMHYa/PoWnJMZDio9Ve8AyFoGZe5v13Ws6G0/EpN4Uh/GGOEPTcxC8UovTncHxS4Zd2uJAo+lu9WoiCutKwpsXKwG+f8XZmHOXxnA/gYvGQ7IhuNl7L+q7Wr/hqvLgA+5Z9q8qrcivcQXaIKSU8lA23Y/+KFbpzaRDeEV/gnO6nWFR+7AeY2zkklHuK3EoK+OtzkUnoElGytYKlVMRpno3ga0PK/PVem3JWYTQqiGOzGVQcPTa9sNzC6P4KH0LbIk4zNzaKACdbbGA9NiOddooySoCUz4LHAEX9J75rw0ynAFPTjW4VZbG4Wo4b+GjzE0phD3P2YSeNI9VVowJ8uOxc2nn19BFZX0HFmtMNBCd1JWCLlNIB/5HyljOFvk+iClN0=
+  on:
+    tags: true
+    repo: utilitycss/atomic
