@@ -1,0 +1,20 @@
+{
+  "name": "@dx/__root__",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "atomic build",
+    "start": "atomic start"
+  },
+  "devDependencies": {
+    "@utilitycss/utility": "*",
+    "@utilitycss/atomic": "*",
+    "lerna": "3.13.3"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/{{ electronsFolder }}",
+      "packages/{{ atomsFolder }}/**/*"
+    ]
+  }
+}
