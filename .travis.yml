@@ -8,6 +8,7 @@ deploy:
   email: axyzxp@gmail.com
   api_key:
     secure: RHUYL+luZzxhkWV9Cxj6L0s+kdtxXlpE742HBTTRN5KbmghwbJ86V0RgVwRDlRbmx6I+30iLGr5tJBF3StkwBCVXOVoRV/PLAsrml90hfLLuM5eSxAvVIPzC/EP53JUF1yaNHhFj+q4MsO1P5RpWQStqDxGQCKmVt+3roYRfzZrRTaZWcfiu6DYDKy+ZZyulBLOx/37q5vLoFWyjOqMbAxldp+NZO7A6EHodPHRDz7KjgIefR3bMHVoMJsRhRZuOyKt4T0JerjeF+pc2tcbjI7wHuKCQHNCdcpzq5ZXRy4nprr0rr2Q8CwFYnhGoNw+VcJs7mT2+HiAMTdkui6GiD8TK8k09o7d05Oao4c1H/XYR26/jBUUDhzdVyCV8Al/ywdhmIYgtCbVXDXsmyWz0uVwxAPCGZb2f0jvFEi+YP0OB+wyJOndZgm6nDuOAZkZCSiIolDVn3be9ukvArN/v2zHxN/VR8ol9Ih88jeH4mUdlmgJX+1hptNqvNGCuMYAjwsWuZFc9/SzCjSyn8sz3mEbc+w/DhyYBybdBxzMBU5LE1fhgWdnnEqE5ETJdzsCNeUpu1zAX1/9IZrkuUWBYjqt5w8nRTYI4QqN3Xep+uD5rO2nCxjpEq8Njt+qANfGvmPxIz6kqohGPb14IBF3JLKDfG9xqPS5MKe3FlLmcWpQ=
+  skip_cleanup: true
   on:
     tags: true
     repo: utilitycss/atomic
