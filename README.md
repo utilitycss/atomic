@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/utilitycss/atomic.svg?branch=master)](https://travis-ci.com/utilitycss/atomic)
+
 # Atomic
 A Framework to build atomic design CSS libraries in a functional manner.
 
