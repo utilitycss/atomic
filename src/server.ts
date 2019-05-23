@@ -9,7 +9,6 @@ import electronsCssAction from "./action/electrons-css";
 import path from "path";
 import util from "util";
 import fs from "fs";
-import mkdirp from "mkdirp-promise";
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
@@ -118,8 +117,6 @@ export default class AtomsServer {
         this.cache.set(p, content);
       }
       resolve();
-      const dirName = path.dirname(p);
-      await mkdirp(dirName);
       await writeFile(p, content);
       console.log("WRITE:", p);
     });
