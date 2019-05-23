@@ -1,6 +1,6 @@
 {
   "name": "@utilitycss/atomic",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "author": "Andrea Moretti (@axyz) <axyzxp@gmail.com>",
   "description": "Atomic CSS composition for yarn workspaces",
   "repository": "utilitycss/atomic",
@@ -18,7 +18,7 @@
     "tslint": "tslint -c tslint.json -p tsconfig.json"
   },
   "dependencies": {
-    "@utilitycss/utility": "^0.2.5",
+    "@utilitycss/utility": "^0.2.6",
     "chalk": "^2.3.2",
     "chokidar": "^2.0.4",
     "commander": "^2.15.0",

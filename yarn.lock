@@ -423,7 +423,7 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.12.tgz#45dd1d0638e8c8f153e87d296907659296873916"
   integrity sha512-SOhuU4wNBxhhTHxYaiG5NY4HBhDIDnJF60GU+2LqHAdKKer86//e4yg69aENCtQ04n0ovz+tq2YPME5t5yp4pw==
 
-"@utilitycss/utility@^0.2.5":
+"@utilitycss/utility@^0.2.6":
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-0.2.6.tgz#368d78fb259fa13021b1272f5b7639b768c149a3"
   integrity sha512-+cAYUYhGYEZZx5lo6DMR1chtqA48rr6jcyHy/t5Lshv7dudR8uB4BGxH9mYnXjDZ1esDTyzICyivIm8sMDuDIg==

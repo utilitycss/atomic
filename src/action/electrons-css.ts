@@ -16,7 +16,7 @@ const electronsCss = async ({
   const toPath = path.join(electronsPath, "dist", "index.css");
   const source = await readFile(fromPath, { encoding: "utf8" });
   const plugins = require(path.join(electronsPath, "postcss.plugins.js"))();
-  const output = await postcss(plugins).process(source, {
+  const { css: output } = await postcss(plugins).process(source, {
     from: fromPath,
     to: toPath
   });
