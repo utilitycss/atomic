@@ -2,7 +2,7 @@ import AtomsServer from "../server";
 
 const generateAtomTypings = async (
   path: string,
-  json: string,
+  json: object,
   { server }: { server: AtomsServer }
 ) => {
   const keys = Object.keys(json);

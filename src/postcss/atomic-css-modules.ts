@@ -44,7 +44,7 @@ type GenerateScopedName = (
   filename: string,
   content: string
 ) => string;
-type GetJSON = (cssFileName: string, json: string) => void;
+type GetJSON = (cssFileName: string, json: { [key: string]: string }) => void;
 
 const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
   "atomic-css-modules",
@@ -184,6 +184,19 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
     const getJSON: GetJSON = async (cssFileName, json) => {
       const jsonFilePath = cssFileName + ".json";
       await server.writeFile(jsonFilePath, JSON.stringify(json));
+
+      let es6ModuleContent = "";
+
+      for (let key in json) {
+        if (Object.prototype.hasOwnProperty.call(json, key)) {
+          es6ModuleContent += `export const ${key} = ${JSON.stringify(
+            json[key]
+          )}\n`;
+        }
+      }
+
+      await server.writeFile(cssFileName + ".es6.js", es6ModuleContent);
+
       const typingsFilePath = path.join(
         path.dirname(cssFileName),
         "index.d.ts"
