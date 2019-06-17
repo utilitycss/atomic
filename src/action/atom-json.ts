@@ -15,7 +15,7 @@ const atomJSON = async ({
   source: string;
   server: AtomsServer;
 }) => {
-  return await postcss([
+  return postcss([
     atomicCssModules({
       trackClasses: server.trackClasses,
       importedElectronRE: server.importedElectronRE,
