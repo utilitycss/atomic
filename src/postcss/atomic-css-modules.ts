@@ -186,14 +186,18 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       await server.writeFile(jsonFilePath, JSON.stringify(json));
 
       let es6ModuleContent = "";
+      const exported: string[] = [];
 
       for (let key in json) {
         if (Object.prototype.hasOwnProperty.call(json, key)) {
+          exported.push(key);
           es6ModuleContent += `export const ${key} = ${JSON.stringify(
             json[key]
-          )}\n`;
+          )};\n`;
         }
       }
+
+      es6ModuleContent += `export default {${exported.join(",")}};`;
 
       await server.writeFile(cssFileName + ".es6.js", es6ModuleContent);
 
