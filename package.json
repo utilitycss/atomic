@@ -1,6 +1,6 @@
 {
   "name": "@utilitycss/atomic",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "author": "Andrea Moretti (@axyz) <axyzxp@gmail.com>",
   "description": "Atomic CSS composition for yarn workspaces",
   "repository": "utilitycss/atomic",
@@ -58,10 +58,7 @@
   },
   "lint-staged": {
     "linters": {
-      "*.js": [
-        "prettier --no-config --write",
-        "git add"
-      ],
+      "*.js": ["prettier --no-config --write", "git add"],
       "*.ts": [
         "prettier --no-config --write",
         "tslint -c tslint.json -p tsconfig.json --fix",
