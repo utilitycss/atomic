@@ -28,6 +28,7 @@ function hashFunction(string: string, length: number): string {
 
 const generateHashableContent = (rule: Rule): string =>
   rule.nodes
+    .filter((d: Declaration) => d.prop !== "composes")
     .map((node: Declaration) => node.type + node.prop + node.value)
     .join(";");
 
