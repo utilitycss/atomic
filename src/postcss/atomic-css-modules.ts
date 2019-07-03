@@ -26,6 +26,8 @@ function hashFunction(string: string, length: number): string {
   );
 }
 
+const CLASS_RE = /\.([\w-]+)/g;
+
 const generateHashableContent = (rule: Rule): string =>
   rule.nodes
     .filter((d: Declaration) => d.prop !== "composes")
@@ -184,13 +186,35 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
 
     const getJSON: GetJSON = async (cssFileName, json) => {
       const jsonFilePath = cssFileName + ".json";
-      await server.writeFile(jsonFilePath, JSON.stringify(json));
+
+      // Create a Set of all the non empty css classes
+      const resultClassesSet = new Set();
+      css.walkRules(r => {
+        const matches = r.selector.match(CLASS_RE);
+        if (matches) {
+          matches.forEach(m => resultClassesSet.add(m.slice(1)));
+        }
+      });
+
+      // Strip empty classes from json mapping
+      const filteredJSON = Object.keys(json).reduce(
+        (prev, next) => {
+          prev[next] = json[next]
+            .split(" ")
+            .filter(c => resultClassesSet.has(c))
+            .join(" ");
+          return prev;
+        },
+        {} as { [key: string]: string }
+      );
+
+      await server.writeFile(jsonFilePath, JSON.stringify(filteredJSON));
 
       const typingsFilePath = path.join(
         path.dirname(cssFileName),
         "index.d.ts"
       );
-      await generateAtomTypings(typingsFilePath, json, { server });
+      await generateAtomTypings(typingsFilePath, filteredJSON, { server });
     };
 
     return cssModules({ generateScopedName, getJSON })(css, results);
