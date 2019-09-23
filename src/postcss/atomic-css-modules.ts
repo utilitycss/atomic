@@ -79,6 +79,7 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       let pkgName = "";
       let isProxySource = false;
       const definitionsMap = new Map();
+      const isElectron = importedElectronRE.test(filename);
       root.walkRules(new RegExp(`(\.${name}|:import)`), rule => {
         // ensure that a rule that appear multiple times has the same hash
         // e.g. inside media queries or when ICSS imported in a different atom.
@@ -86,7 +87,7 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
         // to the imported module as relative imports are forbidden in atoms
         // we can safely check for @scope/something patterns to get the correct
         // package name
-        if (importedElectronRE.test(filename)) {
+        if (isElectron) {
           // check for @scope/electrons pattern in the filename
           pkgName = filename.match(importedElectronRE)[1];
         } else if (importedModuleRE.test(filename)) {
@@ -137,9 +138,10 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
         if (trackClasses.has(key)) {
           hash = trackClasses.get(key);
         } else {
-          definition = isProxySource
-            ? definition
-            : generateHashableContent(rule);
+          definition =
+            isProxySource || isElectron
+              ? definition
+              : generateHashableContent(rule);
           // if in the scope of the current file we have multiple definitions
           // for the current rule, we concatenate the definitions to generate
           // a global hash that will be updated whenever any of the multiple
@@ -167,7 +169,7 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       // if the hash is empty we fallback to content based hash
       // (e.g. utility generated atoms)
       if (!hash) {
-        if (importedElectronRE.test(filename)) {
+        if (isElectron) {
           // use electron hashes for proxied atoms
           const pkg = filename.match(importedElectronRE)[1];
           if (isProxySource) {
