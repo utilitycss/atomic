@@ -9,6 +9,7 @@ import electronsCssAction from "./action/electrons-css";
 import path from "path";
 import util from "util";
 import fs from "fs";
+import { Visitor } from "./visitor/visitor";
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
@@ -195,5 +196,9 @@ export default class AtomsServer {
     }
     console.log("DONE: bundling global css");
     console.timeEnd("bundle-global-css");
+  }
+
+  async visit(visitor: Visitor) {
+    await this.root.accept(visitor);
   }
 }
