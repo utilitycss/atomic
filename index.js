@@ -85,6 +85,30 @@ program
       });
   });
 
+program.command("visit <visitor>").action(v => {
+  const {
+    electronsModuleName,
+    packageScope,
+    utilityConfigPath,
+    bundleCSSPath,
+    bundleCSSName
+  } = program.cfg;
+
+  const visitor = require(path.join(process.cwd(), v));
+
+  new AtomsServer({
+    electronsModuleName,
+    packageScope,
+    utilityConfigPath,
+    bundleCSSPath,
+    bundleCSSName
+  })
+    .initialize()
+    .then(async server => {
+      await server.visit(new visitor());
+    });
+});
+
 program.command("init").action(cmd => {
   inquirer
     .prompt([

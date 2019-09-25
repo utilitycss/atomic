@@ -40,3 +40,27 @@ can use the --no-rebuild (-n) flag
 ```
 $ yarn start -- -n
 ```
+
+You can create your own visitor in order to execute some actions on each atom
+respecting the dependency order.
+
+```js
+// ./visitor.js
+
+const Visitor = require("@utilitycss/atomic").Visitor;
+
+module.exports = class ListVisitor extends Visitor {
+    async visit(node) {
+        console.log('ATOM NAME:', node.name);
+    }
+};
+```
+
+and then run
+```
+$ yarn atomic visit ./visitor.ts
+```
+
+the visit function will be executed in batches of concurrent task whenever
+possible: all the atoms in the current batch do not have interdependencies and
+they only depend on atoms already visited on some previous batch.

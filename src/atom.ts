@@ -101,7 +101,7 @@ export default class Atom {
         prev[prev.length - 1] = [...currentBatch, next];
         return prev;
       },
-      [[order[0]]]
+      [[]]
     );
 
     for (const batch of batches) {
