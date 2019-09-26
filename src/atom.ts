@@ -107,5 +107,7 @@ export default class Atom {
     for (const batch of batches) {
       await Promise.all(batch.map(node => visitor.visit(this.atoms[node])));
     }
+
+    await visitor.finalize();
   }
 }
