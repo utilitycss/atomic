@@ -50,15 +50,19 @@ respecting the dependency order.
 const Visitor = require("@utilitycss/atomic").Visitor;
 
 module.exports = class ListVisitor extends Visitor {
-    async visit(node) {
-        console.log('ATOM NAME:', node.name);
-    }
+  async visit(node) {
+    console.log('ATOM NAME:', node.name);
+  }
+
+  async finalize() {
+    console.log('END');
+  }
 };
 ```
 
 and then run
 ```
-$ yarn atomic visit ./visitor.ts
+$ yarn atomic visit ./visitor.js
 ```
 
 the visit function will be executed in batches of concurrent task whenever
