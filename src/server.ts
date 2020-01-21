@@ -1,4 +1,5 @@
 import chokidar from "chokidar";
+import postcss from "postcss";
 import Atom from "./atom";
 import generateDependencyGraph, { AtomGraph } from "./dependency-graph";
 import BuildAtomCssVisitor from "./visitor/build-atom-css";
@@ -6,6 +7,7 @@ import ConcatenateCSSVisitor from "./visitor/concatenate-css";
 import indexCssWatchChange from "./watch/index-css/change";
 import bundleAtomsAction from "./action/bundle-atoms";
 import electronsCssAction from "./action/electrons-css";
+import electronsRoot from "./action/electrons-root";
 import path from "path";
 import util from "util";
 import fs from "fs";
@@ -24,6 +26,7 @@ export default class AtomsServer {
   atomsFolder: string;
   electronsFolder: string;
   electronsModuleName: string;
+  electronsRoot: postcss.Root;
   utilityConfigPath: string;
   packageScope: string;
   bundleCSSPath: string;
@@ -154,6 +157,9 @@ export default class AtomsServer {
   }
 
   async run() {
+    console.log("START: building electrons root");
+    await electronsRoot({ server: this });
+    console.log("DONE: building electrons root");
     const indexCssWatcher = chokidar.watch(
       `packages/${this.atomsFolder}/**/index.css`
     );
@@ -164,6 +170,9 @@ export default class AtomsServer {
     console.log("START: building electrons css");
     await electronsCssAction({ electronsFolder: this.electronsFolder });
     console.log("DONE: building electrons css");
+    console.log("START: building electrons root");
+    await electronsRoot({ server: this });
+    console.log("DONE: building electrons root");
     console.log("START: building atoms css");
     console.time("build-atoms-css");
     await this.root.accept(
