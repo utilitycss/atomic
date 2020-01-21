@@ -34,6 +34,30 @@ const generateHashableContent = (rule: Rule): string =>
     .map((node: Declaration) => node.type + node.prop + node.value)
     .join(";");
 
+const getElectronDefinition = (server: AtomsServer, name: any): string => {
+  const definitionsMap = new Map();
+
+  let definition = "";
+  server.electronsRoot.walkRules(new RegExp(`\.${name}`), rule => {
+    definition = generateHashableContent(rule);
+    if (definitionsMap.has(name) && definitionsMap.get(name).count >= 1) {
+      definition = definitionsMap.get(name).definition + definition;
+      definitionsMap.set(name, {
+        definition,
+        count: definitionsMap.get(name).count + 1
+      });
+    } else {
+      definitionsMap.set(name, { definition, count: 1 });
+    }
+  });
+
+  if (definition === "") {
+    console.error(`definition is empty for electron ${name}`);
+  }
+
+  return definition;
+};
+
 interface AtomicCssModulesOptions {
   trackClasses: Map<string, string>;
   importedElectronRE: RegExp;
@@ -77,7 +101,6 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       let definition = content;
       let hash;
       let pkgName = "";
-      let isProxySource = false;
       const definitionsMap = new Map();
       const isElectron = importedElectronRE.test(filename);
       root.walkRules(new RegExp(`(\.${name}|:import)`), rule => {
@@ -126,7 +149,6 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
             definition = <string>(
               server.readFileSync(require.resolve(pkg.proxy))
             );
-            isProxySource = true;
             pkgName = pkg.proxy;
           } else {
             pkgName = pkg.name;
@@ -135,13 +157,11 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
 
         const key = `${pkgName};${name}`;
         // if the hash was generated on a different source file we should use it
+
         if (trackClasses.has(key)) {
           hash = trackClasses.get(key);
         } else {
-          definition =
-            isProxySource || isElectron
-              ? definition
-              : generateHashableContent(rule);
+          definition = generateHashableContent(rule);
           // if in the scope of the current file we have multiple definitions
           // for the current rule, we concatenate the definitions to generate
           // a global hash that will be updated whenever any of the multiple
@@ -161,8 +181,8 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       });
 
       if (definitionsMap.has(name)) {
-        const { pkgName, key } = definitionsMap.get(name);
-        hash = hashFunction(`${pkgName}_${name}_${definition}`, HASH_LENGTH);
+        const { key } = definitionsMap.get(name);
+        hash = hashFunction(definition, HASH_LENGTH);
         trackClasses.set(key, hash);
       }
 
@@ -170,16 +190,23 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       // (e.g. utility generated atoms)
       if (!hash) {
         if (isElectron) {
+          pkgName = server.electronsModuleName;
+        }
+        if (pkgName === "") {
+          console.error(`unable to find package name for ${name}`);
+        }
+        const key = `${pkgName};${name}`;
+        if (trackClasses.has(key)) {
+          hash = trackClasses.get(key);
+        } else if (isElectron) {
           // use electron hashes for proxied atoms
           const pkg = filename.match(importedElectronRE)[1];
-          if (isProxySource) {
-            definition = <string>server.readFileSync(require.resolve(pkg));
-          }
-          hash = hashFunction(`${pkg}_${name}_${definition}`, HASH_LENGTH);
+          definition = getElectronDefinition(server, name);
+          hash = hashFunction(definition, HASH_LENGTH);
           const key = `${pkg};${name}`;
           trackClasses.set(key, hash);
         } else {
-          hash = hashFunction(`${name}_${definition}`, HASH_LENGTH);
+          hash = hashFunction(name, HASH_LENGTH);
         }
       }
 
@@ -199,16 +226,13 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       });
 
       // Strip empty classes from json mapping
-      const filteredJSON = Object.keys(json).reduce(
-        (prev, next) => {
-          prev[next] = json[next]
-            .split(" ")
-            .filter(c => resultClassesSet.has(c))
-            .join(" ");
-          return prev;
-        },
-        {} as { [key: string]: string }
-      );
+      const filteredJSON = Object.keys(json).reduce((prev, next) => {
+        prev[next] = json[next]
+          .split(" ")
+          .filter(c => resultClassesSet.has(c))
+          .join(" ");
+        return prev;
+      }, {} as { [key: string]: string });
 
       await server.writeFile(jsonFilePath, JSON.stringify(filteredJSON));
 
