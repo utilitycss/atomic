@@ -28,11 +28,31 @@ function hashFunction(string: string, length: number): string {
 
 const CLASS_RE = /\.([\w-]+)/g;
 
-const generateHashableContent = (rule: Rule): string =>
-  rule.nodes
-    .filter((d: Declaration) => d.prop !== "composes")
-    .map((node: Declaration) => node.type + node.prop + node.value)
-    .join(";");
+const generateHashableContent = (rule: Rule): string => {
+  let pseudo = "";
+  let media = "";
+
+  if (rule.selector && rule.selector.indexOf(":") !== -1) {
+    pseudo = `;${rule.selector.split(/:+/)[1]}`;
+  }
+
+  if (
+    rule.parent &&
+    rule.parent.type === "atrule" &&
+    rule.parent.name === "media"
+  ) {
+    media = `;${rule.parent.params}`;
+  }
+
+  return (
+    rule.nodes
+      .filter((d: Declaration) => d.prop !== "composes")
+      .map((node: Declaration) => node.type + node.prop + node.value)
+      .join(";") +
+    pseudo +
+    media
+  );
+};
 
 const getElectronDefinition = (server: AtomsServer, name: any): string => {
   const definitionsMap = new Map();
