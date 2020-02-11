@@ -28,31 +28,11 @@ function hashFunction(string: string, length: number): string {
 
 const CLASS_RE = /\.([\w-]+)/g;
 
-const generateHashableContent = (rule: Rule): string => {
-  let pseudo = "";
-  let media = "";
-
-  if (rule.selector && rule.selector.indexOf(":") !== -1) {
-    pseudo = `;${rule.selector.split(/:+/)[1]}`;
-  }
-
-  if (
-    rule.parent &&
-    rule.parent.type === "atrule" &&
-    rule.parent.name === "media"
-  ) {
-    media = `;${rule.parent.params}`;
-  }
-
-  return (
-    rule.nodes
-      .filter((d: Declaration) => d.prop !== "composes")
-      .map((node: Declaration) => node.type + node.prop + node.value)
-      .join(";") +
-    pseudo +
-    media
-  );
-};
+const generateHashableContent = (rule: Rule): string =>
+  rule.nodes
+    .filter((d: Declaration) => d.prop !== "composes")
+    .map((node: Declaration) => node.type + node.prop + node.value)
+    .join(";");
 
 const getElectronDefinition = (server: AtomsServer, name: any): string => {
   const definitionsMap = new Map();
@@ -202,7 +182,7 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
 
       if (definitionsMap.has(name)) {
         const { key } = definitionsMap.get(name);
-        hash = hashFunction(definition, HASH_LENGTH);
+        hash = hashFunction(`${name}_${definition}`, HASH_LENGTH);
         trackClasses.set(key, hash);
       }
 
@@ -222,7 +202,7 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
           // use electron hashes for proxied atoms
           const pkg = filename.match(importedElectronRE)[1];
           definition = getElectronDefinition(server, name);
-          hash = hashFunction(definition, HASH_LENGTH);
+          hash = hashFunction(`${name}_${definition}`, HASH_LENGTH);
           const key = `${pkg};${name}`;
           trackClasses.set(key, hash);
         } else {
