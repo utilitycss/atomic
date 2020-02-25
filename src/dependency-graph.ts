@@ -59,7 +59,6 @@ const generateDependencyGraph = async (
     // fallback use case
     data = JSON.parse(infoStringJSON.data);
   }
-  data = infoStringJSON.data ? infoStringJSON.data : infoStringJSON;
   const atomsInfo = Object.keys(data).reduce((prev, next) => {
     if (atomsPathRE.test(data[next].location)) {
       const { workspaceDependencies, location } = data[next];
