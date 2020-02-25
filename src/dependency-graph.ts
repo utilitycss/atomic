@@ -25,17 +25,14 @@ interface AtomsInfo {
 }
 
 const buildAtomGraph = (atoms: AtomsInfo): AtomGraph => {
-  return Object.keys(atoms).reduce(
-    (forest, name) => {
-      const { path, children, parents, pkg, isCss } = atoms[name];
-      forest[name] = new Atom({ name, path, atoms: forest, isCss })
-        .withParents(parents)
-        .withChildren(children)
-        .withPackage(pkg);
-      return forest;
-    },
-    {} as AtomGraph
-  );
+  return Object.keys(atoms).reduce((forest, name) => {
+    const { path, children, parents, pkg, isCss } = atoms[name];
+    forest[name] = new Atom({ name, path, atoms: forest, isCss })
+      .withParents(parents)
+      .withChildren(children)
+      .withPackage(pkg);
+    return forest;
+  }, {} as AtomGraph);
 };
 
 export interface AtomGraph {
@@ -46,27 +43,38 @@ const generateDependencyGraph = async (
   atomsPathRE: RegExp
 ): Promise<AtomGraph> => {
   const infoString = await run("yarn workspaces info --json");
-  const data = JSON.parse(infoString).data;
-  const info: YarnInfo = JSON.parse(data);
-  const atomsInfo = Object.keys(info).reduce(
-    (prev, next) => {
-      if (atomsPathRE.test(info[next].location)) {
-        const { workspaceDependencies, location } = info[next];
-        const pkg = require(path.join(process.cwd(), location, "package.json"));
-        const indexCssPath = path.join(process.cwd(), location, "index.css");
-        const isCss = fs.existsSync(indexCssPath);
-        prev[next] = {
-          path: location,
-          children: [],
-          parents: workspaceDependencies,
-          pkg,
-          isCss
-        };
-      }
-      return prev;
-    },
-    {} as AtomsInfo
+  const versionString = await run("yarn --version").then(value =>
+    value.split(".")
   );
+  const infoStringJSON = JSON.parse(infoString);
+  let data: YarnInfo;
+  if (
+    versionString &&
+    Array.isArray(versionString) &&
+    parseInt(versionString[1], 10) >= 20
+  ) {
+    // compact use case for yarn version > 20
+    data = infoStringJSON;
+  } else {
+    // fallback use case
+    data = JSON.parse(infoStringJSON.data);
+  }
+  const atomsInfo = Object.keys(data).reduce((prev, next) => {
+    if (atomsPathRE.test(data[next].location)) {
+      const { workspaceDependencies, location } = data[next];
+      const pkg = require(path.join(process.cwd(), location, "package.json"));
+      const indexCssPath = path.join(process.cwd(), location, "index.css");
+      const isCss = fs.existsSync(indexCssPath);
+      prev[next] = {
+        path: location,
+        children: [],
+        parents: workspaceDependencies,
+        pkg,
+        isCss
+      };
+    }
+    return prev;
+  }, {} as AtomsInfo);
 
   const atoms = Object.keys(atomsInfo).reduce((prev, next) => {
     const dependencies = atomsInfo[next].parents;
