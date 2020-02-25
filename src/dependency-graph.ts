@@ -44,11 +44,12 @@ const generateDependencyGraph = async (
 ): Promise<AtomGraph> => {
   const infoString = await run("yarn workspaces info --json");
   const infoStringJSON = JSON.parse(infoString);
-  const data = infoStringJSON.data ? infoStringJSON.data : infoStringJSON;
-  const info: YarnInfo = JSON.parse(data);
-  const atomsInfo = Object.keys(info).reduce((prev, next) => {
-    if (atomsPathRE.test(info[next].location)) {
-      const { workspaceDependencies, location } = info[next];
+  const data: YarnInfo = infoStringJSON.data
+    ? infoStringJSON.data
+    : infoStringJSON;
+  const atomsInfo = Object.keys(data).reduce((prev, next) => {
+    if (atomsPathRE.test(data[next].location)) {
+      const { workspaceDependencies, location } = data[next];
       const pkg = require(path.join(process.cwd(), location, "package.json"));
       const indexCssPath = path.join(process.cwd(), location, "index.css");
       const isCss = fs.existsSync(indexCssPath);
