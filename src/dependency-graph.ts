@@ -43,10 +43,23 @@ const generateDependencyGraph = async (
   atomsPathRE: RegExp
 ): Promise<AtomGraph> => {
   const infoString = await run("yarn workspaces info --json");
+  const versionString = await run("yarn --version").then(value =>
+    value.split(".")
+  );
   const infoStringJSON = JSON.parse(infoString);
-  const data: YarnInfo = infoStringJSON.data
-    ? infoStringJSON.data
-    : infoStringJSON;
+  let data: YarnInfo;
+  if (
+    versionString &&
+    Array.isArray(versionString) &&
+    parseInt(versionString[1], 10) >= 20
+  ) {
+    // compact use case for yarn version > 20
+    data = infoStringJSON;
+  } else {
+    // fallback use case
+    data = JSON.parse(infoStringJSON.data);
+  }
+  data = infoStringJSON.data ? infoStringJSON.data : infoStringJSON;
   const atomsInfo = Object.keys(data).reduce((prev, next) => {
     if (atomsPathRE.test(data[next].location)) {
       const { workspaceDependencies, location } = data[next];
