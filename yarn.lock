@@ -497,10 +497,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@utilitycss/utility@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-0.5.2.tgz#21ae7d2617570c13b8095aeab7f48f9c01a9ca43"
-  integrity sha512-B8G+Wp6OZiTjoGczYvYT4Ku1kpdlPPhStEolYh2MygX+n+z284Wi4aL0WTGi5mzSqp9U2ZfV9byAPCXHuir9mw==
+"@utilitycss/utility@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-0.5.3.tgz#5ce47818b4fa342a8706bb93df0416b3c8d595b0"
+  integrity sha512-u09Uu5yG5WBVY+UCbxlq8spIlu+9QOItv7mam5X6nfaK8Y1Y9CCoPa5D7RkXJ0Sv/jQLrCKhwNVm/hItz7jdZg==
   dependencies:
     commander "4.1.0"
     cssstats "^3.4.0"
