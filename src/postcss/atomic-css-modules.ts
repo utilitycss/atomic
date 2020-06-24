@@ -243,7 +243,10 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       await generateAtomTypings(typingsFilePath, filteredJSON, { server });
     };
 
-    return cssModules({ generateScopedName, getJSON })(css, results);
+    return cssModules({ generateScopedName, getJSON, exportGlobals: true })(
+      css,
+      results
+    );
   }
 );
 
