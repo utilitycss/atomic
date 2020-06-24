@@ -1,6 +1,6 @@
 {
   "name": "@utilitycss/atomic",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "author": "Andrea Moretti (@axyz) <axyzxp@gmail.com>",
   "description": "Atomic CSS composition for yarn workspaces",
   "repository": "utilitycss/atomic",
@@ -33,7 +33,7 @@
     "postcss-discard-duplicates": "^4.0.2",
     "postcss-discard-empty": "^4.0.1",
     "postcss-for": "^2.1.1",
-    "postcss-modules": "^1.4.1",
+    "postcss-modules": "^3.1.0",
     "postcss-nested": "^4.2.1",
     "postcss-simple-vars": "^5.0.2"
   },
