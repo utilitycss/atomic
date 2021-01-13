@@ -99,7 +99,7 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
       content
     ) {
       let definition = content;
-      let hash;
+      let hash: string;
       let pkgName = "";
       const definitionsMap = new Map();
       const isElectron = importedElectronRE.test(filename);
@@ -113,6 +113,22 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
         if (isElectron) {
           // check for @scope/electrons pattern in the filename
           pkgName = filename.match(importedElectronRE)[1];
+          const key = `${pkgName};${name}`;
+
+          if (trackClasses.has(key)) {
+            hash = trackClasses.get(key);
+          } else {
+            // use electron hashes for proxied atoms
+            const pkg = filename.match(importedElectronRE)[1];
+            definition = getElectronDefinition(server, name);
+            hash = hashFunction(`${name}_${definition}`, HASH_LENGTH);
+            const key = `${pkg};${name}`;
+            trackClasses.set(key, hash);
+          }
+
+          // short circuit: electron definition for a given name is always
+          // highest priority and unique source of truth.
+          return DEVELOPMENT ? `${name.toUpperCase()}_${hash}` : hash;
         } else if (importedModuleRE.test(filename)) {
           // check for @scope/xxx pattern in the filename
           const importedPackage = filename.match(importedModuleRE)[1];
@@ -192,6 +208,7 @@ const atomicCssModules = postcss.plugin<AtomicCssModulesOptions>(
         if (isElectron) {
           pkgName = server.electronsModuleName;
         }
+
         if (pkgName === "") {
           console.error(`unable to find package name for ${name}`);
         }
