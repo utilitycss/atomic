@@ -274,3 +274,5 @@ function atomicCssModules(opts: AtomicCssModulesOptions) {
 }
 
 export default atomicCssModules;
+
+export const postcss = true;
