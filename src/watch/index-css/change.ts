@@ -5,12 +5,12 @@ import bundleAtomsAction from "../../action/bundle-atoms";
 import { Watcher } from "../watcher";
 const CWD = process.cwd();
 
-const indexCssChange: Watcher = server => async dir => {
+const indexCssChange: Watcher = (server) => async (dir) => {
   // purge cache entry
   server.cache.delete(path.join(CWD, dir));
 
   const atomName = Object.keys(server.graph).find(
-    name => server.graph[name].path === path.dirname(dir)
+    (name) => server.graph[name].path === path.dirname(dir)
   );
 
   const atomRoot = server.graph[atomName];
@@ -28,7 +28,7 @@ const indexCssChange: Watcher = server => async dir => {
   const bundleCssPath = path.join(CWD, server.bundleCSSPath);
   const { css } = await bundleAtomsAction({
     source: concatenateCSSVisitor.getCSS(),
-    to: bundleCssPath
+    to: bundleCssPath,
   });
   await server.writeFile(bundleCssPath, css);
   console.log("DONE: bundling global css");

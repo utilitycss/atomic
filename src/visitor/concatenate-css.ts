@@ -5,7 +5,7 @@ const CWD = process.cwd();
 
 export default class BundleAtomsVisitor extends Visitor {
   server: AtomsServer;
-  buffer: string = "";
+  buffer = "";
 
   constructor({ server }: { server: AtomsServer }) {
     super();

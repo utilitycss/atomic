@@ -25,7 +25,7 @@ export default class BuildAtomCssVisitor extends Visitor {
       to,
       source,
       utilityConfig: this.server.utilityConfig,
-      electronsModuleName: this.server.electronsModuleName
+      electronsModuleName: this.server.electronsModuleName,
     });
 
     await this.server.writeFile(to, css);
@@ -36,7 +36,7 @@ export default class BuildAtomCssVisitor extends Visitor {
       from: to,
       to: resultPath,
       source: css,
-      server: this.server
+      server: this.server,
     });
 
     await this.server.writeFile(resultPath, resultCss);

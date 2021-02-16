@@ -1,5 +1,5 @@
 import chokidar from "chokidar";
-import postcss from "postcss";
+import * as postcss from "postcss";
 import Atom from "./atom";
 import generateDependencyGraph, { AtomGraph } from "./dependency-graph";
 import BuildAtomCssVisitor from "./visitor/build-atom-css";
@@ -12,6 +12,7 @@ import path from "path";
 import util from "util";
 import fs from "fs";
 import { Visitor } from "./visitor/visitor";
+import { PluginConfig } from "@utilitycss/utility/dist/types";
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
@@ -39,7 +40,7 @@ export default class AtomsServer {
   ICSSImportRE: RegExp;
   graph: AtomGraph;
   root: Atom;
-  utilityConfig: Object;
+  utilityConfig: PluginConfig;
 
   constructor({
     atomsFolder = "atoms",
@@ -48,7 +49,7 @@ export default class AtomsServer {
     utilityConfigPath = "packages/atoms/utility.config.js",
     packageScope = "@my-org",
     bundleCSSPath = "./",
-    bundleCSSName = "atoms"
+    bundleCSSName = "atoms",
   } = {}) {
     this.atomsFolder = atomsFolder;
     this.electronsFolder = electronsFolder;
@@ -114,7 +115,7 @@ export default class AtomsServer {
   }
 
   writeFile(p: string, content: string): Promise<void> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       if (path.extname(p) === ".json") {
         this.cache.set(p, JSON.parse(content));
       } else {
@@ -132,17 +133,17 @@ export default class AtomsServer {
     this.graph = await generateDependencyGraph(this.atomsPathRE);
 
     const roots = Object.keys(this.graph).filter(
-      name => this.graph[name].parents.length === 0
+      (name) => this.graph[name].parents.length === 0
     );
 
     this.root = new Atom({
       name: "all",
       atoms: this.graph,
-      isCss: false
+      isCss: false,
     }).withChildren(roots);
 
     // prepopulate cache
-    Object.keys(this.graph).forEach(async name => {
+    Object.keys(this.graph).forEach(async (name) => {
       await this.readFile(
         path.join(CWD, this.graph[name].path, "package.json")
       );
@@ -177,7 +178,7 @@ export default class AtomsServer {
     console.time("build-atoms-css");
     await this.root.accept(
       new BuildAtomCssVisitor({
-        server: this
+        server: this,
       })
     );
     console.log("DONE: building atoms css");
@@ -191,7 +192,7 @@ export default class AtomsServer {
     const { css } = await bundleAtomsAction({
       source: concatenateCSSVisitor.getCSS(),
       to: bundleCssPath,
-      minify: false
+      minify: false,
     });
     await this.writeFile(bundleCssPath, css);
     if (!DEVELOPMENT) {
@@ -199,7 +200,7 @@ export default class AtomsServer {
       const { css } = await bundleAtomsAction({
         source: concatenateCSSVisitor.getCSS(),
         to: bundleCssMinPath,
-        minify: true
+        minify: true,
       });
       await this.writeFile(bundleCssMinPath, css);
     }

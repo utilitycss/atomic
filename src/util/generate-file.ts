@@ -27,7 +27,7 @@ export enum Templates {
   ATOM_PROXY_PACKAGE_JSON = "atom_proxy_package.json.hbs",
   ATOM_PROXY_INDEX_CSS = "atom_proxy_index.css.hbs",
   ATOM_PROXY_MODULE_CONFIG_JS = "atom_proxy_module.config.js.hbs",
-  ATOM_TYPOGRAPHY_INDEX_CSS = "atom_typography_index.css.hbs"
+  ATOM_TYPOGRAPHY_INDEX_CSS = "atom_typography_index.css.hbs",
 }
 
 export interface TemplateData {

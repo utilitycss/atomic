@@ -16,7 +16,7 @@ interface AtomInfo {
   path: string;
   children: string[];
   parents: string[];
-  pkg: Object;
+  pkg: Record<string, unknown>;
   isCss: boolean;
 }
 
@@ -43,7 +43,7 @@ const generateDependencyGraph = async (
   atomsPathRE: RegExp
 ): Promise<AtomGraph> => {
   const infoString = await run("yarn workspaces info --json");
-  const versionString = await run("yarn --version").then(value =>
+  const versionString = await run("yarn --version").then((value) =>
     value.split(".")
   );
   const infoStringJSON = JSON.parse(infoString);
@@ -62,6 +62,7 @@ const generateDependencyGraph = async (
   const atomsInfo = Object.keys(data).reduce((prev, next) => {
     if (atomsPathRE.test(data[next].location)) {
       const { workspaceDependencies, location } = data[next];
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const pkg = require(path.join(process.cwd(), location, "package.json"));
       const indexCssPath = path.join(process.cwd(), location, "index.css");
       const isCss = fs.existsSync(indexCssPath);
@@ -70,7 +71,7 @@ const generateDependencyGraph = async (
         children: [],
         parents: workspaceDependencies,
         pkg,
-        isCss
+        isCss,
       };
     }
     return prev;
@@ -78,7 +79,7 @@ const generateDependencyGraph = async (
 
   const atoms = Object.keys(atomsInfo).reduce((prev, next) => {
     const dependencies = atomsInfo[next].parents;
-    dependencies.forEach(dependency => {
+    dependencies.forEach((dependency) => {
       if (prev[dependency]) {
         prev[dependency].children.push(next);
       }

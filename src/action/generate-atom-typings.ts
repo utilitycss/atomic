@@ -2,11 +2,11 @@ import AtomsServer from "../server";
 
 const generateAtomTypings = async (
   path: string,
-  json: object,
+  json: Record<string, unknown>,
   { server }: { server: AtomsServer }
 ) => {
   const keys = Object.keys(json);
-  const types = keys.map(k => `declare const ${k}: string`).join(";\n");
+  const types = keys.map((k) => `declare const ${k}: string`).join(";\n");
   const exports = keys.join(", ");
 
   const content = `${types}

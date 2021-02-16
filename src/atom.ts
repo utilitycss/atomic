@@ -21,9 +21,9 @@ const topologicalOrder = (graph: AtomGraph, root: string[]) => {
     }
     visited.add(current);
 
-    graph[current].children.forEach(child => {
+    graph[current].children.forEach((child) => {
       const allParentsAreVisited = graph[child].parents.every(
-        p => visited.has(p) || !dirty.has(p)
+        (p) => visited.has(p) || !dirty.has(p)
       );
       if (allParentsAreVisited) {
         queue.push(child);
@@ -41,14 +41,14 @@ export default class Atom {
   parents: string[];
   children: string[];
   isCss: boolean;
-  package: {};
+  package: Record<string, unknown>;
   source: string;
 
   constructor({
     name,
     path,
     atoms,
-    isCss = true
+    isCss = true,
   }: {
     name: string;
     path?: string;
@@ -73,7 +73,7 @@ export default class Atom {
     return this;
   }
 
-  withPackage(pkg: {}): this {
+  withPackage(pkg: Record<string, unknown>): this {
     this.package = pkg;
     return this;
   }
@@ -93,7 +93,7 @@ export default class Atom {
     const batches = order.reduce(
       (prev, next) => {
         const currentBatch = prev[prev.length - 1];
-        if (currentBatch.some(el => this.atoms[next].parents.includes(el))) {
+        if (currentBatch.some((el) => this.atoms[next].parents.includes(el))) {
           prev.push([next]);
           return prev;
         }
@@ -105,7 +105,7 @@ export default class Atom {
     );
 
     for (const batch of batches) {
-      await Promise.all(batch.map(node => visitor.visit(this.atoms[node])));
+      await Promise.all(batch.map((node) => visitor.visit(this.atoms[node])));
     }
 
     await visitor.finalize();

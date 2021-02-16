@@ -2,13 +2,15 @@ import postcss from "postcss";
 import atomicCssModules from "../postcss/atomic-css-modules";
 import removeUnusedElectrons from "../postcss/remove-unused-electrons";
 import AtomsServer from "../server";
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const removeEmptyRules = require("postcss-discard-empty");
 
 const atomJSON = async ({
   from,
   to,
   source,
-  server
+  server,
 }: {
   from: string;
   to: string;
@@ -21,10 +23,10 @@ const atomJSON = async ({
       importedElectronRE: server.importedElectronRE,
       importedModuleRE: server.importedModuleRE,
       ICSSImportRE: server.ICSSImportRE,
-      server
+      server,
     }),
     removeEmptyRules(),
-    removeUnusedElectrons({ server })
+    removeUnusedElectrons({ server }),
   ]).process(source, { from, to });
 };
 
