@@ -775,11 +775,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mocha@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-8.2.0.tgz#3eb56d13a1de1d347ecb1957c6860c911704bc44"
-  integrity sha512-/Sge3BymXo4lKc31C8OINJgXLaw+7vL1/L1pGiBNpGrBiT8FQiaFpSYV0uhTaG4y78vcMBTMFsWaHDvuD+xGzQ==
-
 "@types/node@*":
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.2.tgz#3452a24edf9fea138b48fad4a0a028a683da1e40"
@@ -909,17 +904,18 @@
   resolved "https://registry.yarnpkg.com/@ungap/promise-all-settled/-/promise-all-settled-1.1.2.tgz#aa58042711d6e3275dd37dc597e5d31e8c290a44"
   integrity sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
 
-"@utilitycss/utility@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-1.0.0.tgz#5db3f5652f0b76f2e808a86899d84c3808a98484"
-  integrity sha512-Ip2J0WZ8/+Qw2FDQQ+YaU1C5NcI6pU8uvYuaGT2BnrXQji1c2EkFJA3EgZR6+VaiW1jcZ93AKuq0UZ5PzPRRKQ==
+"@utilitycss/utility@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-1.0.1.tgz#0eecc235a5d68eb07ac125e0244de2154fca74aa"
+  integrity sha512-PtZhX4sCMC2z5pQ9c+CXiYKmyxjfJpwIEx0osHU90fCe86Lfc0k4gcWVeEjxa4tNWdT9ZDjl8wQCf/sfozfKXw==
   dependencies:
-    "@types/mocha" "^8.2.0"
+    chalk "^4.1.0"
     commander "7.0.0"
     cssstats "^4.0.0"
     deepmerge "^4.2.2"
     lodash "^4.17.20"
     mocha "^8.3.0"
+    open "^7.4.0"
     postcss "8.2.6"
 
 abab@^2.0.3:
@@ -3677,7 +3673,7 @@ is-windows@^1.0.2:
   resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
   integrity sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==
 
-is-wsl@^2.2.0:
+is-wsl@^2.1.1, is-wsl@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-2.2.0.tgz#74a4c76e77ca9fd3f932f290c17ea326cd157271"
   integrity sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==
@@ -4897,6 +4893,14 @@ onetime@^5.1.0:
   integrity sha512-5NcSkPHhwTVFIQN+TUqXoS5+dlElHXdpAWu9I0HP20YOtIi+aZ0Ct82jdlILDxjLEAWwvm+qj1m6aEtsDVmm6Q==
   dependencies:
     mimic-fn "^2.1.0"
+
+open@^7.4.0, open@^7.4.2:
+  version "7.4.2"
+  resolved "https://registry.yarnpkg.com/open/-/open-7.4.2.tgz#b8147e26dcf3e426316c730089fd71edd29c2321"
+  integrity sha512-MVHddDVweXZF3awtlAS+6pgKLlm/JgxZ90+/NBurBoQctVOOB/zDdVjcyPzQ+0laDGbsWgrRkflI65sQeOgT9Q==
+  dependencies:
+    is-docker "^2.0.0"
+    is-wsl "^2.1.1"
 
 opencollective-postinstall@^2.0.2:
   version "2.0.2"
