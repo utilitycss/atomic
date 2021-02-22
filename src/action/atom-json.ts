@@ -1,4 +1,5 @@
 import postcss from "postcss";
+import { LazyResult } from "postcss";
 import atomicCssModules from "../postcss/atomic-css-modules";
 import removeUnusedElectrons from "../postcss/remove-unused-electrons";
 import AtomsServer from "../server";
@@ -16,7 +17,7 @@ const atomJSON = async ({
   to: string;
   source: string;
   server: AtomsServer;
-}) => {
+}): Promise<LazyResult> => {
   return postcss([
     atomicCssModules({
       trackClasses: server.trackClasses,

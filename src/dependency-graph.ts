@@ -1,7 +1,12 @@
-import run from "./util/run";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const debug = require("debug")("atomic:dependency-graph");
+
 import Atom from "./atom";
 import path from "path";
 import fs from "fs";
+
+import { PACKAGE_JSON, INDEX_CSS } from "./constants";
+import run from "./util/run";
 
 interface YarnInfo {
   [key: string]: DependencyAtomInfo;
@@ -25,6 +30,7 @@ interface AtomsInfo {
 }
 
 const buildAtomGraph = (atoms: AtomsInfo): AtomGraph => {
+  debug("Building Atom graph.");
   return Object.keys(atoms).reduce((forest, name) => {
     const { path, children, parents, pkg, isCss } = atoms[name];
     forest[name] = new Atom({ name, path, atoms: forest, isCss })
@@ -42,11 +48,13 @@ export interface AtomGraph {
 const generateDependencyGraph = async (
   atomsPathRE: RegExp
 ): Promise<AtomGraph> => {
-  const infoString = await run("yarn workspaces info --json");
   const versionString = await run("yarn --version").then((value) =>
     value.split(".")
   );
+  debug(`Detected Yarn version => ${versionString.join(".")}`);
+  const infoString = await run("yarn workspaces info --json");
   const infoStringJSON = JSON.parse(infoString);
+  debug("Getting Yarn Workspace info.");
   let data: YarnInfo;
   if (
     versionString &&
@@ -63,8 +71,8 @@ const generateDependencyGraph = async (
     if (atomsPathRE.test(data[next].location)) {
       const { workspaceDependencies, location } = data[next];
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const pkg = require(path.join(process.cwd(), location, "package.json"));
-      const indexCssPath = path.join(process.cwd(), location, "index.css");
+      const pkg = require(path.join(process.cwd(), location, PACKAGE_JSON));
+      const indexCssPath = path.join(process.cwd(), location, INDEX_CSS);
       const isCss = fs.existsSync(indexCssPath);
       prev[next] = {
         path: location,

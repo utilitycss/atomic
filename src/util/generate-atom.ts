@@ -8,14 +8,14 @@ interface AtomData {
 }
 
 interface GenerateAtomsOptions {
-  proxy: boolean;
+  proxy?: boolean;
   data: AtomData;
 }
 
 export default async function generateAtom(
   name: string,
   options: GenerateAtomsOptions
-) {
+): Promise<void> {
   const getPath = (p: string) =>
     path.join("packages", options.data.atomsFolder, name, p);
   const data = { ...options.data, packageName: name };

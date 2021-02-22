@@ -85,7 +85,7 @@ export default class Atom {
 
   // async topologically sorted visit
   // promises are resolved concurrently for each tree level
-  async accept(visitor: Visitor) {
+  async accept(visitor: Visitor): Promise<void> {
     const root = this.name === "all" ? this.children : [this.name];
     const order = topologicalOrder(this.atoms, root);
     if (order.length === 0) return;

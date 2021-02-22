@@ -1,4 +1,4 @@
-import postcss from "postcss";
+import postcss, { LazyResult } from "postcss";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const rmDuplicates = require("postcss-discard-duplicates");
@@ -17,7 +17,7 @@ const bundleAtoms = async ({
   from?: string;
   to: string;
   minify?: boolean;
-}) => {
+}): Promise<LazyResult> => {
   const plugins = [
     cssNext({ browsers: ["> 1%", "IE 11"], cascade: false }),
     rmDuplicates(),

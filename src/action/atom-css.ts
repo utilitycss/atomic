@@ -1,7 +1,10 @@
 import postcss from "postcss";
-import composeElectrons from "../postcss/compose-electrons";
+import { LazyResult } from "postcss";
+
 import utility from "@utilitycss/utility";
 import { PluginConfig } from "@utilitycss/utility/dist/types";
+
+import composeElectrons from "../postcss/compose-electrons";
 
 const atomCss = async ({
   from,
@@ -15,7 +18,7 @@ const atomCss = async ({
   source: string;
   utilityConfig: PluginConfig;
   electronsModuleName: string;
-}) => {
+}): Promise<LazyResult> => {
   return await postcss([
     utility(utilityConfig),
     // eslint-disable-next-line @typescript-eslint/no-var-requires

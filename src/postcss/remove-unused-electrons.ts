@@ -1,8 +1,9 @@
-import { Rule, Root, Helpers } from "postcss";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const debug = require("debug")("atomic:remove-unused-electrons");
+
+import { Rule, Root, Helpers, Plugin } from "postcss";
 import path from "path";
 import AtomsServer from "../server";
-
-const DOT_RULE_RE = /\.([\w-_]*)/;
 
 interface Module {
   [key: string]: string;
@@ -23,15 +24,21 @@ interface RemoveUnusedElectronsOptions {
   server: AtomsServer;
 }
 
-function removeUnusedElectrons({ server }: RemoveUnusedElectronsOptions) {
+const DOT_RULE_RE = /\.([\w-_]*)/;
+const PLUGIN_NAME = "utility-remove-unused-electrons";
+const MODULE_CSS_JSON = "module.css.json";
+
+function removeUnusedElectrons({
+  server,
+}: RemoveUnusedElectronsOptions): Plugin {
   return {
-    postcssPlugin: "remove-unused-electrons",
+    postcssPlugin: PLUGIN_NAME,
     async Once(css: Root, { result }: Helpers) {
       const { opts: { to: toPath = "" } = {} } = result;
       // last step creates modules.css and at that time the index.css.json is
       // already created
-      const modulePath = path.join(path.dirname(toPath), "module.css.json");
-      if (!toPath) return css;
+      const modulePath = path.join(path.dirname(toPath), MODULE_CSS_JSON);
+      if (!toPath) return;
       const module = <{ [key: string]: any }>await server.readFile(modulePath);
       const moduleMap = getModuleMap(module);
       // Exit if there is no css created-
