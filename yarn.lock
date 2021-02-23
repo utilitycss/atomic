@@ -902,10 +902,10 @@
   resolved "https://registry.yarnpkg.com/@ungap/promise-all-settled/-/promise-all-settled-1.1.2.tgz#aa58042711d6e3275dd37dc597e5d31e8c290a44"
   integrity sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
 
-"@utilitycss/utility@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-1.0.2.tgz#3c209eea33429f99e2b5689c050e691ff6df8592"
-  integrity sha512-hW2nh3ta1rm0rLXvxzRbM3RFWDzNwnhISddzy8qUw8EFs0DLl8RfIPpK1n2uVhZcuZ7zn2NZnFhNxoT37IXbsA==
+"@utilitycss/utility@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-1.0.3.tgz#02457c4cb2797d941354a72d4d718a908b7cc162"
+  integrity sha512-2Coitmz92vKYnu5veg4hJ+uTAxU1+ts4Y+I5ZCDVCkO/w8kCwJIdSjRXeRRSH+YGHz0dkUC0ksH7Hz9iacrrlg==
   dependencies:
     chalk "^4.1.0"
     commander "7.0.0"
