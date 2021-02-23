@@ -1,10 +1,9 @@
 import { compile } from "handlebars";
-import fs from "fs";
+import { promises as fsAsync } from "fs";
 import path from "path";
-import util from "util";
-import mkdirp from "mkdirp-promise";
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
+const readFile = fsAsync.readFile;
+const writeFile = fsAsync.writeFile;
+const mkdirp = fsAsync.mkdir;
 
 export enum Templates {
   PACKAGE_JSON = "package.json.hbs",
@@ -40,14 +39,16 @@ const generateFile = async (
   template: Templates,
   data: TemplateData,
   dest: string
-) => {
+): Promise<void> => {
   const templateContent = await readFile(
     path.join(__dirname, "..", "..", TEMPLATE_PATH, template),
     { encoding: "utf8" }
   );
   const render = compile(templateContent);
   const dirName = path.dirname(dest);
-  await mkdirp(dirName);
+  await mkdirp(dirName, {
+    recursive: true,
+  });
   await writeFile(dest, render(data));
 };
 
