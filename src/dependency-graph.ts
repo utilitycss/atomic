@@ -52,7 +52,8 @@ const generateDependencyGraph = async (
     value.split(".")
   );
   debug(`Detected Yarn version => ${versionString.join(".")}`);
-  const infoString = await run("yarn workspaces info --json");
+  const infoString = await run("yarn --json workspaces info");
+  debug(infoString);
   const infoStringJSON = JSON.parse(infoString);
   debug("Getting Yarn Workspace info.");
   let data: YarnInfo;
