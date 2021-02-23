@@ -130,13 +130,6 @@ program.command("init").action((cmd) => {
       {
         name: "packageScope",
         message: "What is your npm scope (e.g. @my-lib)?",
-        validate: (value) =>
-          new Promise((resolve) => {
-            setTimeout(
-              () => resolve(!value || "You must provide a package scope"),
-              3000
-            );
-          }),
       },
       {
         name: "electronsFolder",
