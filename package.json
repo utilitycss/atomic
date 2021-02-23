@@ -9,6 +9,9 @@
   "bin": {
     "atomic": "./bin/index.js"
   },
+  "engines": {
+    "node": ">=14.5.5"
+  },
   "preferGlobal": true,
   "scripts": {
     "prepublish": "npm run build-ts",
@@ -19,7 +22,7 @@
     "watch-ts": "tsc -w"
   },
   "dependencies": {
-    "@utilitycss/utility": "^1.0.1",
+    "@utilitycss/utility": "^1.0.2",
     "chalk": "^4.1.0",
     "chokidar": "^3.5.1",
     "commander": "^7.1.0",
