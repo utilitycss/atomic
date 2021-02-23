@@ -164,76 +164,96 @@ export default class AtomsServer {
       process.exit(1);
     }
 
-    const roots = Object.keys(this.graph).filter(
-      (name) => this.graph[name].parents.length === 0
-    );
+    try {
+      const roots = Object.keys(this.graph).filter(
+        (name) => this.graph[name].parents.length === 0
+      );
 
-    this.root = new Atom({
-      name: "all",
-      atoms: this.graph,
-      isCss: false,
-    }).withChildren(roots);
+      this.root = new Atom({
+        name: "all",
+        atoms: this.graph,
+        isCss: false,
+      }).withChildren(roots);
 
-    // Pre-populate cache
-    Object.keys(this.graph).forEach(async (name) => {
-      await this.readFile(path.join(CWD, this.graph[name].path, PACKAGE_JSON));
-      if (this.graph[name].isCss) {
-        await this.readFile(path.join(CWD, this.graph[name].path, INDEX_CSS));
-      }
-    });
-    this.utilityConfig = require(path.join(CWD, this.utilityConfigPath));
+      // Pre-populate cache
+      Object.keys(this.graph).forEach(async (name) => {
+        await this.readFile(
+          path.join(CWD, this.graph[name].path, PACKAGE_JSON)
+        );
+        if (this.graph[name].isCss) {
+          await this.readFile(path.join(CWD, this.graph[name].path, INDEX_CSS));
+        }
+      });
+      this.utilityConfig = require(path.join(CWD, this.utilityConfigPath));
 
-    debugInfo("✅: Initializing server.");
-    return this;
+      debugInfo("✅: Initializing server.");
+      return this;
+    } catch (err) {
+      console.error(chalk.red(err));
+      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+      process.exit(1);
+    }
   }
 
   async run(): Promise<void> {
-    await electronsRoot({ server: this });
-    debugInfo("✅: Building Electron Root.");
-    const indexCssWatcher = chokidar.watch(
-      `${PACKAGE_FOLDER}/${this.atomsFolder}/**/${INDEX_CSS}`
-    );
-    indexCssWatcher.on("change", indexCssWatchChange(this));
+    try {
+      await electronsRoot({ server: this });
+      debugInfo("✅: Building Electron Root.");
+      const indexCssWatcher = chokidar.watch(
+        `${PACKAGE_FOLDER}/${this.atomsFolder}/**/${INDEX_CSS}`
+      );
+      indexCssWatcher.on("change", indexCssWatchChange(this));
+    } catch (err) {
+      console.error(chalk.red(err));
+      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+      process.exit(1);
+    }
   }
 
   async build(): Promise<void> {
-    /** Build base electron config */
-    await electronsCssAction({ electronsFolder: this.electronsFolder });
-    debugInfo("✅: Building Electron CSS.");
+    try {
+      /** Build base electron config */
+      await electronsCssAction({ electronsFolder: this.electronsFolder });
+      debugInfo("✅: Building Electron CSS.");
 
-    /** Add electron to server root cache. */
-    await electronsRoot({ server: this });
-    debugInfo("✅: Building Electron Root.");
+      /** Add electron to server root cache. */
+      await electronsRoot({ server: this });
+      debugInfo("✅: Building Electron Root.");
 
-    await this.root.accept(
-      new BuildAtomCssVisitor({
-        server: this,
-      })
-    );
-    debugInfo("✅: Building Atoms CSS.");
+      await this.root.accept(
+        new BuildAtomCssVisitor({
+          server: this,
+        })
+      );
+      debugInfo("✅: Building Atoms CSS.");
 
-    /** Build CSS bundle */
-    const concatenateCSSVisitor = new ConcatenateCSSVisitor({ server: this });
-    await this.root.accept(concatenateCSSVisitor);
-    const bundleCssPath = path.join(CWD, this.bundleCSSPath);
-    const { css } = await bundleAtomsAction({
-      source: concatenateCSSVisitor.getCSS(),
-      to: bundleCssPath,
-      minify: false,
-    });
-    await this.writeFile(bundleCssPath, css);
-    debugInfo(`✅: Building CSS bundle => ${bundleCssPath}`);
-
-    /** Build Minified CSS bundle */
-    if (!DEVELOPMENT) {
-      const bundleCssMinPath = path.join(CWD, this.bundleCSSMinPath);
+      /** Build CSS bundle */
+      const concatenateCSSVisitor = new ConcatenateCSSVisitor({ server: this });
+      await this.root.accept(concatenateCSSVisitor);
+      const bundleCssPath = path.join(CWD, this.bundleCSSPath);
       const { css } = await bundleAtomsAction({
         source: concatenateCSSVisitor.getCSS(),
-        to: bundleCssMinPath,
-        minify: true,
+        to: bundleCssPath,
+        minify: false,
       });
-      await this.writeFile(bundleCssMinPath, css);
-      debugInfo(`✅: Building minified CSS bundle => ${bundleCssMinPath}`);
+      await this.writeFile(bundleCssPath, css);
+      debugInfo(`✅: Building CSS bundle => ${bundleCssPath}`);
+
+      /** Build Minified CSS bundle */
+      if (!DEVELOPMENT) {
+        const bundleCssMinPath = path.join(CWD, this.bundleCSSMinPath);
+        const { css } = await bundleAtomsAction({
+          source: concatenateCSSVisitor.getCSS(),
+          to: bundleCssMinPath,
+          minify: true,
+        });
+        await this.writeFile(bundleCssMinPath, css);
+        debugInfo(`✅: Building minified CSS bundle => ${bundleCssMinPath}`);
+      }
+    } catch (err) {
+      console.error(chalk.red(err));
+      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+      process.exit(1);
     }
   }
 
