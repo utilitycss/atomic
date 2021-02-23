@@ -1,5 +1,26 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const debug = require("debug")("atomic:server-meta");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const debugInfo = require("debug")("atomic:server");
+
 import chokidar from "chokidar";
-import postcss from "postcss";
+import chalk from "chalk";
+import * as postcss from "postcss";
+import path from "path";
+import fs, { promises as fsAsync } from "fs";
+import { PluginConfig } from "@utilitycss/utility/dist/types";
+
+import {
+  PACKAGE_FOLDER,
+  PACKAGE_JSON,
+  INDEX_CSS,
+  ATOMS_FOLDER,
+  ELECTRONS_FOLDER,
+  BUNDLE_CSS_NAME,
+  PACKAGE_SCOPE,
+  ELECTRONS_MODULE_NAME,
+  UTILITY_CONFIG_PATH,
+} from "./constants";
 import Atom from "./atom";
 import generateDependencyGraph, { AtomGraph } from "./dependency-graph";
 import BuildAtomCssVisitor from "./visitor/build-atom-css";
@@ -8,12 +29,10 @@ import indexCssWatchChange from "./watch/index-css/change";
 import bundleAtomsAction from "./action/bundle-atoms";
 import electronsCssAction from "./action/electrons-css";
 import electronsRoot from "./action/electrons-root";
-import path from "path";
-import util from "util";
-import fs from "fs";
 import { Visitor } from "./visitor/visitor";
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
+
+const readFile = fsAsync.readFile;
+const writeFile = fsAsync.writeFile;
 
 const DEVELOPMENT = process.env.NODE_ENV === "development";
 const CWD = process.cwd();
@@ -39,16 +58,16 @@ export default class AtomsServer {
   ICSSImportRE: RegExp;
   graph: AtomGraph;
   root: Atom;
-  utilityConfig: Object;
+  utilityConfig: PluginConfig;
 
   constructor({
-    atomsFolder = "atoms",
-    electronsFolder = "electrons",
-    electronsModuleName = "@my-org/electrons",
-    utilityConfigPath = "packages/atoms/utility.config.js",
-    packageScope = "@my-org",
+    atomsFolder = ATOMS_FOLDER,
+    electronsFolder = ELECTRONS_FOLDER,
+    electronsModuleName = ELECTRONS_MODULE_NAME,
+    utilityConfigPath = UTILITY_CONFIG_PATH,
+    packageScope = PACKAGE_SCOPE,
     bundleCSSPath = "./",
-    bundleCSSName = "atoms"
+    bundleCSSName = BUNDLE_CSS_NAME,
   } = {}) {
     this.atomsFolder = atomsFolder;
     this.electronsFolder = electronsFolder;
@@ -63,8 +82,10 @@ export default class AtomsServer {
     this.cache = new Map();
     this.trackClasses = new Map();
 
-    this.atomsPathRE = new RegExp(`packages\\/${atomsFolder}`);
-    this.importedElectronRE = new RegExp(`^.*\\/(${packageScope}\\/electrons)`);
+    this.atomsPathRE = new RegExp(`${PACKAGE_FOLDER}\\/${atomsFolder}`);
+    this.importedElectronRE = new RegExp(
+      `^.*\\/(${packageScope}\\/${ELECTRONS_FOLDER})`
+    );
     this.importedModuleRE = new RegExp(
       `^.*\\/(${packageScope}\\/.*)\\/module\\.css`
     );
@@ -73,6 +94,7 @@ export default class AtomsServer {
 
   readFileSync(p: string, { useCache = true } = {}): FileContent {
     if (useCache && this.cache.has(p)) {
+      debug(`Reading file from cache => ${p}.`);
       return this.cache.get(p);
     }
 
@@ -80,11 +102,12 @@ export default class AtomsServer {
       const pkg = p.match(PKG_FILE_RE)[1];
       const json = this.graph[pkg]
         ? this.graph[pkg].package
-        : require(`${pkg}/package.json`);
+        : require(`${pkg}/${PACKAGE_JSON}`);
       this.cache.set(p, json);
       return json;
     }
 
+    debug(`Reading file from file-system ${p}.`);
     const content = fs.readFileSync(p, "utf8");
     const cachedContent =
       path.extname(p) === ".json" ? JSON.parse(content) : content;
@@ -94,6 +117,7 @@ export default class AtomsServer {
 
   async readFile(p: string, { useCache = true } = {}): Promise<FileContent> {
     if (useCache && this.cache.has(p)) {
+      debug(`Reading file from cache => ${p}.`);
       return this.cache.get(p);
     }
 
@@ -101,11 +125,12 @@ export default class AtomsServer {
       const pkg = p.match(PKG_FILE_RE)[1];
       const json = this.graph[pkg]
         ? this.graph[pkg].package
-        : require(`${pkg}/package.json`);
+        : require(`${pkg}/${PACKAGE_JSON}`);
       this.cache.set(p, json);
       return json;
     }
 
+    debug(`Reading file from file-system ${p}.`);
     const content = await readFile(p, "utf8");
     const cachedContent =
       path.extname(p) === ".json" ? JSON.parse(content) : content;
@@ -114,100 +139,125 @@ export default class AtomsServer {
   }
 
   writeFile(p: string, content: string): Promise<void> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       if (path.extname(p) === ".json") {
         this.cache.set(p, JSON.parse(content));
       } else {
         this.cache.set(p, content);
       }
-      resolve();
+
+      if (!fs.existsSync(path.dirname(p))) {
+        await fsAsync.mkdir(path.dirname(p), { recursive: true });
+      }
+      debug("Writing file => ", p);
       await writeFile(p, content);
-      console.log("WRITE:", p);
+      resolve();
     });
   }
 
   async initialize(): Promise<this> {
-    console.log("START: initializing server");
-    console.time("initialize-server");
-    this.graph = await generateDependencyGraph(this.atomsPathRE);
+    try {
+      this.graph = await generateDependencyGraph(this.atomsPathRE);
+    } catch (err) {
+      console.error(chalk.red(err));
+      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+      process.exit(1);
+    }
 
-    const roots = Object.keys(this.graph).filter(
-      name => this.graph[name].parents.length === 0
-    );
-
-    this.root = new Atom({
-      name: "all",
-      atoms: this.graph,
-      isCss: false
-    }).withChildren(roots);
-
-    // prepopulate cache
-    Object.keys(this.graph).forEach(async name => {
-      await this.readFile(
-        path.join(CWD, this.graph[name].path, "package.json")
+    try {
+      const roots = Object.keys(this.graph).filter(
+        (name) => this.graph[name].parents.length === 0
       );
-      if (this.graph[name].isCss) {
-        await this.readFile(path.join(CWD, this.graph[name].path, "index.css"));
-      }
-    });
-    this.utilityConfig = require(path.join(CWD, this.utilityConfigPath));
-    console.log("DONE: initializing server");
-    console.timeEnd("initialize-server");
-    return this;
+
+      this.root = new Atom({
+        name: "all",
+        atoms: this.graph,
+        isCss: false,
+      }).withChildren(roots);
+
+      // Pre-populate cache
+      Object.keys(this.graph).forEach(async (name) => {
+        await this.readFile(
+          path.join(CWD, this.graph[name].path, PACKAGE_JSON)
+        );
+        if (this.graph[name].isCss) {
+          await this.readFile(path.join(CWD, this.graph[name].path, INDEX_CSS));
+        }
+      });
+      this.utilityConfig = require(path.join(CWD, this.utilityConfigPath));
+
+      debugInfo("✅: Initializing server.");
+      return this;
+    } catch (err) {
+      console.error(chalk.red(err));
+      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+      process.exit(1);
+    }
   }
 
-  async run() {
-    console.log("START: building electrons root");
-    await electronsRoot({ server: this });
-    console.log("DONE: building electrons root");
-    const indexCssWatcher = chokidar.watch(
-      `packages/${this.atomsFolder}/**/index.css`
-    );
-    indexCssWatcher.on("change", indexCssWatchChange(this));
+  async run(): Promise<void> {
+    try {
+      await electronsRoot({ server: this });
+      debugInfo("✅: Building Electron Root.");
+      const indexCssWatcher = chokidar.watch(
+        `${PACKAGE_FOLDER}/${this.atomsFolder}/**/${INDEX_CSS}`
+      );
+      indexCssWatcher.on("change", indexCssWatchChange(this));
+    } catch (err) {
+      console.error(chalk.red(err));
+      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+      process.exit(1);
+    }
   }
 
-  async build() {
-    console.log("START: building electrons css");
-    await electronsCssAction({ electronsFolder: this.electronsFolder });
-    console.log("DONE: building electrons css");
-    console.log("START: building electrons root");
-    await electronsRoot({ server: this });
-    console.log("DONE: building electrons root");
-    console.log("START: building atoms css");
-    console.time("build-atoms-css");
-    await this.root.accept(
-      new BuildAtomCssVisitor({
-        server: this
-      })
-    );
-    console.log("DONE: building atoms css");
-    console.timeEnd("build-atoms-css");
+  async build(): Promise<void> {
+    try {
+      /** Build base electron config */
+      await electronsCssAction({ electronsFolder: this.electronsFolder });
+      debugInfo("✅: Building Electron CSS.");
 
-    console.log("START: bundling global css");
-    console.time("bundle-global-css");
-    const concatenateCSSVisitor = new ConcatenateCSSVisitor({ server: this });
-    await this.root.accept(concatenateCSSVisitor);
-    const bundleCssPath = path.join(CWD, this.bundleCSSPath);
-    const { css } = await bundleAtomsAction({
-      source: concatenateCSSVisitor.getCSS(),
-      to: bundleCssPath,
-      minify: false
-    });
-    await this.writeFile(bundleCssPath, css);
-    if (!DEVELOPMENT) {
-      const bundleCssMinPath = path.join(CWD, this.bundleCSSMinPath);
+      /** Add electron to server root cache. */
+      await electronsRoot({ server: this });
+      debugInfo("✅: Building Electron Root.");
+
+      await this.root.accept(
+        new BuildAtomCssVisitor({
+          server: this,
+        })
+      );
+      debugInfo("✅: Building Atoms CSS.");
+
+      /** Build CSS bundle */
+      const concatenateCSSVisitor = new ConcatenateCSSVisitor({ server: this });
+      await this.root.accept(concatenateCSSVisitor);
+      const bundleCssPath = path.join(CWD, this.bundleCSSPath);
       const { css } = await bundleAtomsAction({
         source: concatenateCSSVisitor.getCSS(),
-        to: bundleCssMinPath,
-        minify: true
+        to: bundleCssPath,
+        minify: false,
       });
-      await this.writeFile(bundleCssMinPath, css);
+      await this.writeFile(bundleCssPath, css);
+      debugInfo(`✅: Building CSS bundle => ${bundleCssPath}`);
+
+      /** Build Minified CSS bundle */
+      if (!DEVELOPMENT) {
+        const bundleCssMinPath = path.join(CWD, this.bundleCSSMinPath);
+        const { css } = await bundleAtomsAction({
+          source: concatenateCSSVisitor.getCSS(),
+          to: bundleCssMinPath,
+          minify: true,
+        });
+        await this.writeFile(bundleCssMinPath, css);
+        debugInfo(`✅: Building minified CSS bundle => ${bundleCssMinPath}`);
+      }
+    } catch (err) {
+      console.error(chalk.red(err));
+      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+      process.exit(1);
     }
-    console.log("DONE: bundling global css");
-    console.timeEnd("bundle-global-css");
   }
 
-  async visit(visitor: Visitor) {
+  async visit(visitor: Visitor): Promise<void> {
     await this.root.accept(visitor);
   }
 }

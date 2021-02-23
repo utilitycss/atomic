@@ -1,26 +1,39 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const program = require("commander");
-const AtomsServer = require("./dist").AtomsServer;
-const inquirer = require("inquirer");
-const generateFile = require("./dist/util/generate-file");
-const generateAtom = require("./dist/util/generate-atom").default;
-const run = require("./dist/util/run").default;
-const { default: generate, Templates } = generateFile;
+import fs from "fs";
+import clear from "clear";
+import path from "path";
+import chalk from "chalk";
+import program from "commander";
+import { AtomsServer } from "./";
+import inquirer from "inquirer";
+
+import { default as generate, Templates } from "./util/generate-file";
+import generateAtom from "./util/generate-atom";
+import run from "./util/run";
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const figlet = require("figlet");
+
+clear();
+console.log(
+  chalk.red(figlet.textSync("atomic-cli", { horizontalLayout: "full" }))
+);
 
 // This atomic server, as well as the ICSS module resolution extensively use
 // node module resolution to access local workspace packages.
 // As this library will live inside the project node_modules, it will not be
 // able to resolve workspace dependencies correctly.
 // To achieve that NODE_PATH can be extended with the current CWD node_modules
+
 process.env.NODE_PATH = `${
   process.env.NODE_PATH ? process.env.NODE_PATH + ":" : ""
 }${path.join(process.cwd(), "node_modules")}`;
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require("module").Module._initPaths();
 
-const loadConfig = (prog, configRelPath) => {
+const loadConfig = (prog: any, configRelPath: string) => {
   const configPath = path.join(process.cwd(), configRelPath);
   const hasConfig = fs.existsSync(configPath);
   prog.cfg = hasConfig ? require(configPath) : {};
@@ -31,10 +44,11 @@ loadConfig(program, "atomic.config.js");
 
 program.version("0.0.1").description("@utilitycss/atomic CLI");
 
-program.option("-c, --config [path]", "use custom config file");
+program.option("-c, --config [path]", "Use custom config file.");
+
 program.on("option:config", () => {
-  // override with custom config
-  loadConfig(program, program.config);
+  // Override with custom config
+  loadConfig(program, (program as any).config);
 });
 
 program.command("build").action(() => {
@@ -43,18 +57,18 @@ program.command("build").action(() => {
     packageScope,
     utilityConfigPath,
     bundleCSSPath,
-    bundleCSSName
-  } = program.cfg;
+    bundleCSSName,
+  } = (program as any).cfg;
 
   new AtomsServer({
     electronsModuleName,
     packageScope,
     utilityConfigPath,
     bundleCSSPath,
-    bundleCSSName
+    bundleCSSName,
   })
     .initialize()
-    .then(async server => {
+    .then(async (server) => {
       await server.build();
     });
 });
@@ -62,38 +76,39 @@ program.command("build").action(() => {
 program
   .command("start")
   .option("-n, --no-rebuild")
-  .action(cmd => {
+  .action((cmd) => {
     const {
       electronsModuleName,
       packageScope,
       utilityConfigPath,
       bundleCSSPath,
-      bundleCSSName
-    } = program.cfg;
+      bundleCSSName,
+    } = (program as any).cfg;
 
     new AtomsServer({
       electronsModuleName,
       packageScope,
       utilityConfigPath,
       bundleCSSPath,
-      bundleCSSName
+      bundleCSSName,
     })
       .initialize()
-      .then(async server => {
+      .then(async (server) => {
         cmd.rebuild && (await server.build());
         await server.run();
       });
   });
 
-program.command("visit <visitor>").action(v => {
+program.command("visit <visitor>").action((v) => {
   const {
     electronsModuleName,
     packageScope,
     utilityConfigPath,
     bundleCSSPath,
-    bundleCSSName
-  } = program.cfg;
+    bundleCSSName,
+  } = (program as any).cfg;
 
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const visitor = require(path.join(process.cwd(), v));
 
   new AtomsServer({
@@ -101,51 +116,51 @@ program.command("visit <visitor>").action(v => {
     packageScope,
     utilityConfigPath,
     bundleCSSPath,
-    bundleCSSName
+    bundleCSSName,
   })
     .initialize()
-    .then(async server => {
+    .then(async (server) => {
       await server.visit(new visitor());
     });
 });
 
-program.command("init").action(cmd => {
+program.command("init").action((cmd) => {
   inquirer
     .prompt([
       {
         name: "packageScope",
-        message: "What is your npm scope (e.g. @my-lib)?"
+        message: "What is your npm scope (e.g. @my-lib)?",
       },
       {
         name: "electronsFolder",
         message: "Folder name for electrons",
-        default: "electrons"
+        default: "electrons",
       },
       {
         name: "electronsModuleName",
         message: "Package name for electrons",
-        default: inq => `${inq.packageScope}/${inq.electronsFolder}`
+        default: (inq: any) => `${inq.packageScope}/${inq.electronsFolder}`,
       },
       {
         name: "atomsFolder",
         message: "Folder name for atoms",
-        default: "atoms"
+        default: "atoms",
       },
       {
         name: "bundleCSSPath",
         message: "Relative path for the CSS bundle",
-        default: inq => `packages/${inq.atomsFolder}/all/`
+        default: (inq: any) => `packages/${inq.atomsFolder}/all/`,
       },
       {
         name: "bundleCSSName",
         message: "Name of the global bundle",
-        default: "atom"
-      }
+        default: "atom",
+      },
     ])
-    .then(async answers => {
+    .then(async (answers) => {
       const data = {
         ...answers,
-        utilityConfigPath: `packages/${answers.atomsFolder}/utility.config.js`
+        utilityConfigPath: `packages/${answers.atomsFolder}/utility.config.js`,
       };
 
       try {
@@ -220,16 +235,18 @@ program.command("init").action(cmd => {
             Templates.ATOM_TYPOGRAPHY_INDEX_CSS,
             data,
             path.join("packages", data.atomsFolder, "typography", "index.css")
-          )
+          ),
         ]);
-        console.log("[START] Generating project structure...");
+        console.log(
+          chalk.blueBright("[START] Generating project structure...")
+        );
         await filePromises;
-        console.log("[DONE] Generating project structure");
-        console.log("[START] Installing dependencies...");
+        console.log(chalk.green("[DONE] Generating project structure"));
+        console.log(chalk.blueBright("[START] Installing dependencies..."));
         await run("yarn");
-        console.log("[DONE] Installing dependencies...");
+        console.log(chalk.green("[DONE] Installing dependencies..."));
       } catch (e) {
-        console.log("[ERROR]", e);
+        console.error(chalk.red("[ERROR]", e));
       }
     });
 });

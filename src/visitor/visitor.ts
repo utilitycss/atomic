@@ -5,6 +5,7 @@ export interface Node {
 }
 
 export abstract class Visitor {
-  public abstract async visit(node: Node): Promise<void>;
+  public abstract visit(node: Node): Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   public async finalize(): Promise<void> {}
 }

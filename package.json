@@ -1,55 +1,70 @@
 {
   "name": "@utilitycss/atomic",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "author": "Andrea Moretti (@axyz) <axyzxp@gmail.com>",
   "description": "Atomic CSS composition for yarn workspaces",
   "repository": "utilitycss/atomic",
   "license": "MIT",
   "main": "dist",
   "bin": {
-    "atomic": "index.js"
+    "atomic": "./bin/index.js"
   },
+  "engines": {
+    "node": ">=14.5.5"
+  },
+  "preferGlobal": true,
   "scripts": {
     "prepublish": "npm run build-ts",
     "test": "jest --forceExit --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
+    "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "build-ts": "tsc",
-    "watch-ts": "tsc -w",
-    "tslint": "tslint -c tslint.json -p tsconfig.json"
+    "watch-ts": "tsc -w"
   },
   "dependencies": {
-    "@utilitycss/utility": "^0.6.1",
-    "chalk": "^3.0.0",
-    "chokidar": "^3.3.1",
-    "commander": "^4.1.0",
+    "@utilitycss/utility": "^1.0.3",
+    "chalk": "^4.1.0",
+    "chokidar": "^3.5.1",
+    "commander": "^7.1.0",
     "css-mqpacker": "^7.0.0",
     "cssnano": "^4.1.10",
     "cssnano-preset-advanced": "^4.0.7",
-    "handlebars": "^4.5.3",
-    "inquirer": "^7.0.3",
-    "mkdirp-promise": "^5.0.1",
+    "handlebars": "^4.7.7",
+    "inquirer": "^7.3.3",
+    "postcss-combine-duplicated-selectors": "^10.0.2",
     "postcss-cssnext": "^3.1.0",
-    "postcss-combine-duplicated-selectors": "^8.1.0",
     "postcss-discard-duplicates": "^4.0.2",
     "postcss-discard-empty": "^4.0.1",
     "postcss-for": "^2.1.1",
-    "postcss-modules": "^3.1.0",
-    "postcss-nested": "^4.2.1",
-    "postcss-simple-vars": "^5.0.2"
+    "postcss-modules": "^4.0.0",
+    "postcss-nested": "^5.0.3",
+    "postcss-simple-vars": "^6.0.3",
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.25",
-    "@types/node": "^13.1.4",
+    "@types/clear": "^0.1.1",
+    "@types/commander": "^2.12.2",
     "@types/handlebars": "^4.1.0",
-    "@types/inquirer": "^6.5.0",
-    "@types/mkdirp-promise": "^5.0.0",
+    "@types/inquirer": "^7.3.1",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "clear": "^0.1.0",
+    "debug": "^4.3.1",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "figlet": "^1.5.0",
     "husky": "^4.0.0",
-    "jest": "^24.9.0",
-    "prettier": "^1.19.1",
-    "lint-staged": "^9.5.0",
-    "ts-jest": "^24.3.0",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
+    "open": "^7.4.2",
+    "postcss": "^8.2.6",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.1",
+    "typescript": "^4.1.5"
   },
   "husky": {
     "hooks": {
@@ -57,14 +72,9 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.{ts,tsx,js}": [
       "prettier --no-config --write",
-      "git add"
-    ],
-    "*.ts": [
-      "prettier --no-config --write",
-      "tslint -c tslint.json -p tsconfig.json --fix",
-      "git add"
+      "eslint --fix"
     ]
   }
 }
