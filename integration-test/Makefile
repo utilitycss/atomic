@@ -15,7 +15,7 @@ ALL_SNAPS := $(foreach el, $(ALL_RESULTS), $(el).snap)
 .PHONY: test update $(ALL_RESULTS)
 
 $(ALL_RESULTS):
-	diff --color $@.snap $@
+	diff $@.snap $@
 
 $(ALL_SNAPS):
 	cp $(subst .snap,,$@) $@
