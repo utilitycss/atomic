@@ -12,7 +12,7 @@ ALL_RESULTS := $(ATOM_RESULT_CSS)\
   $(ATOM_INDEX_D_TS)
 ALL_SNAPS := $(foreach el, $(ALL_RESULTS), $(el).snap)
 
-.PHONY: test update $(ALL_RESULTS)
+.PHONY: test update $(ALL_RESULTS) $(ALL_SNAPS)
 
 $(ALL_RESULTS):
 	diff $@.snap $@
