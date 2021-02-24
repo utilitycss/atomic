@@ -13,8 +13,8 @@
   },
   "workspaces": {
     "packages": [
-      "packages/{{ electronsFolder }}",
-      "packages/{{ atomsFolder }}/**/*"
+      "packages/electrons",
+      "packages/atoms/**/*"
     ]
   }
 }

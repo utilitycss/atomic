@@ -1,0 +1,72 @@
+.transparent {
+    color: transparent
+}
+.black {
+    color: #111111
+}
+.white {
+    color: #fafafa
+}
+.transparent_hover:hover {
+    color: transparent
+}
+.black_hover:hover {
+    color: #111111
+}
+.white_hover:hover {
+    color: #fafafa
+}
+.bg_transparent {
+    background-color: transparent
+}
+.bg_black {
+    background-color: #111111
+}
+.bg_white {
+    background-color: #fafafa
+}
+.bg_transparent_hover:hover {
+    background-color: transparent
+}
+.bg_black_hover:hover {
+    background-color: #111111
+}
+.bg_white_hover:hover {
+    background-color: #fafafa
+}
+.bg_transparent_active:active {
+    background-color: transparent
+}
+.bg_black_active:active {
+    background-color: #111111
+}
+.bg_white_active:active {
+    background-color: #fafafa
+}
+.bd_transparent {
+    border-color: transparent
+}
+.bd_black {
+    border-color: #111111
+}
+.bd_white {
+    border-color: #fafafa
+}
+.bd_transparent_hover:hover {
+    border-color: transparent
+}
+.bd_black_hover:hover {
+    border-color: #111111
+}
+.bd_white_hover:hover {
+    border-color: #fafafa
+}
+.bd_transparent_focus:focus {
+    border-color: transparent
+}
+.bd_black_focus:focus {
+    border-color: #111111
+}
+.bd_white_focus:focus {
+    border-color: #fafafa
+}

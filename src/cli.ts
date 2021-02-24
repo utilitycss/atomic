@@ -129,7 +129,8 @@ program.command("init").action((cmd) => {
     .prompt([
       {
         name: "packageScope",
-        message: "What is your npm scope (e.g. @my-lib)?",
+        message: "What is your npm scope (e.g. @my-org)?",
+        default: "@my-org",
       },
       {
         name: "electronsFolder",

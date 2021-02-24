@@ -1,0 +1,10 @@
+.single-declaration {
+  color: red;
+}
+
+.multiple-declarations {
+  color: blue;
+  width: 100px;
+  display: flex;
+  border: 1px solid red;
+}

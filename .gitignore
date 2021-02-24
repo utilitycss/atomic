@@ -63,3 +63,12 @@ typings/
 
 # next.js build output
 .next
+
+# Integration test
+/integration-test/packages/atoms/all
+/integration-test/yarn.lock
+/integration-test/**/*.d.ts
+/integration-test/**/module.css
+/integration-test/**/module.css.json
+/integration-test/**/result.css
+/integration-test/packages/atoms/all
