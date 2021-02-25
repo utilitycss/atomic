@@ -11,7 +11,7 @@ integration-test/node_modules:
 
 integration-test-build: integration-test/node_modules
 	cd integration-test \
-    && yarn build \
+    && DEBUG=* yarn build \
 
 
 integration-test: dist integration-test-build
