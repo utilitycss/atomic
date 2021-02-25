@@ -1,0 +1,72 @@
+.single-nesting {
+  color: red;
+
+  .child {
+    color: blue;
+  }
+}
+
+.deep-nesting {
+  color: red;
+
+  .child {
+    color: blue;
+
+    .grandchild {
+      color: green;
+    }
+  }
+}
+
+.class-combination {
+  font-size: 1em;
+
+  &.modifier {
+    font-size: 2em;
+  }
+}
+
+.complex {
+  font-size: 1em;
+
+  &.modifier {
+    color: red;
+  }
+
+  & {
+    display: flex;
+  }
+
+  .child {
+    font-size: 0.5em;
+
+    &.child-modifier {
+      color: blue;
+
+      .nested {
+        color: green;
+      }
+    }
+  }
+}
+
+.nested-pseudo {
+  color: red;
+
+  &:hover {
+    color: blue;
+
+    .hover-child {
+      color: green;
+
+      &.hover-child-modifier {
+        font-size: 2em;
+
+        &:after {
+          content: "after";
+          position: absolute;
+        }
+      }
+    }
+  }
+}

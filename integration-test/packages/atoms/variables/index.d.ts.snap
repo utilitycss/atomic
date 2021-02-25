@@ -1,0 +1,3 @@
+declare const with-variable: string;
+declare const with-electron-and-variables: string
+export { with-variable, with-electron-and-variables }

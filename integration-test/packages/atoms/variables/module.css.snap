@@ -1,0 +1,15 @@
+:root {
+  --my-variable: 1em;
+  --another-variable: red;
+}
+
+.with-variable {
+  font-size: var(--my-variable);
+}
+
+.with-electron-and-variables {
+  font-size: var(--my-variable);
+  color: var(--another-variable);
+
+  composes: bg_black fontFamily_system from "@my-org/electrons";
+}

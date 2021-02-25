@@ -1,6 +1,5 @@
 const path = require("path");
 const {
-  plugins: { docs },
   modules: { colors, font },
 } = require("@utilitycss/utility");
 const {
@@ -12,22 +11,12 @@ const {
 
 const modules = [colors(colorsConfig), font(fontConfig)];
 
-const plugins = [docs({ output: path.resolve(__dirname, "docs/index.html") })];
-
-const getConfig = (opts) => {
-  const { name, version } = require("./package.json");
+const getConfig = () => {
   const config = Object.assign({}, base, {
     breakPoints: breakPointsValues,
   });
-  const plugins = [
-    docs({
-      output: path.join(__dirname, "docs", "index.html"),
-      openFile: false,
-      packageName: `${name} ${version}`,
-    }),
-  ];
 
-  const utilityConfigs = Object.assign({}, { config, modules, plugins });
+  const utilityConfigs = Object.assign({}, { config, modules });
   return utilityConfigs;
 };
 

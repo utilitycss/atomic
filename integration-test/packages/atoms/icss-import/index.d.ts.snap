@@ -1,0 +1,6 @@
+declare const local-class: string;
+declare const local-composes: string;
+declare const simple-composes: string;
+declare const complex-composes: string;
+declare const extend: string
+export { local-class, local-composes, simple-composes, complex-composes, extend }

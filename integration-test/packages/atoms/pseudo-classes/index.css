@@ -1,0 +1,27 @@
+.hover {
+  color: green;
+}
+
+.hover:hover {
+  color: red;
+}
+
+.focus {
+  color: green;
+}
+
+.focus:focus {
+  color: red;
+}
+
+.button {
+  background-color: black;
+}
+
+.button:disabled {
+  background-color: grey;
+}
+
+.hover-electron {
+  electrons: (black, black_hover);
+}

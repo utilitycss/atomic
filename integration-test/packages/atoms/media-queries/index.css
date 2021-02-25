@@ -1,0 +1,42 @@
+.responsive-class {
+  font-size: 1em;
+}
+
+@media screen and (min-width: 768px) {
+  .responsive-class {
+    font-size: 2em;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .responsive-class {
+    font-size: 3em;
+  }
+}
+
+
+@media screen and (min-width: 1024px) {
+  .responsive-class-mixed-order {
+    font-size: 3em;
+  }
+}
+
+.responsive-class-mixed-order {
+  font-size: 1em;
+}
+
+@media screen and (min-width: 768px) {
+  .responsive-class-mixed-order {
+    font-size: 2em;
+  }
+}
+
+
+.responsive-electrons {
+  electrons: (black_mobile, white_desktop);
+}
+
+.responsive-electrons-with-custom-delcaration {
+  electrons: (black_mobile, white_desktop);
+  font-size: 4em;
+}

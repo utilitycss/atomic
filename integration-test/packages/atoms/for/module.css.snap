@@ -1,0 +1,96 @@
+
+  .size_1{
+    font-size: 1em;
+  }
+
+.size_2{
+    font-size: 2em;
+  }
+
+.size_3{
+    font-size: 3em;
+  }
+
+.calc1{
+    font-size: calc(1 * 10px)
+  }
+
+.calc1 .child_1_1 {
+        width: 1em;
+      }
+
+.calc1.modifier_1_1 {
+        border: 1px red solid;
+      }
+
+.calc1 .child_1_2 {
+        width: 2em;
+      }
+
+.calc1.modifier_1_2 {
+        border: 2px red solid;
+      }
+
+.calc1 .child_1_3 {
+        width: 3em;
+      }
+
+.calc1.modifier_1_3 {
+        border: 3px red solid;
+      }
+
+.calc2{
+    font-size: calc(2 * 10px)
+  }
+
+.calc2 .child_2_1 {
+        width: 1em;
+      }
+
+.calc2.modifier_2_1 {
+        border: 1px red solid;
+      }
+
+.calc2 .child_2_2 {
+        width: 2em;
+      }
+
+.calc2.modifier_2_2 {
+        border: 2px red solid;
+      }
+
+.calc2 .child_2_3 {
+        width: 3em;
+      }
+
+.calc2.modifier_2_3 {
+        border: 3px red solid;
+      }
+
+.calc3{
+    font-size: calc(3 * 10px)
+  }
+
+.calc3 .child_3_1 {
+        width: 1em;
+      }
+
+.calc3.modifier_3_1 {
+        border: 1px red solid;
+      }
+
+.calc3 .child_3_2 {
+        width: 2em;
+      }
+
+.calc3.modifier_3_2 {
+        border: 2px red solid;
+      }
+
+.calc3 .child_3_3 {
+        width: 3em;
+      }
+
+.calc3.modifier_3_3 {
+        border: 3px red solid;
+      }

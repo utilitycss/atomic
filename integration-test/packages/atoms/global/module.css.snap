@@ -1,0 +1,15 @@
+:global(.global-class) {
+  width: 100%;
+}
+
+:global(.global-class) {
+}
+
+:global(.global-class) .child {
+    color: red;
+  }
+
+:global(.global-class).modifier {
+    color: blue;
+  }
+

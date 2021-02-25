@@ -1,1 +1,5 @@
 @utility colors module.config.js;
+
+:global(.inverted) {
+  @utility colors module-inverted.config.js;
+}

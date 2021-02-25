@@ -1,0 +1,24 @@
+/* custom static css (e.g. normalize) can be added here */.vLhOdO {
+    background-color: #1a1a1a
+}@media screen and (min-width: 320px) {
+}@media screen and (min-width: 480px) {
+}@media screen and (min-width: 768px) {
+}@media screen and (min-width: 1024px) {
+}@media screen and (min-width: 1280px) {
+}.YzVv9y {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Arial', 'Helvetica Neue', sans-serif
+}
+
+:root {
+  --my-variable: 1em;
+  --another-variable: red;
+}
+
+.YAP9F8 {
+  font-size: var(--my-variable);
+}
+
+.XBzsTb {
+  font-size: var(--my-variable);
+  color: var(--another-variable);
+}
