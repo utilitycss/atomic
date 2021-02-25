@@ -4,10 +4,10 @@ dist:
 	yarn build-ts
 
 integration-test/node_modules:
-	yarn link
+	npm link
 	cd integration-test \
 	  && yarn \
-	  && yarn link @utilitycss/atomic
+	  && npm link @utilitycss/atomic
 
 integration-test-build: integration-test/node_modules
 	cd integration-test \

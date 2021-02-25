@@ -10,10 +10,6 @@
     "@utilitycss/atomic": "^0.13.0",
     "lerna": "3.13.3"
   },
-  "resolutions": {
-    "mkdirp": "0.5.1",
-    "postcss-modules": "3.1.0"
-  },
   "workspaces": {
     "packages": [
       "packages/electrons",
