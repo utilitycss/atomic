@@ -6,8 +6,8 @@ dist:
 integration-test/node_modules:
 	yarn link
 	cd integration-test \
-	  && yarn \
-	  && yarn link @utilitycss/atomic
+	  && yarn link @utilitycss/atomic \
+	  && yarn
 
 integration-test-build: integration-test/node_modules
 	cd integration-test \
