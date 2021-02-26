@@ -5,7 +5,7 @@ cache:
   yarn: true
 script:
   - yarn test
-  - make integration-test
+  - TRAVIS=true make integration-test
 deploy:
   edge: true
   provider: npm

@@ -1,3 +1,9 @@
+ifdef TRAVIS
+  DIFF := diff
+else
+  DIFF := diff --color
+endif
+
 ATOM_PACKAGES := $(shell find packages/atoms -name "package.json")
 ATOMS_DIRS := $(foreach el, $(ATOM_PACKAGES), $(dir $(el)))
 
@@ -19,7 +25,7 @@ ALL_SNAPS := $(foreach el, $(ALL_RESULTS), $(el).snap)
 .PHONY: test update $(ALL_RESULTS) $(ALL_SNAPS)
 
 $(ALL_RESULTS):
-	diff $@.snap $@
+	$(DIFF) $@.snap $@
 
 $(ALL_SNAPS):
 	cp $(subst .snap,,$@) $@
