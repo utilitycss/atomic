@@ -3,7 +3,7 @@ import postcss, { LazyResult } from "postcss";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const rmDuplicates = require("postcss-discard-duplicates");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const cssNext = require("postcss-cssnext");
+const cssPresetEnv = require("postcss-preset-env");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cssnano = require("cssnano");
 
@@ -19,7 +19,10 @@ const bundleAtoms = async ({
   minify?: boolean;
 }): Promise<LazyResult> => {
   const plugins = [
-    cssNext({ browsers: ["> 1%", "IE 11"], cascade: false }),
+    cssPresetEnv({
+      browsers: ["> 1%", "IE 11"],
+      autoprefixer: { cascade: false },
+    }),
     rmDuplicates(),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("css-mqpacker")({ sort: true }),
