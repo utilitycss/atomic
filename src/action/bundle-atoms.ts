@@ -1,5 +1,7 @@
 import postcss, { LazyResult } from "postcss";
 
+import cssMqPacker from "@utilitycss/css-mqpacker";
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const rmDuplicates = require("postcss-discard-duplicates");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -25,7 +27,7 @@ const bundleAtoms = async ({
     }),
     rmDuplicates(),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("css-mqpacker")({ sort: true }),
+    cssMqPacker({ sort: true }),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("postcss-combine-duplicated-selectors")({
       removeDuplicatedProperties: true,

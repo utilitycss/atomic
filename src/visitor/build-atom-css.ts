@@ -53,7 +53,7 @@ export default class BuildAtomCssVisitor extends Visitor {
 
       await this.server.writeFile(resultPath, resultCss);
     } catch (err) {
-      console.error(chalk.red(err));
+      console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
       process.exit(1);
     }
