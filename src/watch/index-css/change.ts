@@ -34,7 +34,7 @@ const indexCssChange: Watcher = (server) => async (dir) => {
     await server.writeFile(bundleCssPath, css);
     debug(`✅: Building CSS bundle => ${bundleCssPath}`);
   } catch (err) {
-    console.error(chalk.red(err));
+    console.error(err);
     console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
     process.exit(1);
   }

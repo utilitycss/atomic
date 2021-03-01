@@ -2,6 +2,7 @@ import postcss from "postcss";
 import { LazyResult } from "postcss";
 
 import utility from "@utilitycss/utility";
+import postcssFor from "@utilitycss/postcss-for";
 import { PluginConfig } from "@utilitycss/utility/dist/types";
 
 import composeElectrons from "../postcss/compose-electrons";
@@ -22,7 +23,7 @@ const atomCss = async ({
   return await postcss([
     utility(utilityConfig),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("postcss-for"),
+    postcssFor,
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("postcss-simple-vars"),
     // eslint-disable-next-line @typescript-eslint/no-var-requires

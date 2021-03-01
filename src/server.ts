@@ -159,7 +159,7 @@ export default class AtomsServer {
     try {
       this.graph = await generateDependencyGraph(this.atomsPathRE);
     } catch (err) {
-      console.error(chalk.red(err));
+      console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
       process.exit(1);
     }
@@ -189,7 +189,7 @@ export default class AtomsServer {
       debugInfo("✅: Initializing server.");
       return this;
     } catch (err) {
-      console.error(chalk.red(err));
+      console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
       process.exit(1);
     }
@@ -204,7 +204,7 @@ export default class AtomsServer {
       );
       indexCssWatcher.on("change", indexCssWatchChange(this));
     } catch (err) {
-      console.error(chalk.red(err));
+      console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
       process.exit(1);
     }
@@ -251,7 +251,7 @@ export default class AtomsServer {
         debugInfo(`✅: Building minified CSS bundle => ${bundleCssMinPath}`);
       }
     } catch (err) {
-      console.error(chalk.red(err));
+      console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
       process.exit(1);
     }

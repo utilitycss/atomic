@@ -45,30 +45,20 @@ export interface AtomGraph {
   [key: string]: Atom;
 }
 
-const generateDependencyGraph = async (
-  atomsPathRE: RegExp
-): Promise<AtomGraph> => {
-  const versionString = await run("yarn --version").then((value) =>
-    value.split(".")
-  );
-  debug(`Detected Yarn version => ${versionString.join(".")}`);
+const getYarnInfo = async (): Promise<YarnInfo> => {
+  debug("Getting Yarn Workspace info.");
   const infoString = await run("yarn --json workspaces info");
   debug(infoString);
   const infoStringJSON = JSON.parse(infoString);
-  debug("Getting Yarn Workspace info.");
-  let data: YarnInfo;
-  if (
-    versionString &&
-    Array.isArray(versionString) &&
-    parseInt(versionString[1], 10) >= 20
-  ) {
-    // compact use case for yarn version > 20
-    data = infoStringJSON;
-  } else {
-    // fallback use case
-    data = JSON.parse(infoStringJSON.data);
+  // handle discrepant format between yarn versions
+  if (infoStringJSON.data !== undefined) {
+    return JSON.parse(infoStringJSON.data);
   }
-  const atomsInfo = Object.keys(data).reduce((prev, next) => {
+  return infoStringJSON;
+};
+
+const getAtomsInfo = (atomsPathRE: RegExp, data: YarnInfo): AtomsInfo => {
+  return Object.keys(data).reduce((prev, next) => {
     if (atomsPathRE.test(data[next].location)) {
       const { workspaceDependencies, location } = data[next];
       // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -85,8 +75,10 @@ const generateDependencyGraph = async (
     }
     return prev;
   }, {} as AtomsInfo);
+};
 
-  const atoms = Object.keys(atomsInfo).reduce((prev, next) => {
+const getAtoms = (atomsInfo: AtomsInfo): AtomsInfo => {
+  return Object.keys(atomsInfo).reduce((prev, next) => {
     const dependencies = atomsInfo[next].parents;
     dependencies.forEach((dependency) => {
       if (prev[dependency]) {
@@ -95,6 +87,14 @@ const generateDependencyGraph = async (
     });
     return prev;
   }, atomsInfo);
+};
+
+const generateDependencyGraph = async (
+  atomsPathRE: RegExp
+): Promise<AtomGraph> => {
+  const data = await getYarnInfo();
+  const atomsInfo = getAtomsInfo(atomsPathRE, data);
+  const atoms = getAtoms(atomsInfo);
 
   return buildAtomGraph(atoms);
 };
