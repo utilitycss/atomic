@@ -1,4 +1,4 @@
-const utility = require("@utilitycss/utility");
+const utility = require("@utilitycss/utility").default;
 const utilityConfig = require("./utility.config");
 
 module.exports = (opts) => {
