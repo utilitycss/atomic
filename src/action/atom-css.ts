@@ -25,8 +25,6 @@ const atomCss = async ({
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     postcssFor,
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("postcss-simple-vars"),
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("postcss-nested")({ preserveEmpty: true }),
     composeElectrons({ module: electronsModuleName }),
   ]).process(source, {

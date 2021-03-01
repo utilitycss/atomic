@@ -40,7 +40,6 @@
     "postcss-modules": "^4.0.0",
     "postcss-nested": "^5.0.3",
     "postcss-preset-env": "^6.7.0",
-    "postcss-simple-vars": "^6.0.3",
     "ts-node": "^9.1.1"
   },
   "devDependencies": {
