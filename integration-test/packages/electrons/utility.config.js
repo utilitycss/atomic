@@ -1,7 +1,6 @@
-const path = require("path");
 const {
   modules: { colors, font },
-} = require("@utilitycss/utility");
+} = require("@utilitycss/atomic").utility;
 const {
   base,
   breakpoints: breakPointsValues,

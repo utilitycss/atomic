@@ -7,8 +7,7 @@
     "start": "atomic start"
   },
   "devDependencies": {
-    "lerna": "3.13.3",
-    "@utilitycss/utility": "^1.0.3"
+    "lerna": "3.13.3"
   },
   "workspaces": {
     "packages": [

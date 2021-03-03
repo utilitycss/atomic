@@ -1,4 +1,4 @@
-const utility = require("@utilitycss/utility").default;
+const { utility } = require("@utilitycss/atomic").utility;
 const utilityConfig = require("./utility.config");
 
 module.exports = (opts) => {
