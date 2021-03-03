@@ -3,11 +3,11 @@ import postcss, { LazyResult } from "postcss";
 import cssMqPacker from "@utilitycss/css-mqpacker";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const rmDuplicates = require("postcss-discard-duplicates");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const cssPresetEnv = require("postcss-preset-env");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cssnano = require("cssnano");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const cssVariables = require("postcss-css-variables");
 
 const bundleAtoms = async ({
   source,
@@ -21,17 +21,14 @@ const bundleAtoms = async ({
   minify?: boolean;
 }): Promise<LazyResult> => {
   const plugins = [
+    cssMqPacker({ sort: true }),
     cssPresetEnv({
       browsers: ["> 1%", "IE 11"],
-      autoprefixer: { cascade: false },
+      features: {
+        "custom-properties": false,
+      },
     }),
-    rmDuplicates(),
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    cssMqPacker({ sort: true }),
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("postcss-combine-duplicated-selectors")({
-      removeDuplicatedProperties: true,
-    }),
+    cssVariables(),
   ];
 
   if (minify) {

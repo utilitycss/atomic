@@ -1,4 +1,6 @@
-/* custom static css (e.g. normalize) can be added here */.YzVv9y {
+/* custom static css (e.g. normalize) can be added here */.vLhOdO {
+    background-color: #1a1a1a
+}.YzVv9y {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Arial', 'Helvetica Neue', sans-serif
 }
 
@@ -12,12 +14,26 @@
 }
 .YdWKhm {
   color: red;
+}
+
+.HMnHnG {
+  color: blue;
+  width: 100px;
+  display: flex;
+  border: 1px solid red;
+}
+.YdWKhm {
+  color: red;
 }.HMnHnG {
   color: blue;
   width: 100px;
   display: flex;
   border: 1px solid red;
-}/* custom static css (e.g. normalize) can be added here */.dgII7d {
+}/* custom static css (e.g. normalize) can be added here */._1RrCqF {
+    color: #1a1a1a
+}.pQ96hs:hover {
+    color: #fafafa
+}.dgII7d {
     font-weight: bold
 }
 
@@ -34,7 +50,11 @@
 
   font-size: 4em;
 }
-/* custom static css (e.g. normalize) can be added here */
+/* custom static css (e.g. normalize) can be added here */._1RrCqF {
+    color: #1a1a1a
+}.DJ9tNH:hover {
+    color: #1a1a1a
+}
 
 .l-ITF2 {
   color: green;
@@ -88,12 +108,15 @@
   }
 
 .HbTeo6 {
-  font-size: 1em;
-    display: flex
+  font-size: 1em
 }
 
 .HbTeo6.onlaI8 {
     color: red;
+  }
+
+.HbTeo6 {
+    display: flex;
   }
 
 .HbTeo6 .l-e8AL {
@@ -153,8 +176,7 @@
     color: blue;
   }
 
-
-  .oPlD0W{
+.oPlD0W{
     font-size: 1em;
   }
 
@@ -167,7 +189,7 @@
   }
 
 ._8N2ZPM{
-    font-size: 10px
+    font-size: calc(1 * 10px)
   }
 
 ._8N2ZPM ._8Urr0R {
@@ -195,7 +217,7 @@
       }
 
 .Xj0KNQ{
-    font-size: 20px
+    font-size: calc(2 * 10px)
   }
 
 .Xj0KNQ .SnZr3u {
@@ -223,7 +245,7 @@
       }
 
 .mUzFkS{
-    font-size: 30px
+    font-size: calc(3 * 10px)
   }
 
 .mUzFkS .KCb6ES {
@@ -451,13 +473,17 @@
 
 @media screen and (min-width: 320px) {
     .Lp5Coj {
-
         color: #1a1a1a
     }
 
     .Rvp04b {
 
         color: transparent
+    }
+
+    .Lp5Coj {
+
+        color: #1a1a1a
     }
 
     .HCs9Zk {
@@ -1065,7 +1091,6 @@
 
 @media screen and (min-width: 1024px) {
     .HNuXy3 {
-
         color: #fafafa
     }
   .xl882z {
@@ -1083,6 +1108,11 @@
     .CgYuy9 {
 
         color: #1a1a1a
+    }
+
+    .HNuXy3 {
+
+        color: #fafafa
     }
 
     .XhfU7x:hover {

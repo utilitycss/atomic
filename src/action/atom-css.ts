@@ -22,11 +22,11 @@ const atomCss = async ({
 }): Promise<LazyResult> => {
   return await postcss([
     utility(utilityConfig),
+    composeElectrons({ module: electronsModuleName }),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     postcssFor(),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("postcss-nested")({ preserveEmpty: true }),
-    composeElectrons({ module: electronsModuleName }),
   ]).process(source, {
     from,
     to,
