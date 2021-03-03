@@ -1,6 +1,6 @@
 {
   "name": "@utilitycss/atomic",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "author": "Andrea Moretti (@axyz) <axyzxp@gmail.com>",
   "description": "Atomic CSS composition for yarn workspaces",
   "repository": "utilitycss/atomic",
@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@utilitycss/css-mqpacker": "^0.0.1",
-    "@utilitycss/postcss-for": "^0.0.2",
     "@utilitycss/utility": "^1.0.3",
     "chalk": "^4.1.0",
     "chokidar": "^3.5.1",
@@ -35,10 +34,7 @@
     "handlebars": "^4.7.7",
     "inquirer": "^7.3.3",
     "postcss-discard-empty": "^5.0.0-rc.0",
-    "postcss-modules": "^4.0.0",
-    "postcss-css-variables": "^0.17.0",
-    "postcss-nested": "^5.0.3",
-    "postcss-preset-env": "^6.7.0"
+    "postcss-modules": "^4.0.0"
   },
   "devDependencies": {
     "@types/clear": "^0.1.1",

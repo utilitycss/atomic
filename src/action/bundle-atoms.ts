@@ -1,51 +1,48 @@
 import postcss, { LazyResult } from "postcss";
 
 import cssMqPacker from "@utilitycss/css-mqpacker";
+import { PluginHooksMap } from "../server";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const cssPresetEnv = require("postcss-preset-env");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const cssnano = require("cssnano");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const cssVariables = require("postcss-css-variables");
 
 const bundleAtoms = async ({
   source,
   from,
   to,
   minify = false,
+  additionalPlugins,
 }: {
   source: string;
   from?: string;
   to: string;
   minify?: boolean;
+  additionalPlugins: PluginHooksMap;
 }): Promise<LazyResult> => {
   const plugins = [
-    cssPresetEnv({
-      stage: 1,
-      browsers: ["> 1%", "IE 11"],
-      features: {
-        "custom-properties": false,
-      },
-    }),
-    cssVariables(),
+    ...(additionalPlugins.beforeBundling || []),
     cssMqPacker({ sort: true }),
+    ...(additionalPlugins.afterBundling || []),
   ];
 
   if (minify) {
     plugins.push(
-      cssnano({
-        preset: [
-          "advanced",
-          {
-            reduceIdents: false,
-            zindex: false,
-            discardComments: {
-              removeAll: true,
+      ...[
+        ...(additionalPlugins.beforeMinify || []),
+        cssnano({
+          preset: [
+            "advanced",
+            {
+              reduceIdents: false,
+              zindex: false,
+              discardComments: {
+                removeAll: true,
+              },
             },
-          },
-        ],
-      })
+          ],
+        }),
+        ...(additionalPlugins.afterMinify || []),
+      ]
     );
   }
 

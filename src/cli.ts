@@ -58,6 +58,7 @@ program.command("build").action(() => {
     utilityConfigPath,
     bundleCSSPath,
     bundleCSSName,
+    additionalPlugins,
   } = (program as any).cfg;
 
   new AtomsServer({
@@ -66,6 +67,7 @@ program.command("build").action(() => {
     utilityConfigPath,
     bundleCSSPath,
     bundleCSSName,
+    additionalPlugins,
   })
     .initialize()
     .then(async (server) => {
@@ -83,6 +85,7 @@ program
       utilityConfigPath,
       bundleCSSPath,
       bundleCSSName,
+      additionalPlugins,
     } = (program as any).cfg;
 
     new AtomsServer({
@@ -91,6 +94,7 @@ program
       utilityConfigPath,
       bundleCSSPath,
       bundleCSSName,
+      additionalPlugins,
     })
       .initialize()
       .then(async (server) => {
@@ -106,6 +110,7 @@ program.command("visit <visitor>").action((v) => {
     utilityConfigPath,
     bundleCSSPath,
     bundleCSSName,
+    additionalPlugins,
   } = (program as any).cfg;
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -117,6 +122,7 @@ program.command("visit <visitor>").action((v) => {
     utilityConfigPath,
     bundleCSSPath,
     bundleCSSName,
+    additionalPlugins,
   })
     .initialize()
     .then(async (server) => {

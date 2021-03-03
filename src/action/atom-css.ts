@@ -2,10 +2,10 @@ import postcss from "postcss";
 import { LazyResult } from "postcss";
 
 import utility from "@utilitycss/utility";
-import postcssFor from "@utilitycss/postcss-for";
 import { PluginConfig } from "@utilitycss/utility/dist/types";
 
 import composeElectrons from "../postcss/compose-electrons";
+import { PluginHooksMap } from "../server";
 
 const atomCss = async ({
   from,
@@ -13,20 +13,20 @@ const atomCss = async ({
   source,
   utilityConfig,
   electronsModuleName,
+  additionalPlugins,
 }: {
   from: string;
   to: string;
   source: string;
   utilityConfig: PluginConfig;
   electronsModuleName: string;
+  additionalPlugins: PluginHooksMap;
 }): Promise<LazyResult> => {
   return await postcss([
+    ...(additionalPlugins.beforeEachAtom || []),
     utility(utilityConfig),
     composeElectrons({ module: electronsModuleName }),
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    postcssFor(),
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("postcss-nested")({ preserveEmpty: true }),
+    ...(additionalPlugins.afterEachAtom || []),
   ]).process(source, {
     from,
     to,
