@@ -21,14 +21,15 @@ const bundleAtoms = async ({
   minify?: boolean;
 }): Promise<LazyResult> => {
   const plugins = [
-    cssMqPacker({ sort: true }),
     cssPresetEnv({
+      stage: 1,
       browsers: ["> 1%", "IE 11"],
       features: {
         "custom-properties": false,
       },
     }),
     cssVariables(),
+    cssMqPacker({ sort: true }),
   ];
 
   if (minify) {
