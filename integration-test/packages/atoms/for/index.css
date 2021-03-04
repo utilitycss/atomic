@@ -1,0 +1,21 @@
+@for $i from 1 to 3 {
+  .size_$(i){
+    font-size: $(i)em;
+  }
+}
+
+@for $i from 1 to 3 {
+  .calc$(i){
+    font-size: calc($(i) * 10px);
+
+    @for $j from 1 to 3 {
+      .child_$(i)_$(j) {
+        width: $(j)em;
+      }
+
+      &.modifier_$(i)_$(j) {
+        border: $(j)px red solid;
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@my-org/colors",
+  "version": "0.0.1",
+  "main": "module.css.json",
+  "proxy": "@my-org/electrons",
+  "sideEffects": false
+}

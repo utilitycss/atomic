@@ -1,0 +1,34 @@
+:import("@my-org/simple-class/module.css") {
+  single: single-declaration;
+  multiple: multiple-declarations;
+}
+
+:root {
+  --large: 4em;
+}
+
+.local-class {
+  height: 100%;
+}
+
+.local-composes {
+  composes: local-class;
+  composes: fontWeightBold from "@my-org/electrons";
+
+  text-decoration: underline;
+}
+
+.simple-composes {
+  composes: single;
+}
+
+.complex-composes {
+  composes: single multiple local-composes;
+  composes: black white_hover from "@my-org/electrons";
+}
+
+.extend {
+  composes: multiple;
+
+  font-size: var(--large);
+}

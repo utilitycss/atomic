@@ -33,7 +33,7 @@ function removeUnusedElectrons({
 }: RemoveUnusedElectronsOptions): Plugin {
   return {
     postcssPlugin: PLUGIN_NAME,
-    async Once(css: Root, { result }: Helpers) {
+    async OnceExit(css: Root, { result }: Helpers) {
       const { opts: { to: toPath = "" } = {} } = result;
       // last step creates modules.css and at that time the index.css.json is
       // already created

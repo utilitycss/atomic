@@ -2,7 +2,7 @@
 const debug = require("debug")("atomic:atomic-css-modules");
 
 import path from "path";
-import postcssFn, { Root, Helpers, Plugin } from "postcss";
+import postcssFn, { Root, Helpers, Plugin, Rule } from "postcss";
 
 import generateScopedNameFn from "./generateScopedName";
 import generateAtomTypings from "../../action/generate-atom-typings";
@@ -23,11 +23,14 @@ interface AtomicCssModulesOptions {
 }
 type GetJSON = (cssFileName: string, json: { [key: string]: string }) => void;
 
+const isEmptyRule = (r: Rule) =>
+  r.nodes.filter((el) => el.type !== "comment").length === 0;
+
 function atomicCssModules(opts: AtomicCssModulesOptions): Plugin {
   const { server } = opts;
   return {
     postcssPlugin: PLUGIN_NAME,
-    async Once(css: Root, { result, ...rest }: Helpers) {
+    async Once(css: Root, { result }: Helpers) {
       const { opts: { to, from } = { to: "" } } = result;
       // only apply the plugin when a target is specified (avoid infinite loop)
       if (!to) return;
@@ -50,7 +53,7 @@ function atomicCssModules(opts: AtomicCssModulesOptions): Plugin {
         const resultClassesSet = new Set();
         css.walkRules((r) => {
           const matches = r.selector.match(CLASS_RE);
-          if (matches) {
+          if (matches && !isEmptyRule(r)) {
             matches.forEach((m) => resultClassesSet.add(m.slice(1)));
           }
         });

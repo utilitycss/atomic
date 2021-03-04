@@ -1,0 +1,4 @@
+declare const global-class: string;
+declare const child: string;
+declare const modifier: string
+export { global-class, child, modifier }

@@ -1,0 +1,10 @@
+.YdWKhm {
+  color: red;
+}
+
+.HMnHnG {
+  color: blue;
+  width: 100px;
+  display: flex;
+  border: 1px solid red;
+}

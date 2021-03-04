@@ -1,0 +1,49 @@
+/* custom static css (e.g. normalize) can be added here */@media screen and (min-width: 320px) {
+    .Lp5Coj {
+        color: #1a1a1a
+    }
+}@media screen and (min-width: 480px) {
+}@media screen and (min-width: 768px) {
+}@media screen and (min-width: 1024px) {
+    .HNuXy3 {
+        color: #fafafa
+    }
+}@media screen and (min-width: 1280px) {
+}
+
+.xl882z {
+  font-size: 1em;
+}
+
+@media screen and (min-width: 768px) {
+  .xl882z {
+    font-size: 2em;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .xl882z {
+    font-size: 3em;
+  }
+}
+
+
+@media screen and (min-width: 1024px) {
+  .McqfDp {
+    font-size: 3em;
+  }
+}
+
+.McqfDp {
+  font-size: 1em;
+}
+
+@media screen and (min-width: 768px) {
+  .McqfDp {
+    font-size: 2em;
+  }
+}
+
+.hg64jR {
+  font-size: 4em;
+}

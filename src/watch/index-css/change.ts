@@ -30,6 +30,7 @@ const indexCssChange: Watcher = (server) => async (dir) => {
     const { css } = await bundleAtomsAction({
       source: concatenateCSSVisitor.getCSS(),
       to: bundleCssPath,
+      additionalPlugins: server.additionalPlugins,
     });
     await server.writeFile(bundleCssPath, css);
     debug(`✅: Building CSS bundle => ${bundleCssPath}`);

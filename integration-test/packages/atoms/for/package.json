@@ -1,0 +1,6 @@
+{
+  "name": "@my-org/for",
+  "version": "0.0.1",
+  "main": "module.css.json",
+  "sideEffects": false
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@my-org/__root__",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "atomic build",
+    "start": "atomic start"
+  },
+  "devDependencies": {
+    "@utilitycss/postcss-for": "^0.0.2",
+    "lerna": "3.13.3",
+    "postcss-css-variables": "^0.17.0",
+    "postcss-nested": "^5.0.3",
+    "postcss-preset-env": "^6.7.0"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/electrons",
+      "packages/atoms/**/*"
+    ]
+  }
+}

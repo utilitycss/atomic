@@ -1,0 +1,72 @@
+.AkiP_t {
+  color: red
+}
+
+  .AkiP_t .l-e8AL {
+    color: blue;
+  }
+
+.pBcZ8q {
+  color: red
+}
+
+.pBcZ8q .l-e8AL {
+    color: blue
+  }
+
+.pBcZ8q .l-e8AL .oLzZ_N {
+      color: green;
+    }
+
+.Vsez8s {
+  font-size: 1em
+}
+
+.Vsez8s.onlaI8 {
+    font-size: 2em;
+  }
+
+.HbTeo6 {
+  font-size: 1em
+}
+
+.HbTeo6.onlaI8 {
+    color: red;
+  }
+
+.HbTeo6 {
+    display: flex;
+  }
+
+.HbTeo6 .l-e8AL {
+    font-size: 0.5em
+  }
+
+.HbTeo6 .l-e8AL.IEmj7p {
+      color: blue
+    }
+
+.HbTeo6 .l-e8AL.IEmj7p .vruPji {
+        color: green;
+      }
+
+.DG8Mjh {
+  color: red
+}
+
+.DG8Mjh:hover {
+    color: blue
+  }
+
+.DG8Mjh:hover .PH_qY8 {
+      color: green
+    }
+
+.DG8Mjh:hover .PH_qY8.Tmf42F {
+        font-size: 2em
+      }
+
+.DG8Mjh:hover .PH_qY8.Tmf42F:after {
+          content: "after";
+          position: absolute;
+        }

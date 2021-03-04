@@ -1,13 +1,14 @@
 module.exports = {
   globals: {
     "ts-jest": {
-      tsConfig: "tsconfig.json"
-    }
+      tsConfig: "tsconfig.json",
+    },
   },
   moduleFileExtensions: ["ts", "js"],
+  modulePathIgnorePatterns: ["integration-test"],
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest"
+    "^.+\\.(ts|tsx)$": "ts-jest",
   },
   testMatch: ["**/**/*.test.(ts|js)"],
-  testEnvironment: "node"
+  testEnvironment: "node",
 };

@@ -35,6 +35,7 @@ export default class BuildAtomCssVisitor extends Visitor {
       source,
       utilityConfig: this.server.utilityConfig,
       electronsModuleName: this.server.electronsModuleName,
+      additionalPlugins: this.server.additionalPlugins,
     });
 
     debug(`Writing file => ${to}`);

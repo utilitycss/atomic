@@ -1,11 +1,8 @@
 import postcss, { LazyResult } from "postcss";
 
 import cssMqPacker from "@utilitycss/css-mqpacker";
+import { PluginHooksMap } from "../server";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const rmDuplicates = require("postcss-discard-duplicates");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const cssPresetEnv = require("postcss-preset-env");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cssnano = require("cssnano");
 
@@ -14,40 +11,38 @@ const bundleAtoms = async ({
   from,
   to,
   minify = false,
+  additionalPlugins,
 }: {
   source: string;
   from?: string;
   to: string;
   minify?: boolean;
+  additionalPlugins: PluginHooksMap;
 }): Promise<LazyResult> => {
   const plugins = [
-    cssPresetEnv({
-      browsers: ["> 1%", "IE 11"],
-      autoprefixer: { cascade: false },
-    }),
-    rmDuplicates(),
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ...(additionalPlugins.beforeBundling || []),
     cssMqPacker({ sort: true }),
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("postcss-combine-duplicated-selectors")({
-      removeDuplicatedProperties: true,
-    }),
+    ...(additionalPlugins.afterBundling || []),
   ];
 
   if (minify) {
     plugins.push(
-      cssnano({
-        preset: [
-          "advanced",
-          {
-            reduceIdents: false,
-            zindex: false,
-            discardComments: {
-              removeAll: true,
+      ...[
+        ...(additionalPlugins.beforeMinify || []),
+        cssnano({
+          preset: [
+            "advanced",
+            {
+              reduceIdents: false,
+              zindex: false,
+              discardComments: {
+                removeAll: true,
+              },
             },
-          },
-        ],
-      })
+          ],
+        }),
+        ...(additionalPlugins.afterMinify || []),
+      ]
     );
   }
 

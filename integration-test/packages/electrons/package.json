@@ -1,0 +1,6 @@
+{
+  "name": "@my-org/electrons",
+  "version": "0.0.1",
+  "main": "./dist/index.css",
+  "sideEffects": false
+}

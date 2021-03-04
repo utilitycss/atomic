@@ -40,6 +40,14 @@ const CWD = process.cwd();
 const PKG_FILE_RE = /^pkg:(.*)/;
 
 type FileContent = string | { [key: string]: any };
+export interface PluginHooksMap {
+  beforeEachAtom?: postcss.Plugin[];
+  afterEachAtom?: postcss.Plugin[];
+  beforeBundling?: postcss.Plugin[];
+  afterBundling?: postcss.Plugin[];
+  beforeMinify?: postcss.Plugin[];
+  afterMinify?: postcss.Plugin[];
+}
 
 export default class AtomsServer {
   atomsFolder: string;
@@ -59,6 +67,7 @@ export default class AtomsServer {
   graph: AtomGraph;
   root: Atom;
   utilityConfig: PluginConfig;
+  additionalPlugins: PluginHooksMap;
 
   constructor({
     atomsFolder = ATOMS_FOLDER,
@@ -68,6 +77,7 @@ export default class AtomsServer {
     packageScope = PACKAGE_SCOPE,
     bundleCSSPath = "./",
     bundleCSSName = BUNDLE_CSS_NAME,
+    additionalPlugins = {},
   } = {}) {
     this.atomsFolder = atomsFolder;
     this.electronsFolder = electronsFolder;
@@ -79,6 +89,7 @@ export default class AtomsServer {
       bundleCSSPath,
       `${bundleCSSName}.min.css`
     );
+    this.additionalPlugins = additionalPlugins;
     this.cache = new Map();
     this.trackClasses = new Map();
 
@@ -235,6 +246,7 @@ export default class AtomsServer {
         source: concatenateCSSVisitor.getCSS(),
         to: bundleCssPath,
         minify: false,
+        additionalPlugins: this.additionalPlugins,
       });
       await this.writeFile(bundleCssPath, css);
       debugInfo(`✅: Building CSS bundle => ${bundleCssPath}`);
@@ -246,6 +258,7 @@ export default class AtomsServer {
           source: concatenateCSSVisitor.getCSS(),
           to: bundleCssMinPath,
           minify: true,
+          additionalPlugins: this.additionalPlugins,
         });
         await this.writeFile(bundleCssMinPath, css);
         debugInfo(`✅: Building minified CSS bundle => ${bundleCssMinPath}`);

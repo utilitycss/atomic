@@ -1,0 +1,6 @@
+{
+  "name": "@my-org/simple-class",
+  "version": "0.0.1",
+  "main": "module.css.json",
+  "sideEffects": false
+}
