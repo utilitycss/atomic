@@ -1,0 +1,22 @@
+@keyframes fade-in {
+  0%,
+  10% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation-duration: 250ms;
+  animation-name: fade-in;
+}
+
+.alias {
+  animation-duration: 250ms;
+  animation-name: fade-in;
+}

@@ -1,0 +1,22 @@
+@keyframes btLJzz {
+  0%,
+  10% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.btLJzz {
+  animation-duration: 250ms;
+  animation-name: btLJzz;
+}
+
+._8_jRhp {
+  animation-duration: 250ms;
+  animation-name: btLJzz;
+}

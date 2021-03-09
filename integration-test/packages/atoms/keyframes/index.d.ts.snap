@@ -1,0 +1,3 @@
+declare const fade-in: string;
+declare const alias: string
+export { fade-in, alias }

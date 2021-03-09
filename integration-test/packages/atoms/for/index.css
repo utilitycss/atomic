@@ -1,5 +1,6 @@
 @for $i from 1 to 3 {
-  .size_$(i){
+  .size_$(i),
+  .size_$(i)_sibling {
     font-size: $(i)em;
   }
 }
