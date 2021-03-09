@@ -2,7 +2,8 @@
   color: red
 }
 
-  .single-nesting .child {
+  .single-nesting .child,
+  .single-nesting .sibling {
     color: blue;
   }
 

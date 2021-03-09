@@ -111,7 +111,8 @@ a:hover {
   color: red
 }
 
-  .AkiP_t .l-e8AL {
+  .AkiP_t .l-e8AL,
+  .AkiP_t .B_oqE3 {
     color: blue;
   }
 
@@ -192,6 +193,28 @@ a:hover {
 .hg64jR {
   font-size: 4em;
 }
+@keyframes btLJzz {
+  0%,
+  10% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.btLJzz {
+  animation-duration: 250ms;
+  animation-name: btLJzz;
+}
+
+._8_jRhp {
+  animation-duration: 250ms;
+  animation-name: btLJzz;
+}
 .global-class {
   width: 100%;
 }
@@ -204,15 +227,18 @@ a:hover {
     color: blue;
   }
 
-.oPlD0W{
+.oPlD0W,
+  .NRaoKv {
     font-size: 1em;
   }
 
-.FCG5GQ{
+.FCG5GQ,
+  .H9WShg {
     font-size: 2em;
   }
 
-.d8yso7{
+.d8yso7,
+  .uGM3oi {
     font-size: 3em;
   }
 

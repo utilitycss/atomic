@@ -1,12 +1,15 @@
-.size_1{
+.size_1,
+  .size_1_sibling {
     font-size: 1em;
   }
 
-.size_2{
+.size_2,
+  .size_2_sibling {
     font-size: 2em;
   }
 
-.size_3{
+.size_3,
+  .size_3_sibling {
     font-size: 3em;
   }
 
