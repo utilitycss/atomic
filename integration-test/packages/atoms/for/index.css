@@ -1,7 +1,17 @@
 @for $i from 1 to 3 {
+  .foo_$(i) { color: red }
+  .bar_$(i) { color: blue }
+}
+
+@for $i from 1 to 3 {
   .size_$(i),
   .size_$(i)_sibling {
     font-size: $(i)em;
+  }
+
+  .line-height_$(i),
+  .line-height_$(i)_sibling {
+    line-height: $(i)em;
   }
 }
 
@@ -16,6 +26,14 @@
 
       &.modifier_$(i)_$(j) {
         border: $(j)px red solid;
+      }
+
+      .another-child_$(i)_$(j) {
+        width: $(j)em;
+      }
+
+      &.another-modifier_$(i)_$(j) {
+        border-top: $(j)px blue solid;
       }
     }
   }
