@@ -1,15 +1,15 @@
-:global(.global-class) {
+:global(.globalClass) {
   width: 100%;
 }
 
-:global(.global-class) {
+:global(.globalClass) {
 }
 
-:global(.global-class) .child {
+:global(.globalClass) .child {
     color: red;
   }
 
-:global(.global-class).modifier {
+:global(.globalClass).modifier {
     color: blue;
   }
 

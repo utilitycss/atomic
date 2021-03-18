@@ -7,23 +7,23 @@
   --large: 4em;
 }
 
-.local-class {
+.localClass {
   height: 100%;
 }
 
-.local-composes {
-  composes: local-class;
+.localComposes {
+  composes: localClass;
   composes: fontWeightBold from "@my-org/electrons";
 
   text-decoration: underline;
 }
 
-.simple-composes {
+.simpleComposes {
   composes: single;
 }
 
-.complex-composes {
-  composes: single multiple local-composes;
+.complexComposes {
+  composes: single multiple localComposes;
   composes: black white_hover from "@my-org/electrons";
 }
 

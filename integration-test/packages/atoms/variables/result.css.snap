@@ -14,11 +14,11 @@
   --another-variable: red;
 }
 
-.YAP9F8 {
+.V_ma2j {
   font-size: var(--my-variable);
 }
 
-.XBzsTb {
+.YfpiAb {
   font-size: var(--my-variable);
   color: var(--another-variable);
 }

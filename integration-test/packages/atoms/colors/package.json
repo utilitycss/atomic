@@ -1,7 +1,8 @@
 {
   "name": "@my-org/colors",
   "version": "0.0.1",
-  "main": "module.css.json",
+  "main": "index.js",
+  "module": "index.esm.js",
   "proxy": "@my-org/electrons",
   "sideEffects": false
 }

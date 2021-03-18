@@ -3,11 +3,11 @@
   --another-variable: red;
 }
 
-.with-variable {
+.withVariable {
   font-size: var(--my-variable);
 }
 
-.with-electron-and-variables {
+.withElectronAndVariables {
   font-size: var(--my-variable);
   color: var(--another-variable);
 

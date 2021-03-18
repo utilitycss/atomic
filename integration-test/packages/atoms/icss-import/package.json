@@ -1,7 +1,8 @@
 {
   "name": "@my-org/icss-import",
   "version": "0.0.1",
-  "main": "module.css.json",
+  "main": "index.js",
+  "module": "index.esm.js",
   "sideEffects": false,
   "dependencies": {
     "@my-org/simple-class": "0.0.1"

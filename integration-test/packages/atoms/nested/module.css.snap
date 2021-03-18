@@ -1,29 +1,29 @@
-.single-nesting {
+.singleNesting {
   color: red
 }
 
-  .single-nesting .child,
-  .single-nesting .sibling {
+  .singleNesting .child,
+  .singleNesting .sibling {
     color: blue;
   }
 
-.deep-nesting {
+.deepNesting {
   color: red
 }
 
-.deep-nesting .child {
+.deepNesting .child {
     color: blue
   }
 
-.deep-nesting .child .grandchild {
+.deepNesting .child .grandchild {
       color: green;
     }
 
-.class-combination {
+.classCombination {
   font-size: 1em
 }
 
-.class-combination.modifier {
+.classCombination.modifier {
     font-size: 2em;
   }
 
@@ -43,31 +43,31 @@
     font-size: 0.5em
   }
 
-.complex .child.child-modifier {
+.complex .child.childModifier {
       color: blue
     }
 
-.complex .child.child-modifier .nested {
+.complex .child.childModifier .nested {
         color: green;
       }
 
-.nested-pseudo {
+.nestedPseudo {
   color: red
 }
 
-.nested-pseudo:hover {
+.nestedPseudo:hover {
     color: blue
   }
 
-.nested-pseudo:hover .hover-child {
+.nestedPseudo:hover .hoverChild {
       color: green
     }
 
-.nested-pseudo:hover .hover-child.hover-child-modifier {
+.nestedPseudo:hover .hoverChild.hoverChildModifier {
         font-size: 2em
       }
 
-.nested-pseudo:hover .hover-child.hover-child-modifier:after {
+.nestedPseudo:hover .hoverChild.hoverChildModifier:after {
           content: "after";
           position: absolute;
         }

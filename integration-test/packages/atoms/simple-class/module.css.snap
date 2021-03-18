@@ -1,8 +1,8 @@
-.single-declaration {
+.singleDeclaration {
   color: red;
 }
 
-.multiple-declarations {
+.multipleDeclarations {
   color: blue;
   width: 100px;
   display: flex;

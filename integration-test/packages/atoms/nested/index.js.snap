@@ -1,0 +1,15 @@
+module.exports = {
+  singleNesting: "mHJuMv",
+  child: "qhqOPF",
+  sibling: "B_oqE3",
+  deepNesting: "_9q-zqg",
+  grandchild: "oLzZ_N",
+  classCombination: "nHROCZ",
+  modifier: "YZP-Tu",
+  complex: "HbTeo6",
+  childModifier: "_6cCOB0",
+  nested: "vruPji",
+  nestedPseudo: "XPMGYZ",
+  hoverChild: "QMsI4n",
+  hoverChildModifier: "fc23Jo"
+};

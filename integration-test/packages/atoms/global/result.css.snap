@@ -1,12 +1,12 @@
-.global-class {
+.globalClass {
   width: 100%;
 }
 
-.global-class .v5Vpzq {
+.globalClass .v5Vpzq {
     color: red;
   }
 
-.global-class.ado0HJ {
+.globalClass.ado0HJ {
     color: blue;
   }
 

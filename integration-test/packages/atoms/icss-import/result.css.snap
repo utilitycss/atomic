@@ -1,11 +1,4 @@
-.YdWKhm {
-  color: red;
-}.HMnHnG {
-  color: blue;
-  width: 100px;
-  display: flex;
-  border: 1px solid red;
-}/* custom static css (e.g. normalize) can be added here */._1RrCqF {
+/* custom static css (e.g. normalize) can be added here */._1RrCqF {
     color: #1a1a1a
 }.pQ96hs:hover {
     color: #fafafa
@@ -22,11 +15,11 @@
   --large: 4em;
 }
 
-.zHcJU0 {
+.n4oS1I {
   height: 100%;
 }
 
-.-dnEFp {
+.i6EUck {
 
   text-decoration: underline;
 }

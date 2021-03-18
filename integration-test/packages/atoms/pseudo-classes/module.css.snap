@@ -22,6 +22,6 @@
   background-color: grey;
 }
 
-.hover-electron {
+.hoverElectron {
   composes: black black_hover from "@my-org/electrons";
 }

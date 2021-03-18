@@ -9,8 +9,8 @@
     font-size: $(i)em;
   }
 
-  .line-height_$(i),
-  .line-height_$(i)_sibling {
+  .lineHeight_$(i),
+  .lineHeight_$(i)_sibling {
     line-height: $(i)em;
   }
 }
@@ -28,11 +28,11 @@
         border: $(j)px red solid;
       }
 
-      .another-child_$(i)_$(j) {
+      .anotherChild_$(i)_$(j) {
         width: $(j)em;
       }
 
-      &.another-modifier_$(i)_$(j) {
+      &.anotherModifier_$(i)_$(j) {
         border-top: $(j)px blue solid;
       }
     }
