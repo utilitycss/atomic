@@ -1,8 +1,8 @@
-:global(.global-class) {
+:global(.globalClass) {
   width: 100%;
 }
 
-:global(.global-class) {
+:global(.globalClass) {
   .child {
     color: red;
   }

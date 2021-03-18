@@ -1,4 +1,4 @@
-@keyframes fade-in {
+@keyframes fadeIn {
   0%,
   10% {
     opacity: 0;
@@ -11,12 +11,12 @@
   }
 }
 
-.fade-in {
+.fadeIn {
   animation-duration: 250ms;
-  animation-name: fade-in;
+  animation-name: fadeIn;
 }
 
 .alias {
   animation-duration: 250ms;
-  animation-name: fade-in;
+  animation-name: fadeIn;
 }

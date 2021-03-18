@@ -1,5 +1,5 @@
-declare const responsive-class: string;
-declare const responsive-class-mixed-order: string;
-declare const responsive-electrons: string;
-declare const responsive-electrons-with-custom-delcaration: string
-export { responsive-class, responsive-class-mixed-order, responsive-electrons, responsive-electrons-with-custom-delcaration }
+declare const responsiveClass: string;
+declare const responsiveClassMixedOrder: string;
+declare const responsiveElectrons: string;
+declare const responsiveElectronsWithCustomDelcaration: string
+export { responsiveClass, responsiveClassMixedOrder, responsiveElectrons, responsiveElectronsWithCustomDelcaration }

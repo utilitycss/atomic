@@ -1,29 +1,29 @@
-.AkiP_t {
+.mHJuMv {
   color: red
 }
 
-  .AkiP_t .l-e8AL,
-  .AkiP_t .B_oqE3 {
+  .mHJuMv .qhqOPF,
+  .mHJuMv .B_oqE3 {
     color: blue;
   }
 
-.pBcZ8q {
+._9q-zqg {
   color: red
 }
 
-.pBcZ8q .l-e8AL {
+._9q-zqg .qhqOPF {
     color: blue
   }
 
-.pBcZ8q .l-e8AL .oLzZ_N {
+._9q-zqg .qhqOPF .oLzZ_N {
       color: green;
     }
 
-.Vsez8s {
+.nHROCZ {
   font-size: 1em
 }
 
-.Vsez8s.onlaI8 {
+.nHROCZ.YZP-Tu {
     font-size: 2em;
   }
 
@@ -31,7 +31,7 @@
   font-size: 1em
 }
 
-.HbTeo6.onlaI8 {
+.HbTeo6.YZP-Tu {
     color: red;
   }
 
@@ -39,35 +39,35 @@
     display: flex;
   }
 
-.HbTeo6 .l-e8AL {
+.HbTeo6 .qhqOPF {
     font-size: 0.5em
   }
 
-.HbTeo6 .l-e8AL.IEmj7p {
+.HbTeo6 .qhqOPF._6cCOB0 {
       color: blue
     }
 
-.HbTeo6 .l-e8AL.IEmj7p .vruPji {
+.HbTeo6 .qhqOPF._6cCOB0 .vruPji {
         color: green;
       }
 
-.DG8Mjh {
+.XPMGYZ {
   color: red
 }
 
-.DG8Mjh:hover {
+.XPMGYZ:hover {
     color: blue
   }
 
-.DG8Mjh:hover .PH_qY8 {
+.XPMGYZ:hover .QMsI4n {
       color: green
     }
 
-.DG8Mjh:hover .PH_qY8.Tmf42F {
+.XPMGYZ:hover .QMsI4n.fc23Jo {
         font-size: 2em
       }
 
-.DG8Mjh:hover .PH_qY8.Tmf42F:after {
+.XPMGYZ:hover .QMsI4n.fc23Jo:after {
           content: "after";
           position: absolute;
         }

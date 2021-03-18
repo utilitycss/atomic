@@ -13,8 +13,8 @@
     font-size: 1em;
   }
 
-.line-height_1,
-  .line-height_1_sibling {
+.lineHeight_1,
+  .lineHeight_1_sibling {
     line-height: 1em;
   }
 
@@ -23,8 +23,8 @@
     font-size: 2em;
   }
 
-.line-height_2,
-  .line-height_2_sibling {
+.lineHeight_2,
+  .lineHeight_2_sibling {
     line-height: 2em;
   }
 
@@ -33,8 +33,8 @@
     font-size: 3em;
   }
 
-.line-height_3,
-  .line-height_3_sibling {
+.lineHeight_3,
+  .lineHeight_3_sibling {
     line-height: 3em;
   }
 
@@ -50,11 +50,11 @@
         border: 1px red solid;
       }
 
-.calc1 .another-child_1_1 {
+.calc1 .anotherChild_1_1 {
         width: 1em;
       }
 
-.calc1.another-modifier_1_1 {
+.calc1.anotherModifier_1_1 {
         border-top: 1px blue solid;
       }
 
@@ -66,11 +66,11 @@
         border: 2px red solid;
       }
 
-.calc1 .another-child_1_2 {
+.calc1 .anotherChild_1_2 {
         width: 2em;
       }
 
-.calc1.another-modifier_1_2 {
+.calc1.anotherModifier_1_2 {
         border-top: 2px blue solid;
       }
 
@@ -82,11 +82,11 @@
         border: 3px red solid;
       }
 
-.calc1 .another-child_1_3 {
+.calc1 .anotherChild_1_3 {
         width: 3em;
       }
 
-.calc1.another-modifier_1_3 {
+.calc1.anotherModifier_1_3 {
         border-top: 3px blue solid;
       }
 
@@ -102,11 +102,11 @@
         border: 1px red solid;
       }
 
-.calc2 .another-child_2_1 {
+.calc2 .anotherChild_2_1 {
         width: 1em;
       }
 
-.calc2.another-modifier_2_1 {
+.calc2.anotherModifier_2_1 {
         border-top: 1px blue solid;
       }
 
@@ -118,11 +118,11 @@
         border: 2px red solid;
       }
 
-.calc2 .another-child_2_2 {
+.calc2 .anotherChild_2_2 {
         width: 2em;
       }
 
-.calc2.another-modifier_2_2 {
+.calc2.anotherModifier_2_2 {
         border-top: 2px blue solid;
       }
 
@@ -134,11 +134,11 @@
         border: 3px red solid;
       }
 
-.calc2 .another-child_2_3 {
+.calc2 .anotherChild_2_3 {
         width: 3em;
       }
 
-.calc2.another-modifier_2_3 {
+.calc2.anotherModifier_2_3 {
         border-top: 3px blue solid;
       }
 
@@ -154,11 +154,11 @@
         border: 1px red solid;
       }
 
-.calc3 .another-child_3_1 {
+.calc3 .anotherChild_3_1 {
         width: 1em;
       }
 
-.calc3.another-modifier_3_1 {
+.calc3.anotherModifier_3_1 {
         border-top: 1px blue solid;
       }
 
@@ -170,11 +170,11 @@
         border: 2px red solid;
       }
 
-.calc3 .another-child_3_2 {
+.calc3 .anotherChild_3_2 {
         width: 2em;
       }
 
-.calc3.another-modifier_3_2 {
+.calc3.anotherModifier_3_2 {
         border-top: 2px blue solid;
       }
 
@@ -186,10 +186,10 @@
         border: 3px red solid;
       }
 
-.calc3 .another-child_3_3 {
+.calc3 .anotherChild_3_3 {
         width: 3em;
       }
 
-.calc3.another-modifier_3_3 {
+.calc3.anotherModifier_3_3 {
         border-top: 3px blue solid;
       }

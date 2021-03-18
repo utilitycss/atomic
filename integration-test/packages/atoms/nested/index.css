@@ -1,4 +1,4 @@
-.single-nesting {
+.singleNesting {
   color: red;
 
   .child,
@@ -7,7 +7,7 @@
   }
 }
 
-.deep-nesting {
+.deepNesting {
   color: red;
 
   .child {
@@ -19,7 +19,7 @@
   }
 }
 
-.class-combination {
+.classCombination {
   font-size: 1em;
 
   &.modifier {
@@ -41,7 +41,7 @@
   .child {
     font-size: 0.5em;
 
-    &.child-modifier {
+    &.childModifier {
       color: blue;
 
       .nested {
@@ -51,16 +51,16 @@
   }
 }
 
-.nested-pseudo {
+.nestedPseudo {
   color: red;
 
   &:hover {
     color: blue;
 
-    .hover-child {
+    .hoverChild {
       color: green;
 
-      &.hover-child-modifier {
+      &.hoverChildModifier {
         font-size: 2em;
 
         &:after {

@@ -1,0 +1,13 @@
+export const singleNesting = "mHJuMv";
+export const child = "qhqOPF";
+export const sibling = "B_oqE3";
+export const deepNesting = "_9q-zqg";
+export const grandchild = "oLzZ_N";
+export const classCombination = "nHROCZ";
+export const modifier = "YZP-Tu";
+export const complex = "HbTeo6";
+export const childModifier = "_6cCOB0";
+export const nested = "vruPji";
+export const nestedPseudo = "XPMGYZ";
+export const hoverChild = "QMsI4n";
+export const hoverChildModifier = "fc23Jo"

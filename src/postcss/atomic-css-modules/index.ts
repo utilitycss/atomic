@@ -6,6 +6,8 @@ import postcssFn, { Root, Helpers, Plugin, Rule } from "postcss";
 
 import generateScopedNameFn from "./generateScopedName";
 import generateAtomTypings from "../../action/generate-atom-typings";
+import generateAtomCJS from "../../action/generate-atom-cjs";
+import generateAtomESM from "../../action/generate-atom-esm";
 import AtomsServer from "../../server";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cssModules = require("postcss-modules");
@@ -13,6 +15,8 @@ const cssModules = require("postcss-modules");
 const PLUGIN_NAME = "utility-atomic-css-modules";
 const CLASS_RE = /\.([\w-]+)/g;
 const INDEX_TYPE_FILE = "index.d.ts";
+const INDEX_CJS_FILE = "index.js";
+const INDEX_ESM_FILE = "index.esm.js";
 
 interface AtomicCssModulesOptions {
   trackClasses: Map<string, string>;
@@ -69,10 +73,21 @@ function atomicCssModules(opts: AtomicCssModulesOptions): Plugin {
 
         await server.writeFile(jsonFilePath, JSON.stringify(filteredJSON));
 
+        const cjsFilePath = path.join(
+          path.dirname(cssFileName),
+          INDEX_CJS_FILE
+        );
+        const esmFilePath = path.join(
+          path.dirname(cssFileName),
+          INDEX_ESM_FILE
+        );
         const typingsFilePath = path.join(
           path.dirname(cssFileName),
           INDEX_TYPE_FILE
         );
+
+        await generateAtomCJS(cjsFilePath, filteredJSON, { server });
+        await generateAtomESM(esmFilePath, filteredJSON, { server });
         await generateAtomTypings(typingsFilePath, filteredJSON, { server });
       };
 

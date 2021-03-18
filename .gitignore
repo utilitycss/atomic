@@ -66,6 +66,8 @@ typings/
 
 # Integration test
 /integration-test/packages/atoms/all/*.css
+/integration-test/packages/atoms/**/index.js
+/integration-test/packages/atoms/**/index.esm.js
 /integration-test/yarn.lock
 /integration-test/**/*.d.ts
 /integration-test/**/module.css

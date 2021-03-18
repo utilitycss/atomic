@@ -1,4 +1,4 @@
-@keyframes btLJzz {
+@keyframes _4bsdl {
   0%,
   10% {
     opacity: 0;
@@ -11,12 +11,12 @@
   }
 }
 
-.btLJzz {
+._4bsdl {
   animation-duration: 250ms;
-  animation-name: btLJzz;
+  animation-name: _4bsdl;
 }
 
-._8_jRhp {
+.C0hAH1 {
   animation-duration: 250ms;
-  animation-name: btLJzz;
+  animation-name: _4bsdl;
 }

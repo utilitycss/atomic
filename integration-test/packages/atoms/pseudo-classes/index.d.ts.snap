@@ -1,5 +1,5 @@
 declare const hover: string;
 declare const focus: string;
 declare const button: string;
-declare const hover-electron: string
-export { hover, focus, button, hover-electron }
+declare const hoverElectron: string
+export { hover, focus, button, hoverElectron }

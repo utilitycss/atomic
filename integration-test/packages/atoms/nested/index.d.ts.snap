@@ -1,14 +1,14 @@
-declare const single-nesting: string;
+declare const singleNesting: string;
 declare const child: string;
 declare const sibling: string;
-declare const deep-nesting: string;
+declare const deepNesting: string;
 declare const grandchild: string;
-declare const class-combination: string;
+declare const classCombination: string;
 declare const modifier: string;
 declare const complex: string;
-declare const child-modifier: string;
+declare const childModifier: string;
 declare const nested: string;
-declare const nested-pseudo: string;
-declare const hover-child: string;
-declare const hover-child-modifier: string
-export { single-nesting, child, sibling, deep-nesting, grandchild, class-combination, modifier, complex, child-modifier, nested, nested-pseudo, hover-child, hover-child-modifier }
+declare const nestedPseudo: string;
+declare const hoverChild: string;
+declare const hoverChildModifier: string
+export { singleNesting, child, sibling, deepNesting, grandchild, classCombination, modifier, complex, childModifier, nested, nestedPseudo, hoverChild, hoverChildModifier }
