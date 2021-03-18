@@ -1,0 +1,7 @@
+{
+  "name": "@my-org/deeply-nested-atom",
+  "version": "0.0.1",
+  "main": "index.js",
+  "module": "index.esm.js",
+  "sideEffects": false
+}
