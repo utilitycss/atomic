@@ -7,17 +7,25 @@ import chalk from "chalk";
 import program from "commander";
 import { AtomsServer } from "./";
 import inquirer from "inquirer";
+import execa from "execa";
+import Listr, { ListrTask } from "listr";
 
 import { default as generate, Templates } from "./util/generate-file";
 import generateAtom from "./util/generate-atom";
-import run from "./util/run";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const figlet = require("figlet");
 
 clear();
 console.log(
-  chalk.red(figlet.textSync("atomic-cli", { horizontalLayout: "full" }))
+  chalk.red(
+    figlet.textSync("atomic cli", {
+      horizontalLayout: "default",
+      verticalLayout: "default",
+      width: 100,
+      whitespaceBreak: true,
+    })
+  )
 );
 
 // This atomic server, as well as the ICSS module resolution extensively use
@@ -171,87 +179,115 @@ program.command("init").action((cmd) => {
       };
 
       try {
-        const filePromises = Promise.all([
-          // Root folder
-          generate(Templates.PACKAGE_JSON, data, "package.json"),
-          generate(Templates.LERNA_JSON, data, "lerna.json"),
-          generate(Templates.YARNRC, data, ".yarnrc"),
-          generate(Templates.ATOMIC_CONFIG_JS, data, "atomic.config.js"),
-          // Electrons package
-          generate(
-            Templates.ELECTRONS_PACKAGE_JSON,
-            data,
-            path.join("packages", data.electronsFolder, "package.json")
-          ),
-          generate(
-            Templates.ELECTRONS_INDEX_CSS,
-            data,
-            path.join("packages", data.electronsFolder, "index.css")
-          ),
-          generate(
-            Templates.ELECTRONS_POSTCSS_PLUGINS_JS,
-            data,
-            path.join("packages", data.electronsFolder, "postcss.plugins.js")
-          ),
-          generate(
-            Templates.ELECTRONS_UTILITY_CONFIG_JS,
-            data,
-            path.join("packages", data.electronsFolder, "utility.config.js")
-          ),
-          generate(
-            Templates.ELECTRONS_CONFIG_INDEX_JS,
-            data,
-            path.join("packages", data.electronsFolder, "config", "index.js")
-          ),
-          generate(
-            Templates.ELECTRONS_CONFIG_BREAKPOINTS_JS,
-            data,
-            path.join(
-              "packages",
-              data.electronsFolder,
-              "config",
-              "breakpoints.js"
-            )
-          ),
-          generate(
-            Templates.ELECTRONS_CONFIG_BASE_JS,
-            data,
-            path.join("packages", data.electronsFolder, "config", "base.js")
-          ),
-          // Sample electrons
-          generate(
-            Templates.ELECTRONS_CONFIG_COLORS_JS,
-            data,
-            path.join("packages", data.electronsFolder, "config", "colors.js")
-          ),
-          generate(
-            Templates.ELECTRONS_CONFIG_FONT_JS,
-            data,
-            path.join("packages", data.electronsFolder, "config", "font.js")
-          ),
-          // Atoms packages
-          generate(
-            Templates.ATOMS_UTILITY_CONFIG_JS,
-            data,
-            path.resolve(data.utilityConfigPath)
-          ),
-          // Sample atoms
-          generateAtom("colors", { data, proxy: true }),
-          generateAtom("typography", { data }),
-          generate(
-            Templates.ATOM_TYPOGRAPHY_INDEX_CSS,
-            data,
-            path.join("packages", data.atomsFolder, "typography", "index.css")
-          ),
-        ]);
-        console.log(
-          chalk.blueBright("[START] Generating project structure...")
-        );
-        await filePromises;
-        console.log(chalk.green("[DONE] Generating project structure"));
-        console.log(chalk.blueBright("[START] Installing dependencies..."));
-        await run("yarn");
-        console.log(chalk.green("[DONE] Installing dependencies..."));
+        const listrTasks: ListrTask[] = [];
+
+        listrTasks.push({
+          title: "Generating project structure",
+          task: async () => {
+            await Promise.all([
+              // Root folder
+              generate(Templates.PACKAGE_JSON, data, "package.json"),
+              generate(Templates.LERNA_JSON, data, "lerna.json"),
+              generate(Templates.YARNRC, data, ".yarnrc"),
+              generate(Templates.ATOMIC_CONFIG_JS, data, "atomic.config.js"),
+              // Electrons package
+              generate(
+                Templates.ELECTRONS_PACKAGE_JSON,
+                data,
+                path.join("packages", data.electronsFolder, "package.json")
+              ),
+              generate(
+                Templates.ELECTRONS_INDEX_CSS,
+                data,
+                path.join("packages", data.electronsFolder, "index.css")
+              ),
+              generate(
+                Templates.ELECTRONS_POSTCSS_PLUGINS_JS,
+                data,
+                path.join(
+                  "packages",
+                  data.electronsFolder,
+                  "postcss.plugins.js"
+                )
+              ),
+              generate(
+                Templates.ELECTRONS_UTILITY_CONFIG_JS,
+                data,
+                path.join("packages", data.electronsFolder, "utility.config.js")
+              ),
+              generate(
+                Templates.ELECTRONS_CONFIG_INDEX_JS,
+                data,
+                path.join(
+                  "packages",
+                  data.electronsFolder,
+                  "config",
+                  "index.js"
+                )
+              ),
+              generate(
+                Templates.ELECTRONS_CONFIG_BREAKPOINTS_JS,
+                data,
+                path.join(
+                  "packages",
+                  data.electronsFolder,
+                  "config",
+                  "breakpoints.js"
+                )
+              ),
+              generate(
+                Templates.ELECTRONS_CONFIG_BASE_JS,
+                data,
+                path.join("packages", data.electronsFolder, "config", "base.js")
+              ),
+              // Sample electrons
+              generate(
+                Templates.ELECTRONS_CONFIG_COLORS_JS,
+                data,
+                path.join(
+                  "packages",
+                  data.electronsFolder,
+                  "config",
+                  "colors.js"
+                )
+              ),
+              generate(
+                Templates.ELECTRONS_CONFIG_FONT_JS,
+                data,
+                path.join("packages", data.electronsFolder, "config", "font.js")
+              ),
+              // Atoms packages
+              generate(
+                Templates.ATOMS_UTILITY_CONFIG_JS,
+                data,
+                path.resolve(data.utilityConfigPath)
+              ),
+              // Sample atoms
+              generateAtom("colors", { data, proxy: true }),
+              generateAtom("typography", { data }),
+              generate(
+                Templates.ATOM_TYPOGRAPHY_INDEX_CSS,
+                data,
+                path.join(
+                  "packages",
+                  data.atomsFolder,
+                  "typography",
+                  "index.css"
+                )
+              ),
+            ]);
+          },
+        });
+
+        listrTasks.push({
+          title: "Installing dependencies",
+          task: () => execa("yarn"),
+        });
+
+        const tasks = new Listr(listrTasks, {
+          exitOnError: true,
+        });
+        await tasks.run();
       } catch (e) {
         console.error(chalk.red("[ERROR]", e));
       }
