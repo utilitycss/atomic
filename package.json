@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@utilitycss/css-mqpacker": "^0.0.1",
-    "@utilitycss/utility": "^1.0.3",
+    "@utilitycss/utility": "^1.0.4",
     "chalk": "^4.1.0",
     "chokidar": "^3.5.1",
     "clear": "^0.1.0",
