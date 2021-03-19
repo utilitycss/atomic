@@ -3,12 +3,15 @@ const debug = require("debug")("atomic:server-meta");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const debugInfo = require("debug")("atomic:server");
 
+import Listr, { ListrTask } from "listr";
 import chokidar from "chokidar";
 import chalk from "chalk";
 import * as postcss from "postcss";
 import path from "path";
 import fs, { promises as fsAsync } from "fs";
 import { PluginConfig } from "@utilitycss/utility/dist/types";
+import ora from "ora";
+import cliSpinner from "cli-spinners";
 
 import {
   PACKAGE_FOLDER,
@@ -33,6 +36,9 @@ import { Visitor } from "./visitor/visitor";
 
 const readFile = fsAsync.readFile;
 const writeFile = fsAsync.writeFile;
+
+const lineBreak = "\n\n";
+const horizontalLine = "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500";
 
 const DEVELOPMENT = process.env.NODE_ENV === "development";
 const CWD = process.cwd();
@@ -69,6 +75,8 @@ export default class AtomsServer {
   utilityConfig: PluginConfig;
   additionalPlugins: PluginHooksMap;
 
+  progressSpinner: ora.Ora;
+
   constructor({
     atomsFolder = ATOMS_FOLDER,
     electronsFolder = ELECTRONS_FOLDER,
@@ -92,6 +100,9 @@ export default class AtomsServer {
     this.additionalPlugins = additionalPlugins;
     this.cache = new Map();
     this.trackClasses = new Map();
+    this.progressSpinner = ora({
+      spinner: cliSpinner.dots3,
+    });
 
     this.atomsPathRE = new RegExp(`${PACKAGE_FOLDER}\\/${atomsFolder}`);
     this.importedElectronRE = new RegExp(
@@ -167,43 +178,63 @@ export default class AtomsServer {
   }
 
   async initialize(): Promise<this> {
-    try {
-      this.graph = await generateDependencyGraph(this.atomsPathRE);
-    } catch (err) {
-      console.error(err);
-      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
-      process.exit(1);
-    }
+    return new Promise(async (resolve, reject) => {
+      const listrTasks: ListrTask[] = [];
 
-    try {
-      const roots = Object.keys(this.graph).filter(
-        (name) => this.graph[name].parents.length === 0
-      );
+      try {
+        listrTasks.push({
+          title: "Building dependency graph.",
+          task: async () => {
+            this.graph = await generateDependencyGraph(this.atomsPathRE);
+          },
+        });
 
-      this.root = new Atom({
-        name: "all",
-        atoms: this.graph,
-        isCss: false,
-      }).withChildren(roots);
+        listrTasks.push({
+          title: "Initializing server",
+          task: async () => {
+            const roots = Object.keys(this.graph).filter(
+              (name) => this.graph[name].parents.length === 0
+            );
 
-      // Pre-populate cache
-      Object.keys(this.graph).forEach(async (name) => {
-        await this.readFile(
-          path.join(CWD, this.graph[name].path, PACKAGE_JSON)
-        );
-        if (this.graph[name].isCss) {
-          await this.readFile(path.join(CWD, this.graph[name].path, INDEX_CSS));
-        }
-      });
-      this.utilityConfig = require(path.join(CWD, this.utilityConfigPath));
+            this.root = new Atom({
+              name: "all",
+              atoms: this.graph,
+              isCss: false,
+            }).withChildren(roots);
 
-      debugInfo("✅: Initializing server.");
-      return this;
-    } catch (err) {
-      console.error(err);
-      console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
-      process.exit(1);
-    }
+            // Pre-populate cache
+            Object.keys(this.graph).forEach(async (name) => {
+              await this.readFile(
+                path.join(CWD, this.graph[name].path, PACKAGE_JSON)
+              );
+              if (this.graph[name].isCss) {
+                await this.readFile(
+                  path.join(CWD, this.graph[name].path, INDEX_CSS)
+                );
+              }
+            });
+            this.utilityConfig = require(path.join(
+              CWD,
+              this.utilityConfigPath
+            ));
+
+            debugInfo("✅: Initializing server.");
+          },
+        });
+
+        const tasks = new Listr(listrTasks, {
+          exitOnError: true,
+        });
+        await tasks.run();
+
+        resolve(this);
+      } catch (err) {
+        reject();
+        console.error(err);
+        console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
+        process.exit(1);
+      }
+    });
   }
 
   async run(): Promise<void> {
@@ -214,6 +245,8 @@ export default class AtomsServer {
         `${PACKAGE_FOLDER}/${this.atomsFolder}/**/${INDEX_CSS}`
       );
       indexCssWatcher.on("change", indexCssWatchChange(this));
+      this.progressSpinner.start();
+      this.progressSpinner.text = "Waiting for CSS changes";
     } catch (err) {
       console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
@@ -223,46 +256,82 @@ export default class AtomsServer {
 
   async build(): Promise<void> {
     try {
-      /** Build base electron config */
-      await electronsCssAction({ electronsFolder: this.electronsFolder });
-      debugInfo("✅: Building Electron CSS.");
+      const listrTasks: ListrTask[] = [];
 
-      /** Add electron to server root cache. */
-      await electronsRoot({ server: this });
-      debugInfo("✅: Building Electron Root.");
+      listrTasks.push({
+        title: "Building Electron CSS.",
+        task: async () => {
+          /** Build base electron config */
+          await electronsCssAction({ electronsFolder: this.electronsFolder });
+          debugInfo("✅: Building Electron CSS.");
+        },
+      });
 
-      await this.root.accept(
-        new BuildAtomCssVisitor({
-          server: this,
-        })
-      );
-      debugInfo("✅: Building Atoms CSS.");
+      listrTasks.push({
+        title: "Caching Electron Root.",
+        task: async () => {
+          /** Add electron to server root cache. */
+          await electronsRoot({ server: this });
+          debugInfo("✅: Building Electron Root.");
+        },
+      });
+
+      listrTasks.push({
+        title: "Building Atoms CSS.",
+        task: async () => {
+          await this.root.accept(
+            new BuildAtomCssVisitor({
+              server: this,
+            })
+          );
+          debugInfo("✅: Building Atoms CSS.");
+        },
+      });
 
       /** Build CSS bundle */
-      const concatenateCSSVisitor = new ConcatenateCSSVisitor({ server: this });
-      await this.root.accept(concatenateCSSVisitor);
       const bundleCssPath = path.join(CWD, this.bundleCSSPath);
-      const { css } = await bundleAtomsAction({
-        source: concatenateCSSVisitor.getCSS(),
-        to: bundleCssPath,
-        minify: false,
-        additionalPlugins: this.additionalPlugins,
+      const concatenateCSSVisitor = new ConcatenateCSSVisitor({
+        server: this,
       });
-      await this.writeFile(bundleCssPath, css);
-      debugInfo(`✅: Building CSS bundle => ${bundleCssPath}`);
+      listrTasks.push({
+        title: `Building CSS bundle => ${bundleCssPath}`,
+        task: async () => {
+          await this.root.accept(concatenateCSSVisitor);
+          const { css } = await bundleAtomsAction({
+            source: concatenateCSSVisitor.getCSS(),
+            to: bundleCssPath,
+            minify: false,
+            additionalPlugins: this.additionalPlugins,
+          });
+          await this.writeFile(bundleCssPath, css);
+          debugInfo(`✅: Building CSS bundle => ${bundleCssPath}`);
+        },
+      });
 
       /** Build Minified CSS bundle */
       if (!DEVELOPMENT) {
         const bundleCssMinPath = path.join(CWD, this.bundleCSSMinPath);
-        const { css } = await bundleAtomsAction({
-          source: concatenateCSSVisitor.getCSS(),
-          to: bundleCssMinPath,
-          minify: true,
-          additionalPlugins: this.additionalPlugins,
+        listrTasks.push({
+          title: `Building minified CSS bundle => ${bundleCssMinPath}`,
+          task: async () => {
+            const { css } = await bundleAtomsAction({
+              source: concatenateCSSVisitor.getCSS(),
+              to: bundleCssMinPath,
+              minify: true,
+              additionalPlugins: this.additionalPlugins,
+            });
+            await this.writeFile(bundleCssMinPath, css);
+            debugInfo(
+              `✅: Building minified CSS bundle => ${bundleCssMinPath}`
+            );
+          },
         });
-        await this.writeFile(bundleCssMinPath, css);
-        debugInfo(`✅: Building minified CSS bundle => ${bundleCssMinPath}`);
       }
+
+      const tasks = new Listr(listrTasks, {
+        exitOnError: true,
+      });
+      await tasks.run();
     } catch (err) {
       console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
