@@ -9,11 +9,11 @@ import bundleAtomsAction from "../../action/bundle-atoms";
 import { Watcher } from "../watcher";
 const CWD = process.cwd();
 
-const indexCssChange: Watcher = (server, spinner) => async (dir) => {
+const indexCssChange: Watcher = (server) => async (dir) => {
   try {
     const listrTasks: ListrTask[] = [];
 
-    spinner.succeed();
+    server.progressSpinner.succeed();
 
     /** Purge cache entry */
     server.cache.delete(path.join(CWD, dir));
@@ -56,8 +56,8 @@ const indexCssChange: Watcher = (server, spinner) => async (dir) => {
     });
     await tasks.run();
 
-    spinner.start();
-    spinner.text = "Waiting for CSS changes";
+    server.progressSpinner.start();
+    server.progressSpinner.text = "Waiting for CSS changes";
   } catch (err) {
     console.error(err);
     console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));

@@ -75,6 +75,8 @@ export default class AtomsServer {
   utilityConfig: PluginConfig;
   additionalPlugins: PluginHooksMap;
 
+  progressSpinner: ora.Ora;
+
   constructor({
     atomsFolder = ATOMS_FOLDER,
     electronsFolder = ELECTRONS_FOLDER,
@@ -98,6 +100,9 @@ export default class AtomsServer {
     this.additionalPlugins = additionalPlugins;
     this.cache = new Map();
     this.trackClasses = new Map();
+    this.progressSpinner = ora({
+      spinner: cliSpinner.dots3,
+    });
 
     this.atomsPathRE = new RegExp(`${PACKAGE_FOLDER}\\/${atomsFolder}`);
     this.importedElectronRE = new RegExp(
@@ -234,16 +239,14 @@ export default class AtomsServer {
 
   async run(): Promise<void> {
     try {
-      const spinner = ora({
-        spinner: cliSpinner.dots3,
-      }).start();
       await electronsRoot({ server: this });
       debugInfo("✅: Building Electron Root.");
       const indexCssWatcher = chokidar.watch(
         `${PACKAGE_FOLDER}/${this.atomsFolder}/**/${INDEX_CSS}`
       );
-      indexCssWatcher.on("change", indexCssWatchChange(this, spinner));
-      spinner.text = "Waiting for CSS changes";
+      indexCssWatcher.on("change", indexCssWatchChange(this));
+      this.progressSpinner.start();
+      this.progressSpinner.text = "Waiting for CSS changes";
     } catch (err) {
       console.error(err);
       console.log(chalk.red("<<<<< BREAKING BUILD >>>>>"));
