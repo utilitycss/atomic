@@ -1,39 +1,55 @@
 const path = require("path");
 const {
   plugins: { docs },
-  modules: {
-    colors,
-    font
-  }
+  modules: availableUtilityModules,
 } = require("@utilitycss/atomic").utility;
-const {
-  base,
-  breakpoints: breakPointsValues,
-  colors: colorsConfig,
-  font: fontConfig
-} = require("./config");
-
-const modules = [
-  colors(colorsConfig),
-  font(fontConfig)
+/** Get all the available electron config */
+const availableConfigs = require("./config");
+/**
+ * Add fileName of `module` here to ignore from electron generations
+ *
+ * Config pathname ./config/
+ */
+const DENY_LIST = [
+  /** `base` and `breakpoints` are always ignored from module creation since its not a module but a config. */
+  "base",
+  "breakpoints",
 ];
 
-const plugins = [docs({ output: path.resolve(__dirname, "docs/index.html") })];
+/** Dynamically map the module function and the available config */
+const modules = Object.keys(availableConfigs)
+  .filter((v) => !DENY_LIST.includes(v))
+  .map((v) => {
+    /** Get the module function from utility */
+    const moduleFn = availableUtilityModules[v];
 
-const getConfig = opts => {
+    if (typeof moduleFn === "function") {
+      /** If the moduleFn is a valid function, then add the list with the available config */
+      return moduleFn(availableConfigs[v]);
+    }
+  })
+  .filter(Boolean);
+
+/** Build utility config */
+const getConfig = (opts) => {
   const { name, version } = require("./package.json");
-  const config = Object.assign({}, base, {
-    breakPoints: breakPointsValues
+  /** Build required configs  */
+  const config = Object.assign({}, availableConfigs.base, {
+    breakPoints: availableConfigs.breakpoints,
   });
+  /** Add supported plugins from utility, */
   const plugins = [
+    /** Build a HTML file which has the list of all generated electrons */
     docs({
       output: path.join(__dirname, "docs", "index.html"),
       openFile: false,
-      packageName: `${name} ${version}`
-    })
+      packageName: `${name} ${version}`,
+    }),
   ];
 
+  /** Merge all the above options to build the final utility config */
   const utilityConfigs = Object.assign({}, { config, modules, plugins });
+  /** Return */
   return utilityConfigs;
 };
 

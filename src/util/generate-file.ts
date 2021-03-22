@@ -12,6 +12,7 @@ export enum Templates {
   ATOMIC_CONFIG_JS = "atomic.config.js.hbs",
   ELECTRONS_PACKAGE_JSON = "electrons_package.json.hbs",
   ELECTRONS_INDEX_CSS = "electrons_index.css.hbs",
+  ELECTRONS_PREFLIGHT_CSS = "electrons_preflight.css.hbs",
   ELECTRONS_POSTCSS_PLUGINS_JS = "electrons_postcss.plugins.js.hbs",
   ELECTRONS_UTILITY_CONFIG_JS = "electrons_utility.config.js.hbs",
   ELECTRONS_CONFIG_INDEX_JS = "electrons_config_index.js.hbs",

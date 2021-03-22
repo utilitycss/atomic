@@ -10,11 +10,7 @@ import inquirer from "inquirer";
 import execa from "execa";
 import Listr, { ListrTask } from "listr";
 
-import {
-  default as generate,
-  Templates,
-  TemplateData,
-} from "./util/generate-file";
+import { default as generate, Templates } from "./util/generate-file";
 import generateAtom from "./util/generate-atom";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -260,6 +256,11 @@ program.command("init").action((cmd) => {
                 Templates.ELECTRONS_INDEX_CSS,
                 data,
                 path.join("packages", data.electronsFolder, "index.css")
+              ),
+              generate(
+                Templates.ELECTRONS_PREFLIGHT_CSS,
+                data,
+                path.join("packages", data.electronsFolder, "preflight.css")
               ),
               generate(
                 Templates.ELECTRONS_POSTCSS_PLUGINS_JS,

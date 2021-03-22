@@ -1,6 +1,8 @@
 const { utility } = require("@utilitycss/atomic").utility;
+const atImport = require("postcss-import");
+const autoprefixer = require("autoprefixer");
 const utilityConfig = require("./utility.config");
 
-module.exports = opts => {
-  return [utility(utilityConfig(opts))];
+module.exports = (opts) => {
+  return [atImport, utility(utilityConfig(opts)), autoprefixer];
 };
