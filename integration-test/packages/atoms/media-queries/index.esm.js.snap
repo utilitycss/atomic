@@ -1,4 +1,4 @@
-export const responsiveClass = "_1b2v1R";
-export const responsiveClassMixedOrder = "xXc9fo";
-export const responsiveElectrons = "Lp5Coj HNuXy3";
-export const responsiveElectronsWithCustomDelcaration = "_6gjVlf Lp5Coj HNuXy3"
+export var responsiveClass = "_1b2v1R";
+export var responsiveClassMixedOrder = "xXc9fo";
+export var responsiveElectrons = "Lp5Coj HNuXy3";
+export var responsiveElectronsWithCustomDelcaration = "_6gjVlf Lp5Coj HNuXy3"

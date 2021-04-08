@@ -1,2 +1,2 @@
-export const withVariable = "V_ma2j";
-export const withElectronAndVariables = "YfpiAb vLhOdO YzVv9y"
+export var withVariable = "V_ma2j";
+export var withElectronAndVariables = "YfpiAb vLhOdO YzVv9y"

@@ -1,2 +1,2 @@
-export const hero = "ZlgcWo";
-export const main = "uvJREe"
+export var hero = "ZlgcWo";
+export var main = "uvJREe"
