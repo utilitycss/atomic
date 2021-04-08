@@ -1,22 +1,422 @@
-module.exports = {
+/**
+ * =========
+ * CSS "font" module definitions.
+ * =========
+ * */
+const fontConfig = {
+  /**
+   * Supported CSS definitions
+   *
+   * Define identifiers for each declaration based on your preference.
+   * Defaults to https://docs.emmet.io/cheat-sheet/
+   * **/
   names: {
-    fz: "fontSize",
+    /** font-weight:; **/
+    fw: "fontWeight",
+    /** font-weight:normal; **/
+    "fw:n": "fontWeightNormal",
+    /** font-weight:bold; **/
     "fw:b": "fontWeightBold",
+    /** font-weight:bolder; **/
+    "fw:br": "fontWeightBolder",
+    /** font-weight:lighter; **/
+    "fw:lr": "fontWeightLighter",
+    /** font-style:normal; **/
+    "fs:n": "fontStyleNormal",
+    /** font-style:italic; **/
+    "fs:i": "fontStyleItalic",
+    /** font-style:oblique; **/
+    "fs:o": "fontStyleOblique",
+    /** font-variant:normal; **/
+    "fv:n": "fontVariantNormal",
+    /** font-variant:small-caps; **/
+    "fv:sc": "fontVariantSmallCaps",
+    /** font-size:; **/
+    fz: "fontSize",
+    /** font-size-adjust:; **/
+    fza: "fontSizeAdjust",
+    /** font-size-adjust:none; **/
+    "fza:n": "fontAdjustNone",
+    /** font-family:; **/
     ff: "fontFamily",
-    "fw:n": "fontWeightNormal"
+    /** font-family:serif; **/
+    "ff:s": "fontFamilySerif",
+    /** font-family:sans-serif; **/
+    "ff:ss": "fontFamilySansSerif",
+    /** font-family:cursive; **/
+    "ff:c": "fontFamilyCursive",
+    /** font-family:fantasy; **/
+    "ff:f": "fontFamilyFantasy",
+    /** font-family:monospace; **/
+    "ff:m": "fontFamilyMonospace",
+    /** font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; **/
+    "ff:a": "fontFamilyArial",
+    /** font-family: "Times New Roman", Times, Baskerville, Georgia, serif; **/
+    "ff:t": "fontFamilyTimes",
+    /** font-family: Verdana, Geneva, sans-serif; **/
+    "ff:v": "fontFamilyVerdana",
+    /** font-effect:none; **/
+    "fef:n": "fontEffectNone",
+    /** font-effect:engrave; **/
+    "fef:eg": "fontEffectEngrave",
+    /** font-effect:emboss; **/
+    "fef:eb": "fontEffectEmboss",
+    /** font-effect:outline; **/
+    "fef:o": "fontEffectOutline",
+    /** font-stretch:normal; **/
+    "fst:n": "fontStretchNormal",
+    /** font-stretch:ultra-condensed; **/
+    "fst:uc": "fontStretchUltraCondense",
+    /** font-stretch:extra-condensed; **/
+    "fst:ec": "fontStretchExtraCondensed",
+    /** font-stretch:condensed; **/
+    "fst:c": "fontStretchCondensed",
+    /** font-stretch:semi-condensed; **/
+    "fst:sc": "fontStretchSemiCondensed",
+    /** font-stretch:semi-expanded; **/
+    "fst:se": "fontStretchSemiExpanded",
+    /** font-stretch:expanded; **/
+    "fst:e": "fontStretchExpanded",
+    /** font-stretch:extra-expanded; **/
+    "fst:ee": "fontStretchExtraExpanded",
+    /** font-stretch:ultra-expanded; **/
+    "fst:ue": "fontStretchUltraExpanded",
   },
-  fontFamilyValues: {
-    system: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Arial', 'Helvetica Neue', sans-serif"
+
+  /**
+   * Variables for font-weight:;
+   *
+   * eg., {
+   *  [key]: [value];
+   * }
+   * */
+  fontWeightValues: {
+    thin: "100",
+    extralight: "200",
+    light: "300",
+    normal: "400",
+    medium: "500",
+    semibold: "600",
+    bold: "700",
+    extrabold: "800",
+    black: "900",
   },
-  whitelist: ["fw:b", "fz", "ff", "fw:n"],
-  pseudoClasses: {
-    "fw:b": [":hover"]
-  },
+  /**
+   * Variables for font-size:;
+   *
+   * eg., {
+   *  [key]: [value];
+   * }
+   * */
   fontSizeValues: {
-    xs: "11px",
-    s: "16px",
-    m: "24px",
-    l: "36px",
-    xl: "54px"
-  }
+    xs: "0.75rem",
+    sm: "0.875rem",
+    base: "1rem",
+    lg: "1.125rem",
+    xl: "1.25rem",
+    "2xl": "1.5rem",
+    "3xl": "1.875rem",
+    "4xl": "2.25rem",
+    "5xl": "3rem",
+    "6xl": "3.75rem",
+    "7xl": "4.5rem",
+    "8xl": "6rem",
+    "9xl": "8rem",
+  },
+  /**
+   * Variables for font-size-adjust:;
+   *
+   * eg., {
+   *  [key]: [value];
+   * }
+   * */
+  fontSizeAdjustValues: {},
+  /**
+   * Variables for font-family:;
+   *
+   * eg., {
+   *  [key]: [value];
+   * }
+   * */
+  fontFamilyValues: {
+    sans: [
+      "ui-sans-serif",
+      "system-ui",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      '"Noto Sans"',
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+      '"Noto Color Emoji"',
+    ].join(","),
+    serif: [
+      "ui-serif",
+      "Georgia",
+      "Cambria",
+      '"Times New Roman"',
+      "Times",
+      "serif",
+    ].join(","),
+    mono: [
+      "ui-monospace",
+      "SFMono-Regular",
+      "Menlo",
+      "Monaco",
+      "Consolas",
+      '"Liberation Mono"',
+      '"Courier New"',
+      "monospace",
+    ].join(","),
+  },
+  /**
+   * List of definitions to include.
+   * Remove items from this list if you do not
+   * want it to be included in the output
+   * **/
+  whitelist: [
+    /** font-weight:; **/
+    "fw",
+    /** font-weight:normal; **/
+    "fw:n",
+    /** font-weight:bold; **/
+    "fw:b",
+    /** font-weight:bolder; **/
+    // "fw:br",
+    /** font-weight:lighter; **/
+    // "fw:lr",
+    /** font-style:normal; **/
+    // "fs:n",
+    /** font-style:italic; **/
+    // "fs:i",
+    /** font-style:oblique; **/
+    // "fs:o",
+    /** font-variant:normal; **/
+    // "fv:n",
+    /** font-variant:small-caps; **/
+    // "fv:sc",
+    /** font-size:; **/
+    "fz",
+    /** font-size-adjust:; **/
+    // "fza",
+    /** font-size-adjust:none; **/
+    // "fza:n",
+    /** font-family:; **/
+    "ff",
+    /** font-family:serif; **/
+    // "ff:s",
+    /** font-family:sans-serif; **/
+    // "ff:ss",
+    /** font-family:cursive; **/
+    // "ff:c",
+    /** font-family:fantasy; **/
+    // "ff:f",
+    /** font-family:monospace; **/
+    // "ff:m",
+    /** font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; **/
+    // "ff:a",
+    /** font-family: "Times New Roman", Times, Baskerville, Georgia, serif; **/
+    // "ff:t",
+    /** font-family: Verdana, Geneva, sans-serif; **/
+    // "ff:v",
+    /** font-effect:none; **/
+    // "fef:n",
+    /** font-effect:engrave; **/
+    // "fef:eg",
+    /** font-effect:emboss; **/
+    // "fef:eb",
+    /** font-effect:outline; **/
+    // "fef:o",
+    /** font-stretch:normal; **/
+    // "fst:n",
+    /** font-stretch:ultra-condensed; **/
+    // "fst:uc",
+    /** font-stretch:extra-condensed; **/
+    // "fst:ec",
+    /** font-stretch:condensed; **/
+    // "fst:c",
+    /** font-stretch:semi-condensed; **/
+    // "fst:sc",
+    /** font-stretch:semi-expanded; **/
+    // "fst:se",
+    /** font-stretch:expanded; **/
+    // "fst:e",
+    /** font-stretch:extra-expanded; **/
+    // "fst:ee",
+    /** font-stretch:ultra-expanded; **/
+    // "fst:ue",
+  ],
+  /**
+   * List of definitions to exclude.
+   * If the number of exclusions is very minimal
+   * use this config instead of "whitelist"
+   * **/
+  blacklist: [],
+  /**
+   * Flag to enable definitions with responsive
+   * breakpoints
+   * **/
+  isResponsive: true,
+  /**
+   * List of responsive definitions to include
+   * Remove items from this list if you do not
+   * want it to be included in the output
+   * **/
+  responsiveWhiteList: [
+    /** font-weight:; **/
+    "fw",
+    /** font-weight:normal; **/
+    "fw:n",
+    /** font-weight:bold; **/
+    "fw:b",
+    /** font-weight:bolder; **/
+    // "fw:br",
+    /** font-weight:lighter; **/
+    // "fw:lr",
+    /** font-style:normal; **/
+    // "fs:n",
+    /** font-style:italic; **/
+    // "fs:i",
+    /** font-style:oblique; **/
+    // "fs:o",
+    /** font-variant:normal; **/
+    // "fv:n",
+    /** font-variant:small-caps; **/
+    // "fv:sc",
+    /** font-size:; **/
+    "fz",
+    /** font-size-adjust:; **/
+    // "fza",
+    /** font-size-adjust:none; **/
+    // "fza:n",
+    /** font-family:; **/
+    "ff",
+    /** font-family:serif; **/
+    // "ff:s",
+    /** font-family:sans-serif; **/
+    // "ff:ss",
+    /** font-family:cursive; **/
+    // "ff:c",
+    /** font-family:fantasy; **/
+    // "ff:f",
+    /** font-family:monospace; **/
+    // "ff:m",
+    /** font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; **/
+    // "ff:a",
+    /** font-family: "Times New Roman", Times, Baskerville, Georgia, serif; **/
+    // "ff:t",
+    /** font-family: Verdana, Geneva, sans-serif; **/
+    // "ff:v",
+    /** font-effect:none; **/
+    // "fef:n",
+    /** font-effect:engrave; **/
+    // "fef:eg",
+    /** font-effect:emboss; **/
+    // "fef:eb",
+    /** font-effect:outline; **/
+    // "fef:o",
+    /** font-stretch:normal; **/
+    // "fst:n",
+    /** font-stretch:ultra-condensed; **/
+    // "fst:uc",
+    /** font-stretch:extra-condensed; **/
+    // "fst:ec",
+    /** font-stretch:condensed; **/
+    // "fst:c",
+    /** font-stretch:semi-condensed; **/
+    // "fst:sc",
+    /** font-stretch:semi-expanded; **/
+    // "fst:se",
+    /** font-stretch:expanded; **/
+    // "fst:e",
+    /** font-stretch:extra-expanded; **/
+    // "fst:ee",
+    /** font-stretch:ultra-expanded; **/
+    // "fst:ue",
+  ],
+  /**
+   * List of responsive definitions to exclude.
+   * If the number of exclusions is very minimal
+   * use this config instead of "responsiveWhiteList"
+   * **/
+  responsiveBlackList: [],
+  pseudoClasses: {
+    /** font-weight:; **/
+    fw: [":hover", ":focus", ":active"],
+    /** font-weight:normal; **/
+    // "fw:n": [":hover", ":focus", ":active"],
+    /** font-weight:bold; **/
+    "fw:b": [":hover", ":focus", ":active"],
+    /** font-weight:bolder; **/
+    // "fw:br": [":hover", ":focus", ":active"],
+    /** font-weight:lighter; **/
+    // "fw:lr": [":hover", ":focus", ":active"],
+    /** font-style:normal; **/
+    // "fs:n": [":hover", ":focus", ":active"],
+    /** font-style:italic; **/
+    // "fs:i": [":hover", ":focus", ":active"],
+    /** font-style:oblique; **/
+    // "fs:o": [":hover", ":focus", ":active"],
+    /** font-variant:normal; **/
+    // "fv:n": [":hover", ":focus", ":active"],
+    /** font-variant:small-caps; **/
+    // "fv:sc": [":hover", ":focus", ":active"],
+    /** font-size:; **/
+    fz: [":hover", ":focus", ":active"],
+    /** font-size-adjust:; **/
+    // fza: [":hover", ":focus", ":active"],
+    /** font-size-adjust:none; **/
+    // "fza:n": [":hover", ":focus", ":active"],
+    /** font-family:; **/
+    // ff: [":hover", ":focus", ":active"],
+    /** font-family:serif; **/
+    // "ff:s": [":hover", ":focus", ":active"],
+    /** font-family:sans-serif; **/
+    // "ff:ss": [":hover", ":focus", ":active"],
+    /** font-family:cursive; **/
+    // "ff:c": [":hover", ":focus", ":active"],
+    /** font-family:fantasy; **/
+    // "ff:f": [":hover", ":focus", ":active"],
+    /** font-family:monospace; **/
+    // "ff:m": [":hover", ":focus", ":active"],
+    /** font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; **/
+    // "ff:a": [":hover", ":focus", ":active"],
+    /** font-family: "Times New Roman", Times, Baskerville, Georgia, serif; **/
+    // "ff:t": [":hover", ":focus", ":active"],
+    /** font-family: Verdana, Geneva, sans-serif; **/
+    // "ff:v": [":hover", ":focus", ":active"],
+    /** font-effect:none; **/
+    // "fef:n": [":hover", ":focus", ":active"],
+    /** font-effect:engrave; **/
+    // "fef:eg": [":hover", ":focus", ":active"],
+    /** font-effect:emboss; **/
+    // "fef:eb": [":hover", ":focus", ":active"],
+    /** font-effect:outline; **/
+    // "fef:o": [":hover", ":focus", ":active"],
+    /** font-stretch:normal; **/
+    // "fst:n": [":hover", ":focus", ":active"],
+    /** font-stretch:ultra-condensed; **/
+    // "fst:uc": [":hover", ":focus", ":active"],
+    /** font-stretch:extra-condensed; **/
+    // "fst:ec": [":hover", ":focus", ":active"],
+    /** font-stretch:condensed; **/
+    // "fst:c": [":hover", ":focus", ":active"],
+    /** font-stretch:semi-condensed; **/
+    // "fst:sc": [":hover", ":focus", ":active"],
+    /** font-stretch:semi-expanded; **/
+    // "fst:se": [":hover", ":focus", ":active"],
+    /** font-stretch:expanded; **/
+    // "fst:e": [":hover", ":focus", ":active"],
+    /** font-stretch:extra-expanded; **/
+    // "fst:ee": [":hover", ":focus", ":active"],
+    /** font-stretch:ultra-expanded; **/
+    // "fst:ue": [":hover", ":focus", ":active"],
+  },
 };
+
+module.exports = fontConfig;

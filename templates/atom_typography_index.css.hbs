@@ -1,19 +1,81 @@
-.fontFamily {
-  electrons: (fontFamily_system);
+.fontSmoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.body {
-  composes: fontFamily;
-  electrons: (
-    fontSize_s,
-    black
-  );
+.serif {
+  electrons: (fontFamily_serif);
 }
 
-.title {
-  composes: fontFamily;
-  electrons: (
-    fontSize_l,
-    black
-  );
+.sans {
+  electrons: (fontFamily_sans);
+}
+
+.mono {
+  electrons: (fontFamily_mono);
+}
+
+.xs {
+  composes: fontSmoothing;
+  electrons: (lineHeight_s, fontSize_xs);
+}
+
+.sm {
+  composes: fontSmoothing;
+  electrons: (lineHeight_m, fontSize_sm);
+}
+
+.base {
+  composes: fontSmoothing;
+  electrons: (lineHeight_l, fontSize_base);
+}
+
+.lg {
+  composes: fontSmoothing;
+  electrons: (lineHeight_xl, fontSize_lg);
+}
+
+.xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_xl, fontSize_xl);
+}
+
+.two_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_xxl, fontSize_2xl);
+}
+
+.three_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_3xl, fontSize_3xl);
+}
+
+.four_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_3xl, fontSize_4xl);
+}
+
+.five_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_normal, fontSize_5xl);
+}
+
+.six_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_normal, fontSize_6xl);
+}
+
+.seven_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_normal, fontSize_7xl);
+}
+
+.eight_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_normal, fontSize_8xl);
+}
+
+.nine_xl {
+  composes: fontSmoothing;
+  electrons: (lineHeight_normal, fontSize_9xl);
 }

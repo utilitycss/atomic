@@ -1,11 +1,28 @@
-const base = require("./base");
-const breakpoints = require("./breakpoints");
-const colors = require("./colors");
-const font = require("./font");
+const fs = require("fs");
+const path = require("path");
+const { camelCase } = require("lodash");
 
-module.exports = {
-  base,
-  breakpoints,
-  colors,
-  font
-};
+/** Get the filename so can be ignored from the exports */
+const basename = path.basename(__filename);
+/** List of function to be exported */
+const functions = {};
+
+/**
+ * Sync import files fom the current folder and export them
+ *
+ * { [key: camelCase-string]: {config object} }
+ *
+ */
+fs.readdirSync(path.dirname(__filename))
+  .filter(
+    (file) =>
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+  )
+  .map((file) => {
+    functions[camelCase(file.slice(0, -3))] = require(path.join(
+      __dirname,
+      file
+    ));
+  });
+
+module.exports = functions;

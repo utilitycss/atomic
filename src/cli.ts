@@ -16,6 +16,10 @@ import generateAtom from "./util/generate-atom";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const figlet = require("figlet");
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+import { sampleConfigs } from "@utilitycss/utility";
+import { BuildHelperFunction } from "@utilitycss/utility/dist/types";
+
 clear();
 console.log(
   chalk.red(
@@ -138,6 +142,58 @@ program.command("visit <visitor>").action((v) => {
     });
 });
 
+program.command("generate-electron-config").action((cmd) => {
+  const { electronsModuleName } = (program as any).cfg;
+
+  /**
+   * Resolve for electrons package
+   *
+   * Assuming, there is a `config` folder in the root of electrons folder
+   *  */
+  const electronConfigPath = path.join(
+    path.parse(require.resolve(`${electronsModuleName}`)).dir,
+    "../",
+    "config"
+  );
+
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "module",
+        message: "What electron config you want to create?",
+        choices: Object.keys(sampleConfigs),
+      },
+    ])
+    .then(async (answers) => {
+      const builderFn = (sampleConfigs as {
+        [key: string]: BuildHelperFunction;
+      })[answers.module];
+      if (typeof builderFn === "function") {
+        const listrTasks: ListrTask[] = [];
+
+        const saveFilePath = path.join(
+          electronConfigPath,
+          `${answers.module}.js`
+        );
+
+        listrTasks.push({
+          title: `Creating ${answers.module} config => ${saveFilePath}`,
+          task: async () => {
+            await fs.promises.writeFile(saveFilePath, builderFn());
+          },
+        });
+
+        const tasks = new Listr(listrTasks, {
+          exitOnError: true,
+        });
+        await tasks.run();
+      } else {
+        throw new Error(`Config builder for ${answers.module} is not found.`);
+      }
+    });
+});
+
 program.command("init").action((cmd) => {
   inquirer
     .prompt([
@@ -200,6 +256,11 @@ program.command("init").action((cmd) => {
                 Templates.ELECTRONS_INDEX_CSS,
                 data,
                 path.join("packages", data.electronsFolder, "index.css")
+              ),
+              generate(
+                Templates.ELECTRONS_PREFLIGHT_CSS,
+                data,
+                path.join("packages", data.electronsFolder, "preflight.css")
               ),
               generate(
                 Templates.ELECTRONS_POSTCSS_PLUGINS_JS,
