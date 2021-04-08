@@ -1,5 +1,5 @@
-export const localClass = "n4oS1I";
-export const localComposes = "i6EUck n4oS1I dgII7d";
-export const simpleComposes = "";
-export const complexComposes = "i6EUck n4oS1I dgII7d _1RrCqF pQ96hs";
-export const extend = "_8F86eH"
+export var localClass = "n4oS1I";
+export var localComposes = "i6EUck n4oS1I dgII7d";
+export var simpleComposes = "";
+export var complexComposes = "i6EUck n4oS1I dgII7d _1RrCqF pQ96hs";
+export var extend = "_8F86eH"

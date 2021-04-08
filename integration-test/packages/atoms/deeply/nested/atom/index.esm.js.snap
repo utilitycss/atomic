@@ -1,1 +1,1 @@
-export const foo = "lQb_Er"
+export var foo = "lQb_Er"

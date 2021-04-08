@@ -1,2 +1,2 @@
-export const fadeIn = "_4bsdl";
-export const alias = "C0hAH1"
+export var fadeIn = "_4bsdl";
+export var alias = "C0hAH1"

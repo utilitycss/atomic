@@ -7,7 +7,7 @@ const generateAtomESM = async (
 ): Promise<void> => {
   const keys = Object.keys(json);
   const exports = keys
-    .map((k) => `export const ${k} = "${json[k]}"`)
+    .map((k) => `export var ${k} = "${json[k]}"`)
     .join(";\n");
 
   const content = `${exports}`;
