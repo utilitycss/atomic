@@ -1,6 +1,6 @@
 :import("@my-org/simple-class/module.css") {
-  single: single-declaration;
-  multiple: multiple-declarations;
+  single: singleDeclaration;
+  multiple: multipleDeclarations;
 }
 
 :root {

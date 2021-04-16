@@ -11,7 +11,6 @@ const generateScopedName: generateScopedName = ({
   trackClasses,
   importedElectronRE,
   importedModuleRE,
-  ICSSImportRE,
   root,
   server,
 }) =>
@@ -22,13 +21,14 @@ const generateScopedName: generateScopedName = ({
     const definitionsMap = new Map();
     const isElectron = importedElectronRE.test(filename);
     root.walkRules(new RegExp(`(\.${name}|:import)`), (rule): any => {
-      // ensure that a rule that appear multiple times has the same hash
-      // e.g. inside media queries or when ICSS imported in a different atom.
-      // in the context of ICSS import and composes the filename will point
-      // to the imported module as relative imports are forbidden in atoms
-      // we can safely check for @scope/something patterns to get the correct
-      // package name
       if (isElectron) {
+        // ensure that a rule that appear multiple times has the same hash
+        // e.g. inside media queries or when ICSS imported in a different atom.
+        // in the context of ICSS import and composes the filename will point
+        // to the imported module as relative imports are forbidden in atoms
+        // we can safely check for @scope/something patterns to get the correct
+        // package name
+
         // check for @scope/electrons pattern in the filename
         pkgName = filename.match(importedElectronRE)[1];
         const key = `${pkgName};${name}`;
@@ -43,10 +43,9 @@ const generateScopedName: generateScopedName = ({
           const key = `${pkg};${name}`;
           trackClasses.set(key, hash);
         }
-
         // short circuit: electron definition for a given name is always
         // highest priority and unique source of truth.
-        return DEVELOPMENT ? `${name.toUpperCase()}_${hash}` : hash;
+        return;
       } else if (importedModuleRE.test(filename)) {
         // check for @scope/xxx pattern in the filename
         const importedPackage = filename.match(importedModuleRE)[1];
@@ -54,20 +53,6 @@ const generateScopedName: generateScopedName = ({
           server.readFileSync(`pkg:${importedPackage}`)
         );
         if (pkg.proxy) {
-          pkgName = pkg.proxy;
-        } else {
-          pkgName = importedPackage;
-        }
-      } else if (/:import/.test(rule.selector)) {
-        // check for @scope/xxx pattern in the ICSS selector
-        const importedPackage = rule.selector.match(ICSSImportRE)[1];
-        const pkg = <{ [key: string]: any }>(
-          server.readFileSync(`pkg:${importedPackage}`)
-        );
-        if (pkg.proxy) {
-          // check if it is a proxy atom (passthrough for utility electrons)
-          // in that case we can use the same hash of the respective electron
-          // and avoid a duplicate for each defined rule
           pkgName = pkg.proxy;
         } else {
           pkgName = importedPackage;
@@ -89,6 +74,7 @@ const generateScopedName: generateScopedName = ({
       // if the hash was generated on a different source file we should use it
 
       if (trackClasses.has(key)) {
+        name === "withSharedVar" && console.log("trackClasses has", key);
         hash = trackClasses.get(key);
       } else {
         definition = generateHashableContent(rule);
@@ -114,6 +100,7 @@ const generateScopedName: generateScopedName = ({
       const { key } = definitionsMap.get(name);
       hash = hashFunction(`${name}_${definition}`, HASH_LENGTH);
       trackClasses.set(key, hash);
+      name === "withSharedVar" && console.log("trackClasses set", key, hash);
     }
 
     // if the hash is empty we fallback to content based hash

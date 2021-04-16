@@ -1,0 +1,15 @@
+:import("@my-org/simple-class/module.css") {
+  single-declaration: singleDeclaration;
+}
+
+.simpleDeclaration {
+  composes: single-declaration;
+}
+
+.withSharedVar {
+  color: blue
+}
+
+.withSharedVar .nested {
+    color: green;
+  }

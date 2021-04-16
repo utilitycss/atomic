@@ -1,0 +1,10 @@
+{
+  "name": "@my-org/duplicate-classes-b",
+  "version": "0.0.1",
+  "main": "index.js",
+  "module": "index.esm.js",
+  "sideEffects": false,
+  "dependencies": {
+    "@my-org/simple-class": "0.0.1"
+  }
+}
