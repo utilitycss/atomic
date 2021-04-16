@@ -71,10 +71,9 @@ const generateScopedName: generateScopedName = ({
       }
 
       const key = `${pkgName};${name}`;
-      // if the hash was generated on a different source file we should use it
 
+      // if the hash was generated on a different source file we should use it
       if (trackClasses.has(key)) {
-        name === "withSharedVar" && console.log("trackClasses has", key);
         hash = trackClasses.get(key);
       } else {
         definition = generateHashableContent(rule);
@@ -100,7 +99,6 @@ const generateScopedName: generateScopedName = ({
       const { key } = definitionsMap.get(name);
       hash = hashFunction(`${name}_${definition}`, HASH_LENGTH);
       trackClasses.set(key, hash);
-      name === "withSharedVar" && console.log("trackClasses set", key, hash);
     }
 
     // if the hash is empty we fallback to content based hash
