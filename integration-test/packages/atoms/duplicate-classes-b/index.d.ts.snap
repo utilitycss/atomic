@@ -1,0 +1,4 @@
+declare const simpleDeclaration: string;
+declare const withSharedVar: string;
+declare const nested: string
+export { simpleDeclaration, withSharedVar, nested }

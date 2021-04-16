@@ -1,7 +1,7 @@
 module.exports = {
-  localClass: "n4oS1I",
-  localComposes: "i6EUck n4oS1I dgII7d",
-  simpleComposes: "",
-  complexComposes: "i6EUck n4oS1I dgII7d _1RrCqF pQ96hs",
-  extend: "_8F86eH"
+  localClass: "hZEeRw",
+  localComposes: "Gpf-P8 hZEeRw dgII7d",
+  simpleComposes: "_9M8f-j",
+  complexComposes: "_9M8f-j o3-BnE Gpf-P8 hZEeRw dgII7d _1RrCqF pQ96hs",
+  extend: "_3XV0Ef o3-BnE"
 };

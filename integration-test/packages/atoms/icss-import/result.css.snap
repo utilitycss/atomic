@@ -1,4 +1,11 @@
-/* custom static css (e.g. normalize) can be added here */._1RrCqF {
+._9M8f-j {
+  color: red;
+}.o3-BnE {
+  color: blue;
+  width: 100px;
+  display: flex;
+  border: 1px solid red;
+}/* custom static css (e.g. normalize) can be added here */._1RrCqF {
     color: #1a1a1a
 }.pQ96hs:hover {
     color: #fafafa
@@ -15,16 +22,16 @@
   --large: 4em;
 }
 
-.n4oS1I {
+.hZEeRw {
   height: 100%;
 }
 
-.i6EUck {
+.Gpf-P8 {
 
   text-decoration: underline;
 }
 
-._8F86eH {
+._3XV0Ef {
 
   font-size: var(--large);
 }
