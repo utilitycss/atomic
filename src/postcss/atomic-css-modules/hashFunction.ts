@@ -2,9 +2,6 @@ import crypto from "crypto";
 import { HashFunction } from "./types";
 
 const hashFunction: HashFunction = (string, length) => {
-  if (string.indexOf("withSharedVar") !== -1) {
-    console.log(">>>>>>>>", string);
-  }
   // get numerical value of murmur hash for the string
   return (
     crypto
