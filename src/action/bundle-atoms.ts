@@ -38,6 +38,8 @@ const bundleAtoms = async ({
               discardComments: {
                 removeAll: true,
               },
+              mergeIdents: false,
+              mergeRules: false,
             },
           ],
         }),
