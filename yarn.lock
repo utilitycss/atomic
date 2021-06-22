@@ -793,10 +793,10 @@
   dependencies:
     postcss "^8.2.6"
 
-"@utilitycss/utility@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-1.0.4.tgz#c39df11109bdb3cba236d039243bb6248bdcee5b"
-  integrity sha512-UH4pg3Pg8d1TH2F7RmeDP2PKbneVIW/VgUus/f13I1IGeiO4PeWEeSR2p+c0JCzkzPOgsruycDYwYCkaVeW1kQ==
+"@utilitycss/utility@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@utilitycss/utility/-/utility-1.1.0.tgz#4c9da482eb3083743788b231b2f4973862f13f41"
+  integrity sha512-ExuGofv8TR01kL/MQSYQ1bkSl4q+UPhn5sW13/4WdiK07FAykk9AXtKR2vs4zmprFdDHg+tj+IL9ks0idUG4Bg==
   dependencies:
     chalk "^4.1.0"
     commander "7.0.0"
