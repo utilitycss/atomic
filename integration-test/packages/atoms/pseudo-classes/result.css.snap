@@ -1,12 +1,24 @@
-/* custom static css (e.g. normalize) can be added here */._1RrCqF {
-    color: #1a1a1a
-}.DJ9tNH:hover {
+/* custom static css (e.g. normalize) can be added here */.YcXvtG {
     color: #1a1a1a
 }@media screen and (min-width: 320px) {
 }@media screen and (min-width: 480px) {
 }@media screen and (min-width: 768px) {
 }@media screen and (min-width: 1024px) {
 }@media screen and (min-width: 1280px) {
+}@media (hover: hover) and (pointer: fine) {
+    .DJ9tNH:hover {
+        color: #1a1a1a
+    }
+    @media screen and (min-width: 320px) {
+    }
+    @media screen and (min-width: 480px) {
+    }
+    @media screen and (min-width: 768px) {
+    }
+    @media screen and (min-width: 1024px) {
+    }
+    @media screen and (min-width: 1280px) {
+    }
 }
 
 .l-ITF2 {

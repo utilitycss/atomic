@@ -9,38 +9,53 @@ const invertedColors = {
   white: "#1a1a1a",
 };
 
-module.exports.colors = {
+const commonColorConfig = values => ({
   names: {
     c: "",
     bgc: "bg",
     bdc: "bd",
   },
   whitelist: ["c", "bgc", "bdc"],
-  pseudoClasses: {
-    c: [":hover"],
-    bgc: [":hover", ":active"],
-    bdc: [":hover", ":focus"],
+  colorValues: values,
+  backgroundColorValues: values,
+  borderColorValues: values,
+  isResponsive: true,
+})
+
+module.exports.colors = {
+  ...commonColorConfig(colors),
+	pseudoClasses: {
+    bgc: [":active"],
+    bdc: [":focus"],
   },
-  colorValues: colors,
-  backgroundColorValues: colors,
-  borderColorValues: colors,
-  isResponsive: true
+	nestedRules: {
+    "@media (hover: hover) and (pointer: fine)": {
+			...commonColorConfig(colors),
+			pseudoClasses: {
+    		c: [":hover"],
+    		bgc: [":hover"],
+    		bdc: [":hover"],
+  		},
+			modifiersOnly: true
+		}
+	}
 };
 
 module.exports.invertedColors = {
-  names: {
-    c: "",
-    bgc: "bg",
-    bdc: "bd",
+  ...commonColorConfig(invertedColors),
+	pseudoClasses: {
+    bgc: [":active"],
+    bdc: [":focus"],
   },
-  whitelist: ["c", "bgc", "bdc"],
-  pseudoClasses: {
-    c: [":hover"],
-    bgc: [":hover", ":active"],
-    bdc: [":hover", ":focus"],
-  },
-  colorValues: invertedColors,
-  backgroundColorValues: invertedColors,
-  borderColorValues: invertedColors,
-  isResponsive: true,
+	nestedRules: {
+    "@media (hover: hover) and (pointer: fine)": {
+			...commonColorConfig(invertedColors),
+			pseudoClasses: {
+    		c: [":hover"],
+    		bgc: [":hover"],
+    		bdc: [":hover"],
+  		},
+			modifiersOnly: true
+		}
+	}
 };
