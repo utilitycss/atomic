@@ -13,21 +13,6 @@
     color: #fafafa
 }
 
-.transparent_hover:hover {
-
-    color: transparent
-}
-
-.black_hover:hover {
-
-    color: #1a1a1a
-}
-
-.white_hover:hover {
-
-    color: #fafafa
-}
-
 .bg_transparent {
 
     background-color: transparent
@@ -39,21 +24,6 @@
 }
 
 .bg_white {
-
-    background-color: #fafafa
-}
-
-.bg_transparent_hover:hover {
-
-    background-color: transparent
-}
-
-.bg_black_hover:hover {
-
-    background-color: #1a1a1a
-}
-
-.bg_white_hover:hover {
 
     background-color: #fafafa
 }
@@ -84,21 +54,6 @@
 }
 
 .bd_white {
-
-    border-color: #fafafa
-}
-
-.bd_transparent_hover:hover {
-
-    border-color: transparent
-}
-
-.bd_black_hover:hover {
-
-    border-color: #1a1a1a
-}
-
-.bd_white_hover:hover {
 
     border-color: #fafafa
 }
@@ -135,21 +90,6 @@
         color: #fafafa
     }
 
-    .transparent_hover_mobile:hover {
-
-        color: transparent
-    }
-
-    .black_hover_mobile:hover {
-
-        color: #1a1a1a
-    }
-
-    .white_hover_mobile:hover {
-
-        color: #fafafa
-    }
-
     .bg_transparent_mobile {
 
         background-color: transparent
@@ -161,21 +101,6 @@
     }
 
     .bg_white_mobile {
-
-        background-color: #fafafa
-    }
-
-    .bg_transparent_hover_mobile:hover {
-
-        background-color: transparent
-    }
-
-    .bg_black_hover_mobile:hover {
-
-        background-color: #1a1a1a
-    }
-
-    .bg_white_hover_mobile:hover {
 
         background-color: #fafafa
     }
@@ -206,21 +131,6 @@
     }
 
     .bd_white_mobile {
-
-        border-color: #fafafa
-    }
-
-    .bd_transparent_hover_mobile:hover {
-
-        border-color: transparent
-    }
-
-    .bd_black_hover_mobile:hover {
-
-        border-color: #1a1a1a
-    }
-
-    .bd_white_hover_mobile:hover {
 
         border-color: #fafafa
     }
@@ -258,21 +168,6 @@
         color: #fafafa
     }
 
-    .transparent_hover_phablet:hover {
-
-        color: transparent
-    }
-
-    .black_hover_phablet:hover {
-
-        color: #1a1a1a
-    }
-
-    .white_hover_phablet:hover {
-
-        color: #fafafa
-    }
-
     .bg_transparent_phablet {
 
         background-color: transparent
@@ -284,21 +179,6 @@
     }
 
     .bg_white_phablet {
-
-        background-color: #fafafa
-    }
-
-    .bg_transparent_hover_phablet:hover {
-
-        background-color: transparent
-    }
-
-    .bg_black_hover_phablet:hover {
-
-        background-color: #1a1a1a
-    }
-
-    .bg_white_hover_phablet:hover {
 
         background-color: #fafafa
     }
@@ -329,21 +209,6 @@
     }
 
     .bd_white_phablet {
-
-        border-color: #fafafa
-    }
-
-    .bd_transparent_hover_phablet:hover {
-
-        border-color: transparent
-    }
-
-    .bd_black_hover_phablet:hover {
-
-        border-color: #1a1a1a
-    }
-
-    .bd_white_hover_phablet:hover {
 
         border-color: #fafafa
     }
@@ -381,21 +246,6 @@
         color: #fafafa
     }
 
-    .transparent_hover_tablet:hover {
-
-        color: transparent
-    }
-
-    .black_hover_tablet:hover {
-
-        color: #1a1a1a
-    }
-
-    .white_hover_tablet:hover {
-
-        color: #fafafa
-    }
-
     .bg_transparent_tablet {
 
         background-color: transparent
@@ -407,21 +257,6 @@
     }
 
     .bg_white_tablet {
-
-        background-color: #fafafa
-    }
-
-    .bg_transparent_hover_tablet:hover {
-
-        background-color: transparent
-    }
-
-    .bg_black_hover_tablet:hover {
-
-        background-color: #1a1a1a
-    }
-
-    .bg_white_hover_tablet:hover {
 
         background-color: #fafafa
     }
@@ -452,21 +287,6 @@
     }
 
     .bd_white_tablet {
-
-        border-color: #fafafa
-    }
-
-    .bd_transparent_hover_tablet:hover {
-
-        border-color: transparent
-    }
-
-    .bd_black_hover_tablet:hover {
-
-        border-color: #1a1a1a
-    }
-
-    .bd_white_hover_tablet:hover {
 
         border-color: #fafafa
     }
@@ -504,21 +324,6 @@
         color: #fafafa
     }
 
-    .transparent_hover_desktop:hover {
-
-        color: transparent
-    }
-
-    .black_hover_desktop:hover {
-
-        color: #1a1a1a
-    }
-
-    .white_hover_desktop:hover {
-
-        color: #fafafa
-    }
-
     .bg_transparent_desktop {
 
         background-color: transparent
@@ -530,21 +335,6 @@
     }
 
     .bg_white_desktop {
-
-        background-color: #fafafa
-    }
-
-    .bg_transparent_hover_desktop:hover {
-
-        background-color: transparent
-    }
-
-    .bg_black_hover_desktop:hover {
-
-        background-color: #1a1a1a
-    }
-
-    .bg_white_hover_desktop:hover {
 
         background-color: #fafafa
     }
@@ -575,21 +365,6 @@
     }
 
     .bd_white_desktop {
-
-        border-color: #fafafa
-    }
-
-    .bd_transparent_hover_desktop:hover {
-
-        border-color: transparent
-    }
-
-    .bd_black_hover_desktop:hover {
-
-        border-color: #1a1a1a
-    }
-
-    .bd_white_hover_desktop:hover {
 
         border-color: #fafafa
     }
@@ -627,21 +402,6 @@
         color: #fafafa
     }
 
-    .transparent_hover_wideDesktop:hover {
-
-        color: transparent
-    }
-
-    .black_hover_wideDesktop:hover {
-
-        color: #1a1a1a
-    }
-
-    .white_hover_wideDesktop:hover {
-
-        color: #fafafa
-    }
-
     .bg_transparent_wideDesktop {
 
         background-color: transparent
@@ -653,21 +413,6 @@
     }
 
     .bg_white_wideDesktop {
-
-        background-color: #fafafa
-    }
-
-    .bg_transparent_hover_wideDesktop:hover {
-
-        background-color: transparent
-    }
-
-    .bg_black_hover_wideDesktop:hover {
-
-        background-color: #1a1a1a
-    }
-
-    .bg_white_hover_wideDesktop:hover {
 
         background-color: #fafafa
     }
@@ -702,21 +447,6 @@
         border-color: #fafafa
     }
 
-    .bd_transparent_hover_wideDesktop:hover {
-
-        border-color: transparent
-    }
-
-    .bd_black_hover_wideDesktop:hover {
-
-        border-color: #1a1a1a
-    }
-
-    .bd_white_hover_wideDesktop:hover {
-
-        border-color: #fafafa
-    }
-
     .bd_transparent_focus_wideDesktop:focus {
 
         border-color: transparent
@@ -733,6 +463,294 @@
     }
 }
 
+@media (hover: hover) and (pointer: fine) {
+
+    .transparent_hover:hover {
+
+        color: transparent
+    }
+
+    .black_hover:hover {
+
+        color: #1a1a1a
+    }
+
+    .white_hover:hover {
+
+        color: #fafafa
+    }
+
+    .bg_transparent_hover:hover {
+
+        background-color: transparent
+    }
+
+    .bg_black_hover:hover {
+
+        background-color: #1a1a1a
+    }
+
+    .bg_white_hover:hover {
+
+        background-color: #fafafa
+    }
+
+    .bd_transparent_hover:hover {
+
+        border-color: transparent
+    }
+
+    .bd_black_hover:hover {
+
+        border-color: #1a1a1a
+    }
+
+    .bd_white_hover:hover {
+
+        border-color: #fafafa
+    }
+
+    @media screen and (min-width: 320px) {
+
+        .transparent_hover_mobile:hover {
+
+            color: transparent
+        }
+
+        .black_hover_mobile:hover {
+
+            color: #1a1a1a
+        }
+
+        .white_hover_mobile:hover {
+
+            color: #fafafa
+        }
+
+        .bg_transparent_hover_mobile:hover {
+
+            background-color: transparent
+        }
+
+        .bg_black_hover_mobile:hover {
+
+            background-color: #1a1a1a
+        }
+
+        .bg_white_hover_mobile:hover {
+
+            background-color: #fafafa
+        }
+
+        .bd_transparent_hover_mobile:hover {
+
+            border-color: transparent
+        }
+
+        .bd_black_hover_mobile:hover {
+
+            border-color: #1a1a1a
+        }
+
+        .bd_white_hover_mobile:hover {
+
+            border-color: #fafafa
+        }
+    }
+
+    @media screen and (min-width: 480px) {
+
+        .transparent_hover_phablet:hover {
+
+            color: transparent
+        }
+
+        .black_hover_phablet:hover {
+
+            color: #1a1a1a
+        }
+
+        .white_hover_phablet:hover {
+
+            color: #fafafa
+        }
+
+        .bg_transparent_hover_phablet:hover {
+
+            background-color: transparent
+        }
+
+        .bg_black_hover_phablet:hover {
+
+            background-color: #1a1a1a
+        }
+
+        .bg_white_hover_phablet:hover {
+
+            background-color: #fafafa
+        }
+
+        .bd_transparent_hover_phablet:hover {
+
+            border-color: transparent
+        }
+
+        .bd_black_hover_phablet:hover {
+
+            border-color: #1a1a1a
+        }
+
+        .bd_white_hover_phablet:hover {
+
+            border-color: #fafafa
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+
+        .transparent_hover_tablet:hover {
+
+            color: transparent
+        }
+
+        .black_hover_tablet:hover {
+
+            color: #1a1a1a
+        }
+
+        .white_hover_tablet:hover {
+
+            color: #fafafa
+        }
+
+        .bg_transparent_hover_tablet:hover {
+
+            background-color: transparent
+        }
+
+        .bg_black_hover_tablet:hover {
+
+            background-color: #1a1a1a
+        }
+
+        .bg_white_hover_tablet:hover {
+
+            background-color: #fafafa
+        }
+
+        .bd_transparent_hover_tablet:hover {
+
+            border-color: transparent
+        }
+
+        .bd_black_hover_tablet:hover {
+
+            border-color: #1a1a1a
+        }
+
+        .bd_white_hover_tablet:hover {
+
+            border-color: #fafafa
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+
+        .transparent_hover_desktop:hover {
+
+            color: transparent
+        }
+
+        .black_hover_desktop:hover {
+
+            color: #1a1a1a
+        }
+
+        .white_hover_desktop:hover {
+
+            color: #fafafa
+        }
+
+        .bg_transparent_hover_desktop:hover {
+
+            background-color: transparent
+        }
+
+        .bg_black_hover_desktop:hover {
+
+            background-color: #1a1a1a
+        }
+
+        .bg_white_hover_desktop:hover {
+
+            background-color: #fafafa
+        }
+
+        .bd_transparent_hover_desktop:hover {
+
+            border-color: transparent
+        }
+
+        .bd_black_hover_desktop:hover {
+
+            border-color: #1a1a1a
+        }
+
+        .bd_white_hover_desktop:hover {
+
+            border-color: #fafafa
+        }
+    }
+
+    @media screen and (min-width: 1280px) {
+
+        .transparent_hover_wideDesktop:hover {
+
+            color: transparent
+        }
+
+        .black_hover_wideDesktop:hover {
+
+            color: #1a1a1a
+        }
+
+        .white_hover_wideDesktop:hover {
+
+            color: #fafafa
+        }
+
+        .bg_transparent_hover_wideDesktop:hover {
+
+            background-color: transparent
+        }
+
+        .bg_black_hover_wideDesktop:hover {
+
+            background-color: #1a1a1a
+        }
+
+        .bg_white_hover_wideDesktop:hover {
+
+            background-color: #fafafa
+        }
+
+        .bd_transparent_hover_wideDesktop:hover {
+
+            border-color: transparent
+        }
+
+        .bd_black_hover_wideDesktop:hover {
+
+            border-color: #1a1a1a
+        }
+
+        .bd_white_hover_wideDesktop:hover {
+
+            border-color: #fafafa
+        }
+    }
+}
+
 :global(.inverted) {
 }
 
@@ -746,32 +764,12 @@
     color: #1a1a1a
 }
 
-:global(.inverted) .black_hover:hover {
-
-    color: #fafafa
-}
-
-:global(.inverted) .white_hover:hover {
-
-    color: #1a1a1a
-}
-
 :global(.inverted) .bg_black {
 
     background-color: #fafafa
 }
 
 :global(.inverted) .bg_white {
-
-    background-color: #1a1a1a
-}
-
-:global(.inverted) .bg_black_hover:hover {
-
-    background-color: #fafafa
-}
-
-:global(.inverted) .bg_white_hover:hover {
 
     background-color: #1a1a1a
 }
@@ -792,16 +790,6 @@
 }
 
 :global(.inverted) .bd_white {
-
-    border-color: #1a1a1a
-}
-
-:global(.inverted) .bd_black_hover:hover {
-
-    border-color: #fafafa
-}
-
-:global(.inverted) .bd_white_hover:hover {
 
     border-color: #1a1a1a
 }
@@ -828,32 +816,12 @@
         color: #1a1a1a
     }
 
-    :global(.inverted) .black_hover_mobile:hover {
-
-        color: #fafafa
-    }
-
-    :global(.inverted) .white_hover_mobile:hover {
-
-        color: #1a1a1a
-    }
-
     :global(.inverted) .bg_black_mobile {
 
         background-color: #fafafa
     }
 
     :global(.inverted) .bg_white_mobile {
-
-        background-color: #1a1a1a
-    }
-
-    :global(.inverted) .bg_black_hover_mobile:hover {
-
-        background-color: #fafafa
-    }
-
-    :global(.inverted) .bg_white_hover_mobile:hover {
 
         background-color: #1a1a1a
     }
@@ -874,16 +842,6 @@
     }
 
     :global(.inverted) .bd_white_mobile {
-
-        border-color: #1a1a1a
-    }
-
-    :global(.inverted) .bd_black_hover_mobile:hover {
-
-        border-color: #fafafa
-    }
-
-    :global(.inverted) .bd_white_hover_mobile:hover {
 
         border-color: #1a1a1a
     }
@@ -911,32 +869,12 @@
         color: #1a1a1a
     }
 
-    :global(.inverted) .black_hover_phablet:hover {
-
-        color: #fafafa
-    }
-
-    :global(.inverted) .white_hover_phablet:hover {
-
-        color: #1a1a1a
-    }
-
     :global(.inverted) .bg_black_phablet {
 
         background-color: #fafafa
     }
 
     :global(.inverted) .bg_white_phablet {
-
-        background-color: #1a1a1a
-    }
-
-    :global(.inverted) .bg_black_hover_phablet:hover {
-
-        background-color: #fafafa
-    }
-
-    :global(.inverted) .bg_white_hover_phablet:hover {
 
         background-color: #1a1a1a
     }
@@ -957,16 +895,6 @@
     }
 
     :global(.inverted) .bd_white_phablet {
-
-        border-color: #1a1a1a
-    }
-
-    :global(.inverted) .bd_black_hover_phablet:hover {
-
-        border-color: #fafafa
-    }
-
-    :global(.inverted) .bd_white_hover_phablet:hover {
 
         border-color: #1a1a1a
     }
@@ -994,32 +922,12 @@
         color: #1a1a1a
     }
 
-    :global(.inverted) .black_hover_tablet:hover {
-
-        color: #fafafa
-    }
-
-    :global(.inverted) .white_hover_tablet:hover {
-
-        color: #1a1a1a
-    }
-
     :global(.inverted) .bg_black_tablet {
 
         background-color: #fafafa
     }
 
     :global(.inverted) .bg_white_tablet {
-
-        background-color: #1a1a1a
-    }
-
-    :global(.inverted) .bg_black_hover_tablet:hover {
-
-        background-color: #fafafa
-    }
-
-    :global(.inverted) .bg_white_hover_tablet:hover {
 
         background-color: #1a1a1a
     }
@@ -1040,16 +948,6 @@
     }
 
     :global(.inverted) .bd_white_tablet {
-
-        border-color: #1a1a1a
-    }
-
-    :global(.inverted) .bd_black_hover_tablet:hover {
-
-        border-color: #fafafa
-    }
-
-    :global(.inverted) .bd_white_hover_tablet:hover {
 
         border-color: #1a1a1a
     }
@@ -1077,32 +975,12 @@
         color: #1a1a1a
     }
 
-    :global(.inverted) .black_hover_desktop:hover {
-
-        color: #fafafa
-    }
-
-    :global(.inverted) .white_hover_desktop:hover {
-
-        color: #1a1a1a
-    }
-
     :global(.inverted) .bg_black_desktop {
 
         background-color: #fafafa
     }
 
     :global(.inverted) .bg_white_desktop {
-
-        background-color: #1a1a1a
-    }
-
-    :global(.inverted) .bg_black_hover_desktop:hover {
-
-        background-color: #fafafa
-    }
-
-    :global(.inverted) .bg_white_hover_desktop:hover {
 
         background-color: #1a1a1a
     }
@@ -1123,16 +1001,6 @@
     }
 
     :global(.inverted) .bd_white_desktop {
-
-        border-color: #1a1a1a
-    }
-
-    :global(.inverted) .bd_black_hover_desktop:hover {
-
-        border-color: #fafafa
-    }
-
-    :global(.inverted) .bd_white_hover_desktop:hover {
 
         border-color: #1a1a1a
     }
@@ -1160,32 +1028,12 @@
         color: #1a1a1a
     }
 
-    :global(.inverted) .black_hover_wideDesktop:hover {
-
-        color: #fafafa
-    }
-
-    :global(.inverted) .white_hover_wideDesktop:hover {
-
-        color: #1a1a1a
-    }
-
     :global(.inverted) .bg_black_wideDesktop {
 
         background-color: #fafafa
     }
 
     :global(.inverted) .bg_white_wideDesktop {
-
-        background-color: #1a1a1a
-    }
-
-    :global(.inverted) .bg_black_hover_wideDesktop:hover {
-
-        background-color: #fafafa
-    }
-
-    :global(.inverted) .bg_white_hover_wideDesktop:hover {
 
         background-color: #1a1a1a
     }
@@ -1210,16 +1058,6 @@
         border-color: #1a1a1a
     }
 
-    :global(.inverted) .bd_black_hover_wideDesktop:hover {
-
-        border-color: #fafafa
-    }
-
-    :global(.inverted) .bd_white_hover_wideDesktop:hover {
-
-        border-color: #1a1a1a
-    }
-
     :global(.inverted) .bd_black_focus_wideDesktop:focus {
 
         border-color: #fafafa
@@ -1228,5 +1066,203 @@
     :global(.inverted) .bd_white_focus_wideDesktop:focus {
 
         border-color: #1a1a1a
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    :global(.inverted) .black_hover:hover {
+
+        color: #fafafa
+    }
+
+    :global(.inverted) .white_hover:hover {
+
+        color: #1a1a1a
+    }
+
+    :global(.inverted) .bg_black_hover:hover {
+
+        background-color: #fafafa
+    }
+
+    :global(.inverted) .bg_white_hover:hover {
+
+        background-color: #1a1a1a
+    }
+
+    :global(.inverted) .bd_black_hover:hover {
+
+        border-color: #fafafa
+    }
+
+    :global(.inverted) .bd_white_hover:hover {
+
+        border-color: #1a1a1a
+    }
+
+    @media screen and (min-width: 320px) {
+
+        :global(.inverted) .black_hover_mobile:hover {
+
+            color: #fafafa
+        }
+
+        :global(.inverted) .white_hover_mobile:hover {
+
+            color: #1a1a1a
+        }
+
+        :global(.inverted) .bg_black_hover_mobile:hover {
+
+            background-color: #fafafa
+        }
+
+        :global(.inverted) .bg_white_hover_mobile:hover {
+
+            background-color: #1a1a1a
+        }
+
+        :global(.inverted) .bd_black_hover_mobile:hover {
+
+            border-color: #fafafa
+        }
+
+        :global(.inverted) .bd_white_hover_mobile:hover {
+
+            border-color: #1a1a1a
+        }
+    }
+
+    @media screen and (min-width: 480px) {
+
+        :global(.inverted) .black_hover_phablet:hover {
+
+            color: #fafafa
+        }
+
+        :global(.inverted) .white_hover_phablet:hover {
+
+            color: #1a1a1a
+        }
+
+        :global(.inverted) .bg_black_hover_phablet:hover {
+
+            background-color: #fafafa
+        }
+
+        :global(.inverted) .bg_white_hover_phablet:hover {
+
+            background-color: #1a1a1a
+        }
+
+        :global(.inverted) .bd_black_hover_phablet:hover {
+
+            border-color: #fafafa
+        }
+
+        :global(.inverted) .bd_white_hover_phablet:hover {
+
+            border-color: #1a1a1a
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+
+        :global(.inverted) .black_hover_tablet:hover {
+
+            color: #fafafa
+        }
+
+        :global(.inverted) .white_hover_tablet:hover {
+
+            color: #1a1a1a
+        }
+
+        :global(.inverted) .bg_black_hover_tablet:hover {
+
+            background-color: #fafafa
+        }
+
+        :global(.inverted) .bg_white_hover_tablet:hover {
+
+            background-color: #1a1a1a
+        }
+
+        :global(.inverted) .bd_black_hover_tablet:hover {
+
+            border-color: #fafafa
+        }
+
+        :global(.inverted) .bd_white_hover_tablet:hover {
+
+            border-color: #1a1a1a
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+
+        :global(.inverted) .black_hover_desktop:hover {
+
+            color: #fafafa
+        }
+
+        :global(.inverted) .white_hover_desktop:hover {
+
+            color: #1a1a1a
+        }
+
+        :global(.inverted) .bg_black_hover_desktop:hover {
+
+            background-color: #fafafa
+        }
+
+        :global(.inverted) .bg_white_hover_desktop:hover {
+
+            background-color: #1a1a1a
+        }
+
+        :global(.inverted) .bd_black_hover_desktop:hover {
+
+            border-color: #fafafa
+        }
+
+        :global(.inverted) .bd_white_hover_desktop:hover {
+
+            border-color: #1a1a1a
+        }
+    }
+
+    @media screen and (min-width: 1280px) {
+
+        :global(.inverted) .black_hover_wideDesktop:hover {
+
+            color: #fafafa
+        }
+
+        :global(.inverted) .white_hover_wideDesktop:hover {
+
+            color: #1a1a1a
+        }
+
+        :global(.inverted) .bg_black_hover_wideDesktop:hover {
+
+            background-color: #fafafa
+        }
+
+        :global(.inverted) .bg_white_hover_wideDesktop:hover {
+
+            background-color: #1a1a1a
+        }
+
+        :global(.inverted) .bd_black_hover_wideDesktop:hover {
+
+            border-color: #fafafa
+        }
+
+        :global(.inverted) .bd_white_hover_wideDesktop:hover {
+
+            border-color: #1a1a1a
+        }
     }
 }
