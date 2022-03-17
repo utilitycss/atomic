@@ -1,0 +1,7 @@
+.bar {
+	color: blue;
+}
+
+.foo_bar {
+	color: blue;
+}

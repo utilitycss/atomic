@@ -1,0 +1,7 @@
+{
+  "name": "@my-org/same-content",
+  "version": "0.0.1",
+  "main": "index.js",
+  "module": "index.esm.js",
+  "sideEffects": false
+}
