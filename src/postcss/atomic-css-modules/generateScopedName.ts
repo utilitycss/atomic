@@ -20,7 +20,7 @@ const generateScopedName: generateScopedName = ({
     let pkgName = "";
     const definitionsMap = new Map();
     const isElectron = importedElectronRE.test(filename);
-    root.walkRules(new RegExp(`(\.${name}|:import)`), (rule): any => {
+    root.walkRules(new RegExp(`(\\.${name}|:import)`), (rule): any => {
       if (isElectron) {
         // ensure that a rule that appear multiple times has the same hash
         // e.g. inside media queries or when ICSS imported in a different atom.

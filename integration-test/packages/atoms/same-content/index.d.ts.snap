@@ -1,0 +1,3 @@
+declare const bar: string;
+declare const foo_bar: string
+export { bar, foo_bar }
