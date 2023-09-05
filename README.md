@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/utilitycss/atomic.svg?branch=master)](https://travis-ci.com/utilitycss/atomic)
+[![Node.js CI](https://github.com/utilitycss/atomic/actions/workflows/test.yml/badge.svg)](https://github.com/utilitycss/atomic/actions/workflows/test.yml)
 
 # Atomic
 A Framework to build atomic design CSS libraries in a functional manner.
