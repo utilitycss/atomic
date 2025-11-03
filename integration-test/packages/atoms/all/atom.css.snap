@@ -1719,7 +1719,7 @@ a:hover {
   }
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (min-resolution: 192dpi) {
 
 main.ZlgcWo, .ZlgcWo.uvJREe {
   background-image: img/background-2x.jpg;
