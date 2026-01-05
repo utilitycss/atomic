@@ -181,7 +181,7 @@ a:hover {
       color: blue
     }
 
-.HbTeo6 .qhqOPF._6cCOB0 .vruPji {
+.HbTeo6 .qhqOPF._6cCOB0 .pr9bBS {
         color: green;
       }
 
@@ -207,7 +207,7 @@ a:hover {
         }
 /* custom static css (e.g. normalize) can be added here */
 
-._1b2v1R {
+.xRYQGc {
   font-size: 1em;
 }
 
@@ -991,7 +991,7 @@ a:hover {
     }
 
 @media screen and (min-width: 768px) {
-  ._1b2v1R {
+  .xRYQGc {
     font-size: 2em;
   }
   .xXc9fo {
@@ -1206,7 +1206,7 @@ a:hover {
     .HNuXy3 {
         color: #fafafa
     }
-  ._1b2v1R {
+  .xRYQGc {
     font-size: 3em;
   }
   .xXc9fo {
