@@ -1,6 +1,6 @@
 {
   "name": "@utilitycss/atomic",
-  "version": "0.20.4",
+  "version": "0.20.5",
   "author": "Andrea Moretti (@axyz) <axyzxp@gmail.com>",
   "description": "Atomic CSS composition for yarn workspaces",
   "repository": "utilitycss/atomic",
